@@ -15,8 +15,11 @@
 class ApiInterface : public QObject
 {
     Q_OBJECT
+
 public:
     explicit ApiInterface(QObject *parent = nullptr);
+
+    void enableDeveloperMode(bool enable = true);
 
 signals:
     void internalLinkAvailable(News *news);
@@ -31,13 +34,17 @@ private slots:
 
 private:
     QNetworkRequest getRequest(const QString &endpoint = QString());
+    QByteArray gunzip(const QByteArray &data);
 
     News *parseNews(const QJsonObject &obj);
+    ContentItemAudio *parseContentItemAudio(const QJsonObject &obj);
     ContentItemBox *parseContentItemBox(const QJsonObject &obj);
     ContentItemGallery *parseContentItemGallery(const QJsonArray &arr);
     ContentItemRelated *parseContentItemRelated(const QJsonArray &arr);
+    ContentItemSocial *parseContentItemSocial(const QJsonObject &obj);
     ContentItemVideo *parseContentItemVideo(const QJsonObject &obj);
 
+    bool m_developerMode{false};
     QNetworkAccessManager *m_manager;
 };
 

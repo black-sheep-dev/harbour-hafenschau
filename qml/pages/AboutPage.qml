@@ -13,6 +13,7 @@ Page {
         Column {
             id: column
             width:parent.width
+            spacing: Theme.paddingLarge
 
             PageHeader {
                 title: qsTr("About")
@@ -26,11 +27,6 @@ Page {
                 width: 512
                 anchors.horizontalCenter: parent.horizontalCenter
                 opacity: 0.7
-            }
-
-            Item {
-                height: Theme.paddingLarge
-                width: 1
             }
 
             Label {
@@ -48,23 +44,19 @@ Page {
                 text: Qt.application.version
             }
 
-            Item {
-                height: Theme.paddingLarge
-                width: 1
-            }
-
             Label {
                 width: parent.width - 2 * x
                 x : Theme.horizontalPageMargin
                 wrapMode: Text.WordWrap
                 font.pixelSize: Theme.fontSizeSmall
 
-                text: qsTr("Hafenschau is an unoffical Tagesschau client for Sailfish OS.")
-            }
+                text: qsTr("Hafenschau is a native content viewer for german news portal www.tagesschau.de.")
+            }  
 
             SectionHeader{
                 text: qsTr("Sources")
             }
+
             BackgroundItem{
                 width: parent.width
                 height: Theme.itemSizeMedium

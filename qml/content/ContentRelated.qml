@@ -67,6 +67,12 @@ BackgroundItem {
                         anchors.centerIn: thumbnailImage
                         running: thumbnailImage.status != Image.Ready
                     }
+
+                    Image {
+                        visible: related_type === RelatedItem.RelatedVideo
+                        anchors.centerIn: parent
+                        source: "image://theme/icon-m-play"
+                    }
                 }
 
                 Column {
@@ -79,6 +85,8 @@ BackgroundItem {
                     spacing: Theme.paddingSmall
 
                     Label {
+                        visible: related_type !== RelatedItem.RelatedVideo
+
                         text: topline
 
                         x: Theme.paddingMedium
@@ -107,8 +115,13 @@ BackgroundItem {
                 }
 
                 onClicked: {
+                    if (related_type === RelatedItem.RelatedVideo) {
+                        pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), { url: stream })
+                        return;
+                    }
+
                     if (!HafenschauProvider.isInternalLink(link))
-                        Qt.openUrlExternally(link)
+                        pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: link})
                     else
                         HafenschauProvider.getInternalLink(link)
                 }

@@ -19,14 +19,18 @@ DEFINES += APP_TARGET=\\\"$$TARGET\\\"
 
 CONFIG += sailfishapp
 
+LIBS += -lz
+
 QT += multimedia
 
 SOURCES += src/harbour-hafenschau.cpp \
     src/api/apiinterface.cpp \
     src/content/contentitem.cpp \
+    src/content/contentitemaudio.cpp \
     src/content/contentitembox.cpp \
     src/content/contentitemgallery.cpp \
     src/content/contentitemrelated.cpp \
+    src/content/contentitemsocial.cpp \
     src/content/contentitemvideo.cpp \
     src/content/galleryitem.cpp \
     src/content/gallerymodel.cpp \
@@ -34,13 +38,17 @@ SOURCES += src/harbour-hafenschau.cpp \
     src/content/relatedmodel.cpp \
     src/hafenschauprovider.cpp \
     src/news/news.cpp \
-    src/news/newsmodel.cpp
+    src/news/newsmodel.cpp \
+    src/news/newssortfiltermodel.cpp \
+    src/region/regionsmodel.cpp
 
 DISTFILES += qml/harbour-hafenschau.qml \
+    qml/content/ContentAudio.qml \
     qml/content/ContentBox.qml \
     qml/content/ContentGallery.qml \
     qml/content/ContentHeadline.qml \
     qml/content/ContentRelated.qml \
+    qml/content/ContentSocial.qml \
     qml/content/ContentText.qml \
     qml/content/ContentVideo.qml \
     qml/cover/CoverPage.qml \
@@ -50,6 +58,9 @@ DISTFILES += qml/harbour-hafenschau.qml \
     qml/pages/StartPage.qml \
     qml/pages/SwipeViewPage.qml \
     qml/pages/VideoPlayerPage.qml \
+    qml/pages/settings/SettingsDeveloperPage.qml \
+    qml/pages/settings/SettingsPage.qml \
+    qml/pages/settings/SettingsRegionsPage.qml \
     rpm/harbour-hafenschau.changes.in \
     rpm/harbour-hafenschau.changes.run.in \
     rpm/harbour-hafenschau.spec \
@@ -72,9 +83,11 @@ TRANSLATIONS += translations/harbour-hafenschau-de.ts
 HEADERS += \
     src/api/apiinterface.h \
     src/content/contentitem.h \
+    src/content/contentitemaudio.h \
     src/content/contentitembox.h \
     src/content/contentitemgallery.h \
     src/content/contentitemrelated.h \
+    src/content/contentitemsocial.h \
     src/content/contentitemvideo.h \
     src/content/galleryitem.h \
     src/content/gallerymodel.h \
@@ -82,7 +95,9 @@ HEADERS += \
     src/content/relatedmodel.h \
     src/hafenschauprovider.h \
     src/news/news.h \
-    src/news/newsmodel.h
+    src/news/newsmodel.h \
+    src/news/newssortfiltermodel.h \
+    src/region/regionsmodel.h
 
 RESOURCES += \
     ressources.qrc

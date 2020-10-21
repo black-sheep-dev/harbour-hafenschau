@@ -24,7 +24,7 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  desktop-file-utils
 
 %description
-Hafenschau is an unoffical Tagesschau client for Sailfish OS
+Hafenschau is a native content viewer for german news portal www.tagesschau.de
 
 
 %prep

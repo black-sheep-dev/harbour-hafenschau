@@ -33,7 +33,7 @@ BackgroundItem {
 
             Image {
                 anchors.centerIn: parent
-                source: "image://theme/icon-l-opaque-play"
+                source: "image://theme/icon-l-play"
             }
         }
 
@@ -54,5 +54,5 @@ BackgroundItem {
         }
     }
 
-    //onClicked: pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {url: item.stream})
+    onClicked: pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {url: item.stream})
 }

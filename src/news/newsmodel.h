@@ -8,24 +8,35 @@
 class NewsModel : public QAbstractListModel
 {
     Q_OBJECT
+
 public:
     enum NewsRoles {
-        BreakingNewsRole            = Qt::UserRole + 1,
+        BrandingImageRole       = Qt::UserRole + 1,
+        BreakingNewsRole,
         DateRole,
         FirstSentenceRole,
         ImageRole,
+        NewsTypeRole,
+        PortraitRole,
         RegionRole,
         SophoraIdRole,
         ThumbnailRole,
         TitleRole,
-        ToplineRole
+        ToplineRole,
+        SearchRole,
+        RowRole
     };
     Q_ENUMS(NewsRoles)
 
     explicit NewsModel(QObject *parent = nullptr);
 
+    Q_INVOKABLE bool isEmpty() const;
     Q_INVOKABLE int newsCount() const;
     Q_INVOKABLE News *newsAt(const int index);
+    Q_INVOKABLE News *newsById(const QString &sophoraId);
+
+signals:
+    void newsChanged();
 
 public slots:
     void setNews(const QList<News *> newsAt);
@@ -37,9 +48,6 @@ private:
 public:
     int rowCount(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex &index, int role) const override;
-
-    // QAbstractItemModel interface
-public:
     QHash<int, QByteArray> roleNames() const override;
 };
 

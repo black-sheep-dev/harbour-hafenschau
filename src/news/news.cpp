@@ -41,6 +41,21 @@ int News::contentItemsCount() const
     return m_contentItems.count();
 }
 
+QJsonObject News::debugData() const
+{
+    return m_debugData;
+}
+
+void News::setDebugData(const QJsonObject &obj)
+{
+    m_debugData = obj;
+}
+
+QString News::brandingImage() const
+{
+    return m_brandingImage;
+}
+
 bool News::breakingNews() const
 {
     return m_breakingNews;
@@ -51,6 +66,11 @@ QDateTime News::date() const
     return m_date;
 }
 
+QString News::detailsWeb() const
+{
+    return m_detailsWeb;
+}
+
 QString News::firstSentence() const
 {
     return m_firstSentence;
@@ -59,6 +79,16 @@ QString News::firstSentence() const
 QString News::image() const
 {
     return m_image;
+}
+
+quint8 News::newsType() const
+{
+    return m_newsType;
+}
+
+QString News::portrait() const
+{
+    return m_portrait;
 }
 
 quint8 News::region() const
@@ -98,6 +128,15 @@ void News::setContentItems(const QList<ContentItem *> &items)
     emit contentItemsChanged(m_contentItems);
 }
 
+void News::setBrandingImage(const QString &brandingImage)
+{
+    if (m_brandingImage == brandingImage)
+        return;
+
+    m_brandingImage = brandingImage;
+    emit brandingImageChanged(m_brandingImage);
+}
+
 void News::setBreakingNews(bool breakingNews)
 {
     if (m_breakingNews == breakingNews)
@@ -116,6 +155,15 @@ void News::setDate(const QDateTime &date)
     emit dateChanged(m_date);
 }
 
+void News::setDetailsWeb(const QString &detailsWeb)
+{
+    if (m_detailsWeb == detailsWeb)
+        return;
+
+    m_detailsWeb = detailsWeb;
+    emit detailsWebChanged(m_detailsWeb);
+}
+
 void News::setFirstSentence(const QString &firstSentence)
 {
     if (m_firstSentence == firstSentence)
@@ -132,6 +180,24 @@ void News::setImage(const QString &image)
 
     m_image = image;
     emit imageChanged(m_image);
+}
+
+void News::setNewsType(quint8 newsType)
+{
+    if (m_newsType == newsType)
+        return;
+
+    m_newsType = newsType;
+    emit newsTypeChanged(m_newsType);
+}
+
+void News::setPortrait(const QString &portrait)
+{
+    if (m_portrait == portrait)
+        return;
+
+    m_portrait = portrait;
+    emit portraitChanged(m_portrait);
 }
 
 void News::setRegion(quint8 region)

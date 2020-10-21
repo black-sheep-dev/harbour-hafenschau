@@ -12,11 +12,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hafenschau is an unoffical Tagesschau client for Sailfish OS.</source>
+        <source>Sources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sources</source>
+        <source>Hafenschau is a native content viewer for german news portal www.tagesschau.de.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -24,13 +24,6 @@
     <name>ContentRelated</name>
     <message>
         <source>More on the subject</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>CoverPage</name>
-    <message>
-        <source>My Cover</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -51,19 +44,100 @@
         <source>Time:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Save news data</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
-    <name>StartPage</name>
+    <name>SettingsDeveloperPage</name>
+    <message>
+        <source>Developer Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save news api data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When activated an option to save the raw api data is available in pulldown menu on every reader page.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The data is stored in Documents folder on the device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When there is a problem with displaying a special news, provide this data on GitHub as an issue to help fixing it. An additional screenshot helps too!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsPage</name>
+    <message>
+        <source>Regional News</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select regional news</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Look &amp; Feel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change look &amp; feel settings</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Preferences</source>
+        <source>Show about page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Developer Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage developer options</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsRegionsPage</name>
+    <message>
+        <source>Regional News</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>StartPage</name>
+    <message>
+        <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

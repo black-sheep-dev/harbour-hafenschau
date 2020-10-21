@@ -13,12 +13,13 @@ class ContentItem : public QObject
 public:
     enum ContentType {
         Unkown,
+        Audio,              // audio
         Box,                // box
         Gallery,            // image_gallery
         Headline,           // headline
         List,               // list
         Related,            // related
-        SocialMedia,        // socialmedia
+        Social,             // socialmedia
         Text,               // text
         Video               // video
     };

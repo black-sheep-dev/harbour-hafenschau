@@ -11,11 +11,12 @@ class RelatedModel : public QAbstractListModel
 
 public:
     enum RelatedItemRoles {
-        DateRole        = Qt::UserRole + 1,
+        DateRole            = Qt::UserRole + 1,
         ImageRole,
         LinkRole,
-
+        RelatedType,
         SophoraIdRole,
+        StreamRole,
         TitleRole,
         ToplineRole
     };

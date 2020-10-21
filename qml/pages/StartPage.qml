@@ -8,108 +8,172 @@ Page {
 
     allowedOrientations: Orientation.All
 
-    SilicaListView {
+    SilicaFlickable {
         PullDownMenu {
             MenuItem {
-                text: qsTr("About")
-                onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
-            }
-            MenuItem {
-                text: qsTr("Preferences")
-                //onClicked: {}
+                text: qsTr("Settings")
+                onClicked: pageStack.push(Qt.resolvedUrl("settings/SettingsPage.qml"))
             }
             MenuItem {
                 text: qsTr("Refresh")
                 onClicked: HafenschauProvider.refresh()
             }
-        }
+            MenuItem {
+                text: listView.showSearch ? qsTr("Hide search") : qsTr("Search")
+                onClicked: {
+                    listView.showSearch = !listView.showSearch
 
-        id: listView
-        model: HafenschauProvider.newsModel()
+                    if (!listView.showSearch) {
+                        searchField.focus = false
+                        searchField.text = ""
+                    }
+                }
+            }
+        }
 
         anchors.fill: parent
 
-        header: PageHeader {
-            title: qsTr("Top News")
-        }
+        Column {
+            id: header
+            width: parent.width
 
-        delegate: ListItem {
-            id: delegate
-
-            contentHeight: Theme.itemSizeHuge * 1.2
-
-
-            Image {
-                id: thumbnailImage
-
-                x: Theme.horizontalPageMargin
-                width: Theme.itemSizeHuge
-                height: width
-                anchors.verticalCenter: parent.verticalCenter
-
-                fillMode: Image.PreserveAspectCrop
-
-                source: thumbnail
-                cache: true
-                smooth: true
-
-                BusyIndicator {
-                    size: BusyIndicatorSize.Medium
-                    anchors.centerIn: thumbnailImage
-                    running: thumbnailImage.status != Image.Ready
-                }
+            PageHeader {
+                title: qsTr("Top News")
             }
 
-            Column {
-                id: column
-
-                anchors.left: thumbnailImage.right
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-
-                spacing: Theme.paddingSmall
-
-                Label {
-                    text: topline
-
-                    x: Theme.paddingMedium
-                    width: parent.width - 2*x
-                    wrapMode: Text.WordWrap
-
-                    font.pixelSize: Theme.fontSizeExtraSmall
-                }
-                Label {
-                    text: title
-
-                    x: Theme.paddingMedium
-                    width: parent.width - 2*x
-                    wrapMode: Text.WordWrap
-
-                    font.pixelSize: Theme.fontSizeSmall
-                    color: Theme.highlightColor
-                }
-                Label {
-                    text: first_sentence
-
-                    x: Theme.paddingMedium
-                    width: parent.width - 2*x
-                    wrapMode: Text.WordWrap
-
-                    font.pixelSize: Theme.fontSizeExtraSmall
-                }
-            }
-
-            Separator {
-                id: separatorBottom
-                x: Theme.horizontalPageMargin
-                anchors.bottom: parent.bottom
+            SearchField {
+                id: searchField
                 width: parent.width
-                color: Theme.primaryColor
+                height: listView.showSearch ? implicitHeight : 0
+                opacity: listView.showSearch ? 1 : 0
+                onTextChanged: {
+                    filterModel.setFilterFixedString(text)
+                }
+
+                EnterKey.onClicked: searchField.focus = false
+
+                Connections {
+                    target: listView
+                    onShowSearchChanged: {
+                        searchField.forceActiveFocus()
+                    }
+                }
+
+                Behavior on height {
+                    NumberAnimation { duration: 300 }
+                }
+                Behavior on opacity {
+                    NumberAnimation { duration: 300 }
+                }
+            }
+        }
+
+        SilicaListView {
+            property bool showSearch: false
+
+            id: listView
+
+            width: parent.width
+            anchors.top: header.bottom
+            anchors.bottom: parent.bottom
+
+            clip: true
+
+            model: NewsSortFilterModel {
+                id: filterModel
+                sourceModel: HafenschauProvider.newsModel()
             }
 
+            delegate: ListItem {
+                id: delegate
 
-            onClicked: pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {news: HafenschauProvider.newsModel().newsAt(index)})
+                contentHeight: Theme.itemSizeHuge * 1.3
+
+
+                Image {
+                    id: thumbnailImage
+
+                    x: Theme.horizontalPageMargin
+                    width: Theme.itemSizeHuge
+                    height: delegate.height - separatorBottom.height - Theme.paddingSmall
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    fillMode: Image.PreserveAspectCrop
+
+                    source: thumbnail.length > 0 ? thumbnail : "qrc:/images/dummy_image"
+                    cache: true
+                    smooth: true
+
+                    BusyIndicator {
+                        size: BusyIndicatorSize.Medium
+                        anchors.centerIn: thumbnailImage
+                        running: thumbnailImage.status != Image.Ready
+                    }
+                }
+
+                Column {
+                    id: column
+
+                    anchors.left: thumbnailImage.right
+                    anchors.right: parent.right
+
+                    spacing: Theme.paddingSmall
+
+                    Label {
+                        text: topline
+
+                        x: Theme.paddingMedium
+                        width: parent.width - 2*x
+                        wrapMode: Text.WordWrap
+
+                        font.pixelSize: Theme.fontSizeExtraSmall
+                    }
+                    Label {
+                        text: title
+
+                        x: Theme.paddingMedium
+                        width: parent.width - 2*x
+                        wrapMode: Text.WordWrap
+
+                        font.pixelSize: Theme.fontSizeSmall
+                        color: Theme.highlightColor
+                    }
+                    Label {
+                        text: first_sentence
+
+                        x: Theme.paddingMedium
+                        width: parent.width - 2*x
+                        wrapMode: Text.WordWrap
+
+                        font.pixelSize: Theme.fontSizeExtraSmall
+                    }
+                }
+
+                Separator {
+                    id: separatorBottom
+                    x: Theme.horizontalPageMargin
+                    anchors.bottom: parent.bottom
+                    width: parent.width
+                    color: Theme.primaryColor
+                }
+
+                onClicked: {
+                    if (news_type === News.WebView) {
+                        pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: HafenschauProvider.newsModel().newsAt(row).detailsWeb })
+                    } else {
+                        pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {news: HafenschauProvider.newsModel().newsAt(row)})
+                    }
+                }
+            }
+            VerticalScrollDecorator {}
         }
-        VerticalScrollDecorator {}
+    }
+
+    onStatusChanged: {
+        if (status === PageStatus.Deactivating) {
+            searchField.focus = false
+            searchField.text = ""
+            listView.showSearch = false
+        }
     }
 }

@@ -76,8 +76,14 @@ QVariant RelatedModel::data(const QModelIndex &index, int role) const
     case DateRole:
         return item->date();
 
+    case RelatedType:
+        return item->relatedType();
+
     case SophoraIdRole:
         return item->sophoraId();
+
+    case StreamRole:
+        return item->stream();
 
     default:
         return QVariant();
@@ -91,7 +97,9 @@ QHash<int, QByteArray> RelatedModel::roleNames() const
     roles[DateRole]             = "date";
     roles[ImageRole]            = "image";
     roles[LinkRole]             = "link";
+    roles[RelatedType]          = "related_type";
     roles[SophoraIdRole]        = "sophora_id";
+    roles[StreamRole]           = "stream";
     roles[TitleRole]            = "title";
     roles[ToplineRole]          = "topline";
 

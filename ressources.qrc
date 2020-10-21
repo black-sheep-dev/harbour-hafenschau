@@ -3,4 +3,8 @@
         <file alias="git">icons/github.svg</file>
         <file alias="paypal">icons/paypal.svg</file>
     </qresource>
+    <qresource prefix="/images">
+        <file alias="audiograph">images/audiograph.png</file>
+        <file alias="dummy_image">images/dummy_image.png</file>
+    </qresource>
 </RCC>

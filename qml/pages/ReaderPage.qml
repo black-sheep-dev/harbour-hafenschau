@@ -6,7 +6,6 @@ import org.nubecula.harbour.hafenschau 1.0
 import "../content/"
 
 Page {
-    property bool loading: false
     property News news
 
     id: page
@@ -14,6 +13,16 @@ Page {
     allowedOrientations: Orientation.All
 
     SilicaFlickable {
+        PullDownMenu {
+            visible: (HafenschauProvider.developerOptions & HafenschauProvider.DevOptSaveNews) === HafenschauProvider.DevOptSaveNews
+
+            MenuItem {
+                visible: (HafenschauProvider.developerOptions & HafenschauProvider.DevOptSaveNews) === HafenschauProvider.DevOptSaveNews
+
+                text: qsTr("Save news data")
+                onClicked: HafenschauProvider.saveNews(news)
+            }
+        }
 
         Timer {
             id: refreshTimer
@@ -23,18 +32,12 @@ Page {
             onTriggered: refreshContentLayout()
         }
 
-        BusyIndicator {
-            size: BusyIndicatorSize.Large
-            anchors.centerIn: parent
-            running: loading
-        }
-
         anchors.fill: parent
 
         contentHeight: headerImage.height + columnHeader.height + columnContent.height
 
         Image {
-            visible: !loading
+            visible: news.image.length > 0
 
             id: headerImage
             source: news.image
@@ -51,12 +54,17 @@ Page {
                 anchors.centerIn: headerImage
                 running: headerImage.status != Image.Ready
             }
+
+            Image {
+                x: Theme.paddingLarge
+                y: Theme.paddingMedium
+
+                source: news.brandingImage
+            }
         }
 
 
-        Column {
-            visible: !loading
-
+        Column { 
             id: columnHeader
 
             anchors.top: headerImage.bottom
@@ -118,8 +126,6 @@ Page {
         }
 
         Column {
-            visible: !loading
-
             id: columnContent
 
             anchors.top: columnHeader.bottom
@@ -149,6 +155,10 @@ Page {
                         component = Qt.createComponent("../content/ContentGallery.qml")
                     } else if (item.contentType === ContentItem.Related) {
                         component = Qt.createComponent("../content/ContentRelated.qml")
+                    } else if (item.contentType === ContentItem.Audio) {
+                        component = Qt.createComponent("../content/ContentAudio.qml")
+                    } else if (item.contentType === ContentItem.Social) {
+                        component = Qt.createComponent("../content/ContentSocial.qml")
                     } else {
                         continue
                     }

@@ -10,6 +10,11 @@ NewsModel::NewsModel(QObject *parent) :
 
 }
 
+bool NewsModel::isEmpty() const
+{
+    return m_news.empty();
+}
+
 int NewsModel::newsCount() const
 {
     return m_news.count();
@@ -21,6 +26,16 @@ News *NewsModel::newsAt(const int index)
         return nullptr;
 
     return m_news.at(index);
+}
+
+News *NewsModel::newsById(const QString &sophoraId)
+{
+    for (News *news : m_news) {
+        if (news->sophoraId() == sophoraId)
+            return news;
+    }
+
+    return nullptr;
 }
 
 void NewsModel::setNews(const QList<News *> news)
@@ -36,6 +51,8 @@ void NewsModel::setNews(const QList<News *> news)
 
     m_news = news;
     endResetModel();
+
+    emit newsChanged();
 }
 
 int NewsModel::rowCount(const QModelIndex &parent) const
@@ -69,7 +86,16 @@ QVariant NewsModel::data(const QModelIndex &index, int role) const
     case ImageRole:
         return news->image();
 
+    case PortraitRole:
+        return news->portrait();
+
     // additional info
+    case NewsTypeRole:
+        return news->newsType();
+
+    case BrandingImageRole:
+        return news->brandingImage();
+
     case BreakingNewsRole:
         return news->breakingNews();
 
@@ -82,6 +108,12 @@ QVariant NewsModel::data(const QModelIndex &index, int role) const
     case SophoraIdRole:
         return news->sophoraId();
 
+    case SearchRole:
+        return news->topline() + news->title() + news->firstSentence();
+
+    case RowRole:
+        return index.row();
+
     default:
         return QVariant();
     }
@@ -91,15 +123,19 @@ QHash<int, QByteArray> NewsModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
 
+    roles[BrandingImageRole]            = "branding_image";
     roles[BreakingNewsRole]             = "breaking_news";
     roles[DateRole]                     = "date";
     roles[FirstSentenceRole]            = "first_sentence";
     roles[ImageRole]                    = "image";
+    roles[NewsTypeRole]                 = "news_type";
+    roles[PortraitRole]                 = "portrait";
     roles[RegionRole]                   = "region";
     roles[SophoraIdRole]                = "sophora_id";
     roles[ThumbnailRole]                = "thumbnail";
     roles[TitleRole]                    = "title";
     roles[ToplineRole]                  = "topline";
+    roles[RowRole]                      = "row";
 
     return roles;
 }

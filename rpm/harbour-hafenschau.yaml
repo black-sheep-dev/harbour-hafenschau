@@ -12,7 +12,7 @@ License: GPLv3
 Sources:
 - '%{name}-%{version}.tar.bz2'
 Description: |
-  Hafenschau is an unoffical Tagesschau client for Sailfish OS
+  Hafenschau is a native content viewer for german news portal www.tagesschau.de
 Builder: qmake5
 
 # This section specifies build dependencies that are resolved using pkgconfig.

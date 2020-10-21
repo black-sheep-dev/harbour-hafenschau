@@ -4,6 +4,7 @@
 #include <sailfishapp.h>
 
 #include "hafenschauprovider.h"
+#include "news/newssortfiltermodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,14 +14,18 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain(QStringLiteral("nubecula.org"));
 
     qmlRegisterType<ContentItem>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItem");
+    qmlRegisterType<ContentItemAudio>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemAudio");
     qmlRegisterType<ContentItemBox>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemBox");
     qmlRegisterType<ContentItemGallery>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemGallery");
     qmlRegisterType<ContentItemRelated>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemRelated");
+    qmlRegisterType<ContentItemSocial>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemSocial");
     qmlRegisterType<ContentItemVideo>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemVideo");
     qmlRegisterType<GalleryItem>("org.nubecula.harbour.hafenschau", 1, 0, "GalleryItem");
     qmlRegisterType<GalleryModel>("org.nubecula.harbour.hafenschau", 1, 0, "GalleryModel");
     qmlRegisterType<News>("org.nubecula.harbour.hafenschau", 1, 0, "News");
     qmlRegisterType<NewsModel>("org.nubecula.harbour.hafenschau", 1, 0, "NewsModel");
+    qmlRegisterType<NewsSortFilterModel>("org.nubecula.harbour.hafenschau", 1, 0, "NewsSortFilterModel");
+    qmlRegisterType<RegionsModel>("org.nubecula.harbour.hafenschau", 1, 0, "RegionsModel");
     qmlRegisterType<RelatedItem>("org.nubecula.harbour.hafenschau", 1, 0, "RelatedItem");
     qmlRegisterType<RelatedModel>("org.nubecula.harbour.hafenschau", 1, 0, "RelatedModel");
 
