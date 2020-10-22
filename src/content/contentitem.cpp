@@ -7,7 +7,7 @@ ContentItem::ContentItem(QObject *parent) :
 }
 
 ContentItem::ContentItem(const ContentItem &other) :
-    QObject()
+    QObject(nullptr)
 {
     m_contentType = other.contentType();
     m_value = other.value();

@@ -43,7 +43,7 @@ NewsModel *HafenschauProvider::newsModel()
 
 RegionsModel *HafenschauProvider::regionsModel()
 {
-    RegionsModel *model = new RegionsModel;
+    auto *model = new RegionsModel;
     model->setActiveRegions(m_activeRegions);
     connect(model, &RegionsModel::activeRegionsChanged, this, &HafenschauProvider::setActiveRegions);
 

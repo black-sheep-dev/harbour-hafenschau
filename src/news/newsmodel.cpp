@@ -20,7 +20,7 @@ int NewsModel::newsCount() const
     return m_news.count();
 }
 
-News *NewsModel::newsAt(const int index)
+News *NewsModel::newsAt(int index)
 {
     if (index >= m_news.count() || index < 0)
         return nullptr;
@@ -38,7 +38,7 @@ News *NewsModel::newsById(const QString &sophoraId)
     return nullptr;
 }
 
-void NewsModel::setNews(const QList<News *> news)
+void NewsModel::setNews(const QList<News *> &news)
 {
     beginResetModel();
     for (News *news : m_news) {

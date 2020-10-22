@@ -26,20 +26,20 @@ public:
         SearchRole,
         RowRole
     };
-    Q_ENUMS(NewsRoles)
+    Q_ENUM(NewsRoles)
 
     explicit NewsModel(QObject *parent = nullptr);
 
     Q_INVOKABLE bool isEmpty() const;
     Q_INVOKABLE int newsCount() const;
-    Q_INVOKABLE News *newsAt(const int index);
+    Q_INVOKABLE News *newsAt(int index);
     Q_INVOKABLE News *newsById(const QString &sophoraId);
 
 signals:
     void newsChanged();
 
 public slots:
-    void setNews(const QList<News *> newsAt);
+    void setNews(const QList<News *> &newsAt);
 
 private:
     QList<News *> m_news;

@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
                 Q_UNUSED(engine)
                 Q_UNUSED(scriptEngine)
 
-                HafenschauProvider *provider = new HafenschauProvider;
+                auto *provider = new HafenschauProvider;
 
                 return provider;
             });

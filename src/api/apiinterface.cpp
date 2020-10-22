@@ -49,7 +49,7 @@ void ApiInterface::onRequestFinished(QNetworkReply *reply)
 
     //qDebug() << data;
 
-    QJsonParseError error;
+    QJsonParseError error{};
 
     const QJsonDocument doc = QJsonDocument::fromJson(data, &error);
 
@@ -107,51 +107,50 @@ QNetworkRequest ApiInterface::getRequest(const QString &endpoint)
 QByteArray ApiInterface::gunzip(const QByteArray &data)
 {
     if (data.size() <= 4) {
-            qWarning("gUncompress: Input data is truncated");
+        return QByteArray();
+    }
+
+    QByteArray result;
+
+    int ret;
+    z_stream strm;
+    static const int CHUNK_SIZE = 1024;
+    char out[CHUNK_SIZE];
+
+    /* allocate inflate state */
+    strm.zalloc = Z_NULL;
+    strm.zfree = Z_NULL;
+    strm.opaque = Z_NULL;
+    strm.avail_in = data.size();
+    strm.next_in = (Bytef*)(data.data());
+
+    ret = inflateInit2(&strm, 15 +  32); // gzip decoding
+    if (ret != Z_OK)
+        return QByteArray();
+
+    // run inflate()
+    do {
+        strm.avail_out = CHUNK_SIZE;
+        strm.next_out = (Bytef*)(out);
+
+        ret = inflate(&strm, Z_NO_FLUSH);
+        Q_ASSERT(ret != Z_STREAM_ERROR);  // state not clobbered
+
+        switch (ret) {
+        case Z_NEED_DICT:
+            ret = Z_DATA_ERROR;     // and fall through
+        case Z_DATA_ERROR:
+        case Z_MEM_ERROR:
+            (void)inflateEnd(&strm);
             return QByteArray();
         }
 
-        QByteArray result;
+        result.append(out, CHUNK_SIZE - strm.avail_out);
+    } while (strm.avail_out == 0);
 
-        int ret;
-        z_stream strm;
-        static const int CHUNK_SIZE = 1024;
-        char out[CHUNK_SIZE];
-
-        /* allocate inflate state */
-        strm.zalloc = Z_NULL;
-        strm.zfree = Z_NULL;
-        strm.opaque = Z_NULL;
-        strm.avail_in = data.size();
-        strm.next_in = (Bytef*)(data.data());
-
-        ret = inflateInit2(&strm, 15 +  32); // gzip decoding
-        if (ret != Z_OK)
-            return QByteArray();
-
-        // run inflate()
-        do {
-            strm.avail_out = CHUNK_SIZE;
-            strm.next_out = (Bytef*)(out);
-
-            ret = inflate(&strm, Z_NO_FLUSH);
-            Q_ASSERT(ret != Z_STREAM_ERROR);  // state not clobbered
-
-            switch (ret) {
-            case Z_NEED_DICT:
-                ret = Z_DATA_ERROR;     // and fall through
-            case Z_DATA_ERROR:
-            case Z_MEM_ERROR:
-                (void)inflateEnd(&strm);
-                return QByteArray();
-            }
-
-            result.append(out, CHUNK_SIZE - strm.avail_out);
-        } while (strm.avail_out == 0);
-
-        // clean up and return
-        inflateEnd(&strm);
-        return result;
+    // clean up and return
+    inflateEnd(&strm);
+    return result;
 }
 
 News *ApiInterface::parseNews(const QJsonObject &obj)
@@ -242,7 +241,7 @@ News *ApiInterface::parseNews(const QJsonObject &obj)
 
 ContentItemAudio *ApiInterface::parseContentItemAudio(const QJsonObject &obj)
 {
-    ContentItemAudio *audio = new ContentItemAudio;
+    auto *audio = new ContentItemAudio;
 
     audio->setDate(QDateTime::fromString(obj.value(QStringLiteral("date")).toString(), Qt::ISODate));
     audio->setText(obj.value(QStringLiteral("text")).toString());
@@ -257,7 +256,7 @@ ContentItemAudio *ApiInterface::parseContentItemAudio(const QJsonObject &obj)
 
 ContentItemBox *ApiInterface::parseContentItemBox(const QJsonObject &obj)
 {
-    ContentItemBox *box = new ContentItemBox;
+    auto *box = new ContentItemBox;
     box->setCopyright(obj.value(QStringLiteral("copyright")).toString());
 
     QString link = obj.value(QStringLiteral("link")).toString();
@@ -281,7 +280,7 @@ ContentItemGallery *ApiInterface::parseContentItemGallery(const QJsonArray &arr)
     for (const QJsonValue &x : arr) {
         const QJsonObject obj = x.toObject();
 
-        GalleryItem *item = new GalleryItem;
+        auto *item = new GalleryItem;
         item->setCopyright(obj.value(QStringLiteral("copyright")).toString());
         item->setTitle(obj.value(QStringLiteral("title")).toString());
         item->setImage(obj.value(QStringLiteral("videowebl")).toObject()
@@ -290,7 +289,7 @@ ContentItemGallery *ApiInterface::parseContentItemGallery(const QJsonArray &arr)
         list.append(item);
     }
 
-    ContentItemGallery *gallery = new ContentItemGallery;
+    auto *gallery = new ContentItemGallery;
     gallery->model()->setItems(list);
 
     return gallery;
@@ -303,7 +302,7 @@ ContentItemRelated *ApiInterface::parseContentItemRelated(const QJsonArray &arr)
     for (const QJsonValue &x : arr) {
         const QJsonObject obj = x.toObject();
 
-        RelatedItem *item = new RelatedItem;
+        auto *item = new RelatedItem;
         item->setDate(QDateTime::fromString(obj.value(QStringLiteral("date")).toString(), Qt::ISODate));
         item->setTitle(obj.value(QStringLiteral("title")).toString());
         item->setTopline(obj.value(QStringLiteral("topline")).toString());
@@ -329,7 +328,7 @@ ContentItemRelated *ApiInterface::parseContentItemRelated(const QJsonArray &arr)
         list.append(item);
     }
 
-    ContentItemRelated *related = new ContentItemRelated;
+    auto *related = new ContentItemRelated;
     related->model()->setItems(list);
 
     return related;
@@ -337,7 +336,7 @@ ContentItemRelated *ApiInterface::parseContentItemRelated(const QJsonArray &arr)
 
 ContentItemSocial *ApiInterface::parseContentItemSocial(const QJsonObject &obj)
 {
-    ContentItemSocial *social = new ContentItemSocial;
+    auto *social = new ContentItemSocial;
 
     social->setAccount(obj.value(QStringLiteral("account")).toString());
     social->setAvatar(obj.value(QStringLiteral("avatar")).toString());
@@ -364,7 +363,7 @@ ContentItemSocial *ApiInterface::parseContentItemSocial(const QJsonObject &obj)
 
 ContentItemVideo *ApiInterface::parseContentItemVideo(const QJsonObject &obj)
 {
-    ContentItemVideo *video = new ContentItemVideo;
+    auto *video = new ContentItemVideo;
     video->setCopyright(obj.value(QStringLiteral("copyright")).toString());
     video->setDate(QDateTime::fromString(obj.value(QStringLiteral("date")).toString(), Qt::ISODate));
     video->setTitle(obj.value(QStringLiteral("title")).toString());
