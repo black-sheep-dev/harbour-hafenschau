@@ -34,6 +34,7 @@ class News : public QObject
     Q_PROPERTY(QString thumbnail READ thumbnail WRITE setThumbnail NOTIFY thumbnailChanged)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
     Q_PROPERTY(QString topline READ topline WRITE setTopline NOTIFY toplineChanged)
+    Q_PROPERTY(QString updateCheckUrl READ updateCheckUrl WRITE setUpdateCheckUrl NOTIFY updateCheckUrlChanged)
 
 public:
     enum NewsType {
@@ -90,6 +91,7 @@ public:
     QString thumbnail() const;
     QString title() const;
     QString topline() const;
+    QString updateCheckUrl() const;
 
 signals:
     void contentItemsChanged(const QList<ContentItem *> &contentItems);
@@ -108,6 +110,7 @@ signals:
     void thumbnailChanged(const QString &thumbnail);
     void titleChanged(const QString &title);
     void toplineChanged(const QString &topline);
+    void updateCheckUrlChanged(const QString &url);
 
 public slots:
     void setContentItems(const QList<ContentItem *> &items);
@@ -126,6 +129,7 @@ public slots:
     void setThumbnail(const QString &thumbnail);
     void setTitle(const QString &title);
     void setTopline(const QString &topline);  
+    void setUpdateCheckUrl(const QString &url);
 
 private:
     QList<ContentItem *> m_contentItems;
@@ -145,7 +149,8 @@ private:
     QString m_sophoraId;
     QString m_title;
     QString m_topline;
-    QString m_image; 
+    QString m_image;
+    QString m_updateCheckUrl;
 };
 
 #endif // NEWS_H

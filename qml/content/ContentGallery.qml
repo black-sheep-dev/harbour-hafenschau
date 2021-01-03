@@ -36,7 +36,7 @@ BackgroundItem {
             id: labelTitle
             width: parent.width
 
-            font.pixelSize: Theme.fontSizeMedium
+            font.pixelSize: Theme.fontSizeSmall
             wrapMode: Text.WordWrap
             color: Theme.highlightColor
 

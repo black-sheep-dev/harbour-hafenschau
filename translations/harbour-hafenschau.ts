@@ -16,7 +16,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hafenschau is a native content viewer for german news portal www.tagesschau.de.</source>
+        <source>Hafenschau is an inoffical content viewer for german news portal www.tagesschau.de with native Sailfish OS look &amp; feel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I am not the producer of the content used in the app! The content and its copyright belongs to tagesschau.de!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This project tries to offer a solution to consume the contents of the German public broadcasting under Sailfish OS, since there is no native application.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -24,6 +32,33 @@
     <name>ContentRelated</name>
     <message>
         <source>More on the subject</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NewsListPage</name>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top News</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Regional News</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -80,14 +115,6 @@
     </message>
     <message>
         <source>Select regional news</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Look &amp; Feel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change look &amp; feel settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

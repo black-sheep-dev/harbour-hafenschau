@@ -17,10 +17,18 @@ URL:        https://github.com/black-sheep-dev/harbour-hafenschau
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-hafenschau.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
+Requires:   sailfish-components-media-qt5
+Requires:   sailfish-components-pickers-qt5
+Requires:   embedlite-components-qt5 >= 1.21.2
+Requires:   qtmozembed-qt5
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  pkgconfig(Qt5DBus)
+BuildRequires:  pkgconfig(Qt5Network)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
+BuildRequires:  pkgconfig(qt5embedwidget) >= 1.14.9
+BuildRequires:  pkgconfig(sailfishsilica)
 BuildRequires:  desktop-file-utils
 
 %description

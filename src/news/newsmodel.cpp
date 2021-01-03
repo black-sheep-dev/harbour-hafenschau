@@ -15,6 +15,11 @@ bool NewsModel::isEmpty() const
     return m_news.empty();
 }
 
+QList<News *> NewsModel::news() const
+{
+    return m_news;
+}
+
 int NewsModel::newsCount() const
 {
     return m_news.count();
@@ -30,7 +35,7 @@ News *NewsModel::newsAt(int index)
 
 News *NewsModel::newsById(const QString &sophoraId)
 {
-    for (News *news : m_news) {
+    for (auto *news : m_news) {
         if (news->sophoraId() == sophoraId)
             return news;
     }
@@ -38,14 +43,32 @@ News *NewsModel::newsById(const QString &sophoraId)
     return nullptr;
 }
 
+void NewsModel::updateNews(News *news)
+{
+    if (news == nullptr)
+        return;
+
+    News *old = newsById(news->sophoraId());
+
+    if (old == nullptr)
+        return;
+
+    const QModelIndex idx = index(m_news.indexOf(old));
+
+    m_news.replace(idx.row(), news);
+    emit dataChanged(idx, idx);
+
+    old->deleteLater();
+}
+
 void NewsModel::setNews(const QList<News *> &news)
 {
     beginResetModel();
-    for (News *news : m_news) {
+    for (auto *news : m_news) {
         news->deleteLater();
     }
 
-    for (News *n : news) {
+    for (auto *n : news) {
         n->setParent(this);
     }
 

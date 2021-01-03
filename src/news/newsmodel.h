@@ -31,9 +31,12 @@ public:
     explicit NewsModel(QObject *parent = nullptr);
 
     Q_INVOKABLE bool isEmpty() const;
+    QList<News *> news() const;
     Q_INVOKABLE int newsCount() const;
     Q_INVOKABLE News *newsAt(int index);
     Q_INVOKABLE News *newsById(const QString &sophoraId);
+
+    void updateNews(News *news);
 
 signals:
     void newsChanged();

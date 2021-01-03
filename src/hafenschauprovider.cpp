@@ -10,10 +10,9 @@ HafenschauProvider::HafenschauProvider(QObject *parent) :
     m_api(new ApiInterface(this)),
     m_newsModel(new NewsModel(this))
 {
-    connect(m_api, &ApiInterface::newsAvailable, m_newsModel, &NewsModel::setNews);
-    connect(m_api, &ApiInterface::internalLinkAvailable, this, &HafenschauProvider::internalLinkAvailable);
-
     readSettings();
+
+    connect(m_api, &ApiInterface::internalLinkAvailable, this, &HafenschauProvider::internalLinkAvailable);
 }
 
 HafenschauProvider::~HafenschauProvider()
@@ -38,14 +37,14 @@ bool HafenschauProvider::isInternalLink(const QString &link) const
 
 NewsModel *HafenschauProvider::newsModel()
 {
-    return m_newsModel;
+    return m_api->newsModel();
 }
 
 RegionsModel *HafenschauProvider::regionsModel()
 {
-    auto *model = new RegionsModel;
-    model->setActiveRegions(m_activeRegions);
-    connect(model, &RegionsModel::activeRegionsChanged, this, &HafenschauProvider::setActiveRegions);
+    auto *model = new RegionsModel();
+    model->setActiveRegions(m_api->activeRegions());
+    connect(model, &RegionsModel::activeRegionsChanged, m_api, &ApiInterface::setActiveRegions);
 
     return model;
 }
@@ -57,7 +56,7 @@ void HafenschauProvider::saveSettings()
 
 void HafenschauProvider::saveNews(News *news)
 {
-    if (!news)
+    if (news == nullptr)
         return;
 
     QFile file(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
@@ -97,23 +96,19 @@ void HafenschauProvider::setDeveloperOptions(quint16 options)
     m_api->enableDeveloperMode((m_developerOptions & DevOptSaveNews) == DevOptSaveNews);
 }
 
-void HafenschauProvider::setActiveRegions(const QList<int> &actives)
-{
-    m_activeRegions = actives;
-}
-
 void HafenschauProvider::readSettings()
 {
     QSettings settings;
 
     settings.beginGroup(QStringLiteral("REGIONS"));
-    m_activeRegions.clear();
+    QList<int> regions;
 
     int size = settings.beginReadArray(QStringLiteral("active"));
     for (int i = 0; i < size; ++i) {
         settings.setArrayIndex(i);
-        m_activeRegions.append(settings.value(QStringLiteral("code")).toInt());
+        regions.append(settings.value(QStringLiteral("code")).toInt());
     }
+    m_api->setActiveRegions(regions);
     settings.endArray();
     settings.endGroup();
 
@@ -128,9 +123,9 @@ void HafenschauProvider::writeSettings()
 
     settings.beginGroup(QStringLiteral("REGIONS"));
     settings.beginWriteArray(QStringLiteral("active"));
-    for (int i = 0; i < m_activeRegions.count(); ++i) {
+    for (int i = 0; i < m_api->activeRegions().count(); ++i) {
         settings.setArrayIndex(i);
-        settings.setValue(QStringLiteral("code"), m_activeRegions.at(i));
+        settings.setValue(QStringLiteral("code"), m_api->activeRegions().at(i));
     }
     settings.endArray();
     settings.endGroup();

@@ -8,7 +8,7 @@ News::News(QObject *parent) :
 
 void News::addContentItem(ContentItem *item)
 {
-    if (!item)
+    if (item == nullptr)
         return;
 
     item->setParent(this);
@@ -114,6 +114,11 @@ QString News::title() const
 QString News::topline() const
 {
     return m_topline;
+}
+
+QString News::updateCheckUrl() const
+{
+    return m_updateCheckUrl;
 }
 
 void News::setContentItems(const QList<ContentItem *> &items)
@@ -243,4 +248,13 @@ void News::setTopline(const QString &topline)
 
     m_topline = topline;
     emit toplineChanged(m_topline);
+}
+
+void News::setUpdateCheckUrl(const QString &url)
+{
+    if (m_updateCheckUrl == url)
+        return;
+
+    m_updateCheckUrl = url;
+    emit updateCheckUrlChanged(m_updateCheckUrl);
 }

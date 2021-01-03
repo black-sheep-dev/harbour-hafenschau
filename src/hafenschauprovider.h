@@ -47,14 +47,10 @@ public slots:
     // properties
     void setDeveloperOptions(quint16 options);
 
-private slots:
-    void setActiveRegions(const QList<int> &actives);
-
 private:
     void readSettings();
     void writeSettings();
 
-    QList<int> m_activeRegions;
     ApiInterface *m_api{nullptr};
     NewsModel *m_newsModel{nullptr};
 

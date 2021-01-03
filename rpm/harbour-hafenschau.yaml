@@ -20,8 +20,12 @@ Builder: qmake5
 PkgConfigBR:
   - sailfishapp >= 1.0.2
   - Qt5Core
+  - Qt5DBus
+  - Qt5Network
   - Qt5Qml
   - Qt5Quick
+  - qt5embedwidget >= 1.14.9
+  - sailfishsilica
 
 # Build dependencies without a pkgconfig setup can be listed here
 # PkgBR:
@@ -29,7 +33,11 @@ PkgConfigBR:
 
 # Runtime dependencies which are not automatically detected
 Requires:
-  - sailfishsilica-qt5 >= 0.10.9 
+  - sailfishsilica-qt5 >= 0.10.9
+  - sailfish-components-media-qt5
+  - sailfish-components-pickers-qt5
+  - embedlite-components-qt5 >= 1.21.2
+  - qtmozembed-qt5
 
 # All installed files
 Files:

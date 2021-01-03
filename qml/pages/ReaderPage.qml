@@ -91,7 +91,8 @@ Page {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2*x
 
-                font.pixelSize: Theme.fontSizeExtraLarge
+                font.pixelSize: Theme.fontSizeLarge
+                font.bold: true
                 color: Theme.highlightColor
 
                 wrapMode: Text.WordWrap
@@ -108,14 +109,14 @@ Page {
                 Label {
                     text: qsTr("Time:")
 
-                    font.pixelSize: Theme.fontSizeSmall
+                    font.pixelSize: Theme.fontSizeExtraSmall
                     color: Theme.highlightColor
                 }
 
                 Label {
                     text: news.date.toLocaleString()
 
-                    font.pixelSize: Theme.fontSizeSmall
+                    font.pixelSize: Theme.fontSizeExtraSmall
                 }
             }
 

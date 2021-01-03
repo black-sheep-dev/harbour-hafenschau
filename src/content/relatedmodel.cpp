@@ -21,7 +21,7 @@ int RelatedModel::itemsCount() const
 
 void RelatedModel::addItem(RelatedItem *item)
 {
-    if (!item)
+    if (item == nullptr)
         return;
 
     beginInsertRows(QModelIndex(), m_items.count(), m_items.count());
@@ -37,7 +37,7 @@ void RelatedModel::setItems(const QList<RelatedItem *> &items)
     m_items.clear();
 
     for (auto *item : items) {
-        if (!item)
+        if (item == nullptr)
             continue;
 
         item->setParent(this);

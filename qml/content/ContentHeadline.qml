@@ -14,7 +14,8 @@ Item {
         id: labelValue
         width: parent.width
 
-        font.pixelSize: Theme.fontSizeLarge
+        font.pixelSize: Theme.fontSizeMedium
+        font.bold: true
         wrapMode: Text.WordWrap
         color: Theme.highlightColor
 

@@ -15,12 +15,12 @@ Page {
                 icon: "image://theme/icon-m-levels"
                 page: "SettingsRegionsPage.qml"
             }
-            ListElement {
-                title: qsTr("Look & Feel");
-                description: qsTr("Change look & feel settings")
-                icon: "image://theme/icon-m-ambience"
-                page: "../AboutPage.qml"
-            }
+//            ListElement {
+//                title: qsTr("Look & Feel");
+//                description: qsTr("Change look & feel settings")
+//                icon: "image://theme/icon-m-ambience"
+//                page: "../AboutPage.qml"
+//            }
             ListElement {
                 title: qsTr("Developer Settings");
                 description: qsTr("Manage developer options")

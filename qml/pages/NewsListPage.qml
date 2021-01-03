@@ -3,7 +3,9 @@ import Sailfish.Silica 1.0
 
 import org.nubecula.harbour.hafenschau 1.0
 
-Page {    
+Page {
+    property NewsModel newsModel
+
     id: page
 
     allowedOrientations: Orientation.All
@@ -28,6 +30,13 @@ Page {
                         searchField.text = ""
                     }
                 }
+            }
+        }
+
+        PushUpMenu {
+            MenuItem {
+                text: qsTr("Regional News")
+                onClicked: pageStack.push(Qt.resolvedUrl("NewsListPage.qml"), { newsModel: HafenschauProvider.regionalNewsModel() })
             }
         }
 
@@ -81,83 +90,85 @@ Page {
 
             model: NewsSortFilterModel {
                 id: filterModel
-                sourceModel: HafenschauProvider.newsModel()
+                sourceModel: newsModel
             }
 
             delegate: ListItem {
                 id: delegate
 
-                contentHeight: contentRow.height + separatorBottom.height
+                contentHeight: Theme.itemSizeHuge * 1.4
 
-                Row {
-                    id: contentRow
+
+                Image {
+                    id: thumbnailImage
+
                     x: Theme.horizontalPageMargin
-                    width: parent.width - 2*x
+                    width: Theme.itemSizeHuge
+                    height: delegate.height - separatorBottom.height - Theme.paddingSmall
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    fillMode: Image.PreserveAspectCrop
+
+                    source: thumbnail.length > 0 ? thumbnail : "qrc:/images/dummy_image"
+                    cache: true
+                    smooth: true
+
+                    BusyIndicator {
+                        size: BusyIndicatorSize.Medium
+                        anchors.centerIn: thumbnailImage
+                        running: thumbnailImage.status != Image.Ready
+                    }
+                }
+
+                Column {
+                    id: column
+
+                    anchors.left: thumbnailImage.right
+                    anchors.right: parent.right
+
                     spacing: Theme.paddingSmall
 
-                    Image {
-                        id: thumbnailImage
+                    Label {
+                        text: topline
 
-                        width: Theme.itemSizeExtraLarge
-                        height: Theme.itemSizeExtraLarge * 1.4
+                        x: Theme.paddingMedium
+                        width: parent.width - 2*x
+                        wrapMode: Text.WordWrap
 
-                        fillMode: Image.PreserveAspectCrop
-
-                        source: thumbnail.length > 0 ? thumbnail : "qrc:/images/dummy_image"
-                        cache: true
-                        smooth: true
-
-                        BusyIndicator {
-                            size: BusyIndicatorSize.Medium
-                            anchors.centerIn: thumbnailImage
-                            running: thumbnailImage.status != Image.Ready
-                        }
+                        font.pixelSize: Theme.fontSizeExtraSmall
                     }
+                    Label {
+                        text: title
 
-                    Column {
-                        id: column
-                        width: parent.width - thumbnailImage.width - parent.spacing
-                        spacing: Theme.paddingSmall
+                        x: Theme.paddingMedium
+                        width: parent.width - 2*x
+                        wrapMode: Text.WordWrap
 
-                        Label {
-                            text: topline
+                        font.pixelSize: Theme.fontSizeSmall
+                        color: Theme.highlightColor
+                    }
+                    Label {
+                        text: first_sentence
 
-                            width: parent.width
-                            wrapMode: Text.WordWrap
+                        x: Theme.paddingMedium
+                        width: parent.width - 2*x
+                        wrapMode: Text.WordWrap
 
-                            font.pixelSize: Theme.fontSizeExtraSmall
-                        }
-                        Label {
-                            text: title
-
-                            width: parent.width
-                            wrapMode: Text.WordWrap
-
-                            font.pixelSize: Theme.fontSizeSmall
-                            color: Theme.highlightColor
-                        }
-                        Label {
-                            text: first_sentence
-                            width: parent.width
-                            wrapMode: Text.WordWrap
-
-                            font.pixelSize: Theme.fontSizeExtraSmall
-                        }
+                        font.pixelSize: Theme.fontSizeExtraSmall
                     }
                 }
 
                 Separator {
                     id: separatorBottom
-                    visible: index < listView.count
                     x: Theme.horizontalPageMargin
-                    width: parent.width - 2*x
+                    anchors.bottom: parent.bottom
+                    width: parent.width
                     color: Theme.primaryColor
                 }
 
                 onClicked: {
                     if (news_type === News.WebView) {
-                        //pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: HafenschauProvider.newsModel().newsAt(row).detailsWeb })
-                        pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), {url: HafenschauProvider.newsModel().newsAt(row).detailsWeb })
+                        pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: HafenschauProvider.newsModel().newsAt(row).detailsWeb })
                     } else {
                         pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {news: HafenschauProvider.newsModel().newsAt(row)})
                     }
@@ -175,3 +186,4 @@ Page {
         }
     }
 }
+

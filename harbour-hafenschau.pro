@@ -17,11 +17,12 @@ DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 TARGET = harbour-hafenschau
 DEFINES += APP_TARGET=\\\"$$TARGET\\\"
 
+QT += multimedia
+
 CONFIG += sailfishapp
+PKGCONFIG += qt5embedwidget
 
 LIBS += -lz
-
-QT += multimedia
 
 SOURCES += src/harbour-hafenschau.cpp \
     src/api/apiinterface.cpp \
@@ -54,10 +55,12 @@ DISTFILES += qml/harbour-hafenschau.qml \
     qml/cover/CoverPage.qml \
     qml/dialogs/OpenExternalUrlDialog.qml \
     qml/pages/GalleryPage.qml \
+    qml/pages/NewsListPage.qml \
     qml/pages/ReaderPage.qml \
     qml/pages/StartPage.qml \
     qml/pages/SwipeViewPage.qml \
     qml/pages/VideoPlayerPage.qml \
+    qml/pages/WebViewPage.qml \
     qml/pages/settings/SettingsDeveloperPage.qml \
     qml/pages/settings/SettingsPage.qml \
     qml/pages/settings/SettingsRegionsPage.qml \

@@ -34,6 +34,7 @@ BackgroundItem {
             font.pixelSize: Theme.fontSizeMedium
             wrapMode: Text.WordWrap
             color: Theme.highlightColor
+            linkColor: Theme.secondaryHighlightColor
 
             text: item.title
         }
@@ -64,6 +65,7 @@ BackgroundItem {
 
             font.pixelSize: Theme.fontSizeSmall
             wrapMode: Text.WordWrap
+            linkColor: Theme.secondaryHighlightColor
 
             text: item.shorttext
         }
@@ -99,7 +101,9 @@ BackgroundItem {
 
                 font.pixelSize: Theme.fontSizeMedium
                 wrapMode: Text.WordWrap
-                linkColor: Theme.highlightColor
+                color: Theme.secondaryColor
+                linkColor: Theme.secondaryHighlightColor
+
 
                 text: "@" + item.username
             }

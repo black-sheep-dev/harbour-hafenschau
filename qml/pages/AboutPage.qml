@@ -21,10 +21,10 @@ Page {
 
             Image {
                 id: logo
-                source: "/usr/share/icons/hicolor/512x512/apps/harbour-hafenschau.png"
+                source: "/usr/share/icons/hicolor/512x512/apps/" + Qt.application.name + ".png"
                 smooth: true
-                height: 512
-                width: 512
+                height: parent.width / 2
+                width: parent.width / 2
                 anchors.horizontalCenter: parent.horizontalCenter
                 opacity: 0.7
             }
@@ -50,8 +50,19 @@ Page {
                 wrapMode: Text.WordWrap
                 font.pixelSize: Theme.fontSizeSmall
 
-                text: qsTr("Hafenschau is a native content viewer for german news portal www.tagesschau.de.")
-            }  
+                text: qsTr("Hafenschau is an inoffical content viewer for german news portal www.tagesschau.de with native Sailfish OS look & feel.")
+            }
+
+            Label {
+                width: parent.width - 2 * x
+                x : Theme.horizontalPageMargin
+                wrapMode: Text.WordWrap
+                font.pixelSize: Theme.fontSizeSmall
+
+                text: qsTr("I am not the producer of the content used in the app! The content and its copyright belongs to tagesschau.de!")
+                      + "\n"
+                      + qsTr("This project tries to offer a solution to consume the contents of the German public broadcasting under Sailfish OS, since there is no native application.")  
+            }
 
             SectionHeader{
                 text: qsTr("Sources")
@@ -78,12 +89,17 @@ Page {
                         wrapMode: Text.WrapAnywhere
                         font.pixelSize: Theme.fontSizeSmall
 
-                        text: "https://github.com/black-sheep-dev/harbour-hafenschau"
+                        text: "https://github.com/black-sheep-dev/" + Qt.application.name
                         color: parent.parent.pressed ? Theme.highlightColor : Theme.primaryColor
 
                     }
                 }
-                onClicked: Qt.openUrlExternally("https://github.com/black-sheep-dev/harbour-hafenschau")
+                onClicked: Qt.openUrlExternally("https://github.com/black-sheep-dev/"  + Qt.application.name)
+            }
+
+            Item {
+                width: 1
+                height: Theme.paddingLarge
             }
 
 //            SectionHeader{
