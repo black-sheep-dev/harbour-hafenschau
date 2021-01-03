@@ -38,6 +38,9 @@ Requires:
   - sailfish-components-pickers-qt5
   - embedlite-components-qt5 >= 1.21.2
   - qtmozembed-qt5
+  - sailfish-components-webview-qt5
+  - sailfish-components-webview-qt5-popups
+  - sailfish-components-webview-qt5-pickers
 
 # All installed files
 Files:
