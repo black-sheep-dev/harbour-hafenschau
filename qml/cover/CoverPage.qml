@@ -4,7 +4,8 @@ import Sailfish.Silica 1.0
 import org.nubecula.harbour.hafenschau 1.0
 
 CoverBackground {
-    property int index: -1
+    property int index: 0
+    property NewsModel model: HafenschauProvider.newsModel(NewsModel.Homepage)
 
     Image {
         id: imageDelegate
@@ -15,7 +16,7 @@ CoverBackground {
 
         opacity: 0.4
 
-        source: HafenschauProvider.newsModel().newsAt(index).portrait.length > 0 ? HafenschauProvider.newsModel().newsAt(index).portrait : "qrc:/images/dummy_image"
+        source: model.newsAt(index).portrait.length > 0 ? model.newsAt(index).portrait : "qrc:/images/dummy_image"
         cache: true
         smooth: true
 
@@ -38,7 +39,7 @@ CoverBackground {
         Label {
             x: Theme.horizontalPageMargin
             width: parent.width - 2*x
-            text: HafenschauProvider.newsModel().newsAt(index).title
+            text: model.newsAt(index).title
             font.bold: true
             wrapMode: Text.WordWrap
             font.pixelSize: Theme.fontSizeSmall
@@ -47,7 +48,7 @@ CoverBackground {
         Label {
             x: Theme.horizontalPageMargin
             width: parent.width - 2*x
-            text: HafenschauProvider.newsModel().newsAt(index).firstSentence
+            text: model.newsAt(index).firstSentence
             wrapMode: Text.WordWrap
             font.pixelSize: Theme.fontSizeExtraSmall
         }
@@ -62,19 +63,19 @@ CoverBackground {
                 if (index > 0)
                     index -= 1
                 else
-                    index = HafenschauProvider.newsModel().newsCount() - 1
+                    index = model.newsCount() - 1
             }
         }
 
         CoverAction {
             iconSource: "image://theme/icon-cover-refresh"
-            onTriggered: HafenschauProvider.refresh()
+            onTriggered: HafenschauProvider.refresh(NewsModel.Homepage)
         }
 
         CoverAction {
             iconSource: "image://theme/icon-cover-next"
             onTriggered: {
-                if (index < (HafenschauProvider.newsModel().newsCount() - 1))
+                if (index < (model.newsCount() - 1))
                     index += 1
                 else
                     index = 0
@@ -83,7 +84,7 @@ CoverBackground {
     }
 
     Connections {
-        target: HafenschauProvider.newsModel()
+        target: model
         onNewsChanged: index = 0
     }
 }
