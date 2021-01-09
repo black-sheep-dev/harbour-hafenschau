@@ -4,3 +4,4 @@ Hafenschau is an unoffical content viewer for http://tagesschau.de for SailfishO
 I am not the publisher or creator of the content displayed in this app. 
 The copyright belongs to tagesschau.de!
 
+>![](icons/128x128/harbour-hafenschau.png)
