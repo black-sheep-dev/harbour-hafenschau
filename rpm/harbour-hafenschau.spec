@@ -12,7 +12,7 @@ Summary:    Hafenschau
 Version:    0.1.0
 Release:    1
 Group:      Qt/Qt
-License:    GPLv3
+License:    MIT
 URL:        https://github.com/black-sheep-dev/harbour-hafenschau
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-hafenschau.yaml
