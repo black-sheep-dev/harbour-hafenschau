@@ -61,11 +61,31 @@ void NewsModel::updateNews(News *news)
     old->deleteLater();
 }
 
+bool NewsModel::loading() const
+{
+    return m_loading;
+}
+
+QString NewsModel::newStoriesCountLink() const
+{
+    return m_newStoriesCountLink;
+}
+
+quint8 NewsModel::newsType() const
+{
+    return m_newsType;
+}
+
+QString NewsModel::nextPage() const
+{
+    return m_nextPage;
+}
+
 void NewsModel::setNews(const QList<News *> &news)
 {
     beginResetModel();
-    for (auto *news : m_news) {
-        news->deleteLater();
+    for (auto *old : m_news) {
+        old->deleteLater();
     }
 
     for (auto *n : news) {
@@ -76,6 +96,44 @@ void NewsModel::setNews(const QList<News *> &news)
     endResetModel();
 
     emit newsChanged();
+
+    setLoading(false);
+}
+
+void NewsModel::setLoading(bool loading)
+{
+    if (m_loading == loading)
+        return;
+
+    m_loading = loading;
+    emit loadingChanged(m_loading);
+}
+
+void NewsModel::setNewsType(quint8 newsType)
+{
+    if (m_newsType == newsType)
+        return;
+
+    m_newsType = newsType;
+    emit newsTypeChanged(m_newsType);
+}
+
+void NewsModel::setNewStoriesCountLink(const QString &link)
+{
+    if (m_newStoriesCountLink == link)
+        return;
+
+    m_newStoriesCountLink = link;
+    emit newStoriesCountLinkChanged(m_newStoriesCountLink);
+}
+
+void NewsModel::setNextPage(const QString &nextPage)
+{
+    if (m_nextPage == nextPage)
+        return;
+
+    m_nextPage = nextPage;
+    emit nextPageChanged(m_nextPage);
 }
 
 int NewsModel::rowCount(const QModelIndex &parent) const
@@ -125,6 +183,15 @@ QVariant NewsModel::data(const QModelIndex &index, int role) const
     case DateRole:
         return news->date();
 
+    case DetailsRole:
+        return news->details();
+
+    case DetailsWebRole:
+        return news->detailsWeb();
+
+    case HasContentRole:
+        return news->hasContent();
+
     case RegionRole:
         return news->region();
 
@@ -133,6 +200,9 @@ QVariant NewsModel::data(const QModelIndex &index, int role) const
 
     case SearchRole:
         return news->topline() + news->title() + news->firstSentence();
+
+    case StreamRole:
+        return news->stream();
 
     case RowRole:
         return index.row();
@@ -146,19 +216,23 @@ QHash<int, QByteArray> NewsModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
 
-    roles[BrandingImageRole]            = "branding_image";
-    roles[BreakingNewsRole]             = "breaking_news";
+    roles[BrandingImageRole]            = "brandingImage";
+    roles[BreakingNewsRole]             = "breakingNews";
     roles[DateRole]                     = "date";
-    roles[FirstSentenceRole]            = "first_sentence";
+    roles[DetailsRole]                  = "details";
+    roles[DetailsWebRole]               = "detailsWeb";
+    roles[FirstSentenceRole]            = "firstSentence";
+    roles[HasContentRole]               = "hasContent";
     roles[ImageRole]                    = "image";
-    roles[NewsTypeRole]                 = "news_type";
+    roles[NewsTypeRole]                 = "newsType";
     roles[PortraitRole]                 = "portrait";
     roles[RegionRole]                   = "region";
-    roles[SophoraIdRole]                = "sophora_id";
+    roles[SophoraIdRole]                = "sophoraId";
+    roles[StreamRole]                   = "stream";
     roles[ThumbnailRole]                = "thumbnail";
     roles[TitleRole]                    = "title";
     roles[ToplineRole]                  = "topline";
-    roles[RowRole]                      = "row";
+    roles[RowRole]                      = "row"; 
 
     return roles;
 }

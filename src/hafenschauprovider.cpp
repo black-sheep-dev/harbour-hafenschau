@@ -27,7 +27,7 @@ void HafenschauProvider::getInternalLink(const QString &link)
 
 void HafenschauProvider::initialize()
 {
-    m_api->refresh();
+    m_api->refresh(NewsModel::Homepage);
 }
 
 bool HafenschauProvider::isInternalLink(const QString &link) const
@@ -35,9 +35,9 @@ bool HafenschauProvider::isInternalLink(const QString &link) const
     return link.endsWith(QStringLiteral(".json")) && link.startsWith(QStringLiteral("https://www.tagesschau.de/api2"));
 }
 
-NewsModel *HafenschauProvider::newsModel()
+NewsModel *HafenschauProvider::newsModel(quint8 newsType)
 {
-    return m_api->newsModel();
+    return m_api->newsModel(newsType);
 }
 
 RegionsModel *HafenschauProvider::regionsModel()
@@ -79,9 +79,14 @@ quint16 HafenschauProvider::developerOptions() const
     return m_developerOptions;
 }
 
-void HafenschauProvider::refresh()
+void HafenschauProvider::refresh(bool complete)
 {
-    m_api->refresh();
+    m_api->refresh(complete);
+}
+
+void HafenschauProvider::refresh(quint8 newsType, bool complete)
+{
+    m_api->refresh(newsType, complete);
 }
 
 void HafenschauProvider::setDeveloperOptions(quint16 options)

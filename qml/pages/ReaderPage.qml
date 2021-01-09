@@ -79,6 +79,19 @@ Page {
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2*x
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeTiny
+                font.italic: true
+                color: Theme.highlightColor
+
+                text: "© https://tagesschau.de"
+
+                onLinkActivated: pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: link })
+            }
+
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2*x
 
                 wrapMode: Text.WordWrap
 

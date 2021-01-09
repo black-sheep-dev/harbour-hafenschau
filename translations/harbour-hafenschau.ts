@@ -38,10 +38,6 @@
 <context>
     <name>NewsListPage</name>
     <message>
-        <source>Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
@@ -54,11 +50,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Top News</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Regional News</source>
+        <source>No news available</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -81,6 +73,69 @@
     </message>
     <message>
         <source>Save news data</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RessortListPage</name>
+    <message>
+        <source>Domestic News</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse domestic news</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Foreign News</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse news from foreign countries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Economic News</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse economic news</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Regional News</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse regional news</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sport News</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse sport news</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ressorts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Videos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse videos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Investigative News</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse investigative news</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -160,15 +215,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hide search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Top News</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All News</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

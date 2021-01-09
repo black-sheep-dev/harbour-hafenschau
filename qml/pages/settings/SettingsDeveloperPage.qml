@@ -47,5 +47,10 @@ Page {
         }
     }
 
-    onStatusChanged: if (status === PageStatus.Deactivating) HafenschauProvider.saveSettings()
+    onStatusChanged: {
+        if (status === PageStatus.Deactivating) {
+            HafenschauProvider.saveSettings()
+            HafenschauProvider.refresh(true)
+        }
+    }
 }

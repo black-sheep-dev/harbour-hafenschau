@@ -41,6 +41,11 @@ int News::contentItemsCount() const
     return m_contentItems.count();
 }
 
+bool News::hasContent() const
+{
+    return m_contentItems.count() > 0;
+}
+
 QJsonObject News::debugData() const
 {
     return m_debugData;
@@ -64,6 +69,11 @@ bool News::breakingNews() const
 QDateTime News::date() const
 {
     return m_date;
+}
+
+QString News::details() const
+{
+    return m_details;
 }
 
 QString News::detailsWeb() const
@@ -99,6 +109,11 @@ quint8 News::region() const
 QString News::sophoraId() const
 {
     return m_sophoraId;
+}
+
+QString News::stream() const
+{
+    return m_stream;
 }
 
 QString News::thumbnail() const
@@ -158,6 +173,15 @@ void News::setDate(const QDateTime &date)
 
     m_date = date;
     emit dateChanged(m_date);
+}
+
+void News::setDetails(const QString &details)
+{
+    if (m_details == details)
+        return;
+
+    m_details = details;
+    emit detailsChanged(m_details);
 }
 
 void News::setDetailsWeb(const QString &detailsWeb)
@@ -221,6 +245,15 @@ void News::setSophoraId(const QString &sophoraId)
 
     m_sophoraId = sophoraId;
     emit sophoraIdChanged(m_sophoraId);
+}
+
+void News::setStream(const QString &stream)
+{
+    if (m_stream == stream)
+        return;
+
+    m_stream = stream;
+    emit streamChanged(m_stream);
 }
 
 void News::setThumbnail(const QString &thumbnail)

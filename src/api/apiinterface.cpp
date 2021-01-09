@@ -14,8 +14,7 @@
 
 ApiInterface::ApiInterface(QObject *parent) :
     QObject(parent),
-    m_manager(new QNetworkAccessManager(this)),
-    m_newsModel(new NewsModel(this))
+    m_manager(new QNetworkAccessManager(this))
 {
 
 }
@@ -30,18 +29,18 @@ QList<int> ApiInterface::activeRegions() const
     return m_activeRegions;
 }
 
-NewsModel *ApiInterface::newsModel()
+NewsModel *ApiInterface::newsModel(quint8 newsType)
 {
-    return m_newsModel;
-}
+    NewsModel *model = m_newsModels.value(newsType, nullptr);
 
-void ApiInterface::refresh()
-{
-    if (m_newStoriesCountLink.isEmpty()) {
-        getHomepage();
-    } else {
-        getNewStoriesCount();
+    if (model == nullptr) {
+        model = new NewsModel(this);
+        model->setNewsType(newsType);
+        m_newsModels.insert(newsType, model);
+        refresh(newsType, true);
     }
+
+    return model;
 }
 
 void ApiInterface::getInteralLink(const QString &link)
@@ -50,18 +49,72 @@ void ApiInterface::getInteralLink(const QString &link)
     connect(reply, &QNetworkReply::finished, this, &ApiInterface::onInternalLinkRequestFinished);
 }
 
+void ApiInterface::refresh(quint8 newsType, bool complete)
+{
+    NewsModel *model = m_newsModels.value(newsType, nullptr);
+
+    if (model == nullptr) {
+        model = new NewsModel(this);
+        model->setNewsType(newsType);
+        m_newsModels.insert(newsType, model);
+    }
+
+    model->setLoading(true);
+
+    if (model->newStoriesCountLink().isEmpty() || complete) {
+        getNews(newsType);
+    } else {
+        getNewStoriesCount(model);
+    }
+}
+
 void ApiInterface::setActiveRegions(const QList<int> &regions)
 {
     m_activeRegions = regions;
 }
 
-void ApiInterface::onHomepageRequestFinished()
+void ApiInterface::onInternalLinkRequestFinished()
 {
 #ifdef QT_DEBUG
-        qDebug() << QStringLiteral("HOMEPAGE");
+        qDebug() << QStringLiteral("INTERNAL LINK");
 #endif
 
     const QJsonDocument doc = parseJson(getReplyData(qobject_cast<QNetworkReply *>(sender())));
+
+    if (doc.isEmpty())
+        return;
+
+    auto *news = parseNews(doc.object());
+
+    if (news != nullptr)
+        emit internalLinkAvailable(news);
+}
+
+void ApiInterface::onNewsRequestFinished()
+{
+#ifdef QT_DEBUG
+        qDebug() << QStringLiteral("NEWS");
+#endif
+
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+
+    if (reply == nullptr)
+        return;
+
+    quint8 newsType = reply->property("news_type").toInt();
+    NewsModel *model = m_newsModels.value(newsType, nullptr);
+
+    if (model == nullptr)
+        return;
+
+    // parse data
+    const QByteArray data = getReplyData(reply);
+
+#ifdef QT_DEBUG
+        //qDebug() << data;
+#endif
+
+    const QJsonDocument doc = parseJson(data);
 
     if (doc.isEmpty())
         return;
@@ -90,65 +143,43 @@ void ApiInterface::onHomepageRequestFinished()
         list.append(news);
     }
 
-    // additional data
-    m_newStoriesCountLink = doc.object().value(QStringLiteral("newStoriesCountLink")).toString().remove(QStringLiteral(HAFENSCHAU_API_URL));
-
-    m_newsModel->setNews(list);
-}
-
-void ApiInterface::onInternalLinkRequestFinished()
-{
-#ifdef QT_DEBUG
-        qDebug() << QStringLiteral("INTERNAL LINK");
-#endif
-
-    const QJsonDocument doc = parseJson(getReplyData(qobject_cast<QNetworkReply *>(sender())));
-
-    if (doc.isEmpty())
-        return;
-
-    auto *news = parseNews(doc.object());
-
-    if (news != nullptr)
-        emit internalLinkAvailable(news);
+    model->setNewStoriesCountLink(doc.object().value(QStringLiteral("newStoriesCountLink")).toString().remove(HAFENSCHAU_API_URL));
+    model->setNews(list);
 }
 
 void ApiInterface::onNewStoriesCountRequestFinished()
 {
-    const QJsonDocument doc = parseJson(getReplyData(qobject_cast<QNetworkReply *>(sender())));
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
 
-    if (doc.isEmpty())
+    QJsonParseError error;
+
+    const QJsonDocument doc = parseJson(getReplyData(reply));
+
+    if (error.error) {
+        reply->deleteLater();
         return;
+    }
 
-    if (newNewsAvailable(doc.object()))
-        getHomepage();
+    const quint8 newsType = reply->property("news_type").toInt();
+
+    if (newNewsAvailable(doc.object())) {
+        getNews(newsType);
+    } else {
+        m_newsModels.value(newsType)->setLoading(false);
+    }
+
+    reply->deleteLater();
 }
 
-void ApiInterface::onUpdateCheckRequestFinished()
+QString ApiInterface::activeRegionsAsString() const
 {
-    auto *reply = qobject_cast<QNetworkReply *>(sender());
+    QStringList list;
 
-    if (reply == nullptr)
-        return;
+    for (auto region : m_activeRegions) {
+        list.append(QString::number(region));
+    }
 
-    const QString url = reply->url().toString();
-
-    const QByteArray data = getReplyData(reply);
-
-    if (data != "true")
-        return;
-
-    updateNews(url.split("~").first() + QStringLiteral(".json"));
-}
-
-void ApiInterface::onUpdateNewsRequestFinished()
-{
-    const QJsonDocument doc = parseJson(getReplyData(qobject_cast<QNetworkReply *>(sender())));
-
-    if (doc.isEmpty())
-        return;
-
-    m_newsModel->updateNews(parseNews(doc.object()));
+    return list.join(QStringLiteral(","));
 }
 
 QByteArray ApiInterface::getReplyData(QNetworkReply *reply)
@@ -157,7 +188,7 @@ QByteArray ApiInterface::getReplyData(QNetworkReply *reply)
         return QByteArray();
 
 #ifdef QT_DEBUG
-        qDebug() << reply->url();
+    qDebug() << reply->url();
 #endif
 
     if (reply->error()) {
@@ -183,7 +214,7 @@ QNetworkRequest ApiInterface::getRequest(const QString &endpoint)
     if (endpoint.startsWith("http"))
         request.setUrl(endpoint);
     else
-        request.setUrl(QStringLiteral(HAFENSCHAU_API_URL) + endpoint);
+        request.setUrl(HAFENSCHAU_API_URL + endpoint);
 
 
     request.setRawHeader("Cache-Control", "no-cache");
@@ -246,29 +277,60 @@ QByteArray ApiInterface::gunzip(const QByteArray &data)
     return result;
 }
 
-void ApiInterface::checkForNewsUpdate(const QString &url)
+void ApiInterface::getNews(quint8 newsType)
 {
-    QNetworkReply *reply = m_manager->get(getRequest(url));
-    connect(reply, &QNetworkReply::finished, this, &ApiInterface::onUpdateCheckRequestFinished);
-}
+    QString url = HAFENSCHAU_API_URL + HAFENSCHAU_API_ENDPOINT_NEWS;
 
-void ApiInterface::getHomepage()
-{
-    QNetworkReply *reply = m_manager->get(getRequest(HAFENSCHAU_API_ENDPOINT_HOMEPAGE));
-    connect(reply, &QNetworkReply::finished, this, &ApiInterface::onHomepageRequestFinished);
-}
+#ifdef QT_DEBUG
+    qDebug() << newsType;
+#endif
 
-void ApiInterface::getNewsUpdates()
-{
-    const QList<News *> newsList = m_newsModel->news();
-    for (const News *news : newsList) {
-        checkForNewsUpdate(news->updateCheckUrl());
+    switch (newsType) {
+    case NewsModel::Ausland:
+        url.append(QStringLiteral("?ressort=ausland"));
+        break;
+
+    case NewsModel::Homepage:
+        url = HAFENSCHAU_API_ENDPOINT_HOMEPAGE;
+        break;
+
+    case NewsModel::Inland:
+        url.append(QStringLiteral("?ressort=inland"));
+        break;
+
+    case NewsModel::Investigativ:
+        url.append(QStringLiteral("?ressort=investigativ"));
+        break;
+
+    case NewsModel::Regional:
+        url.append(QStringLiteral("?regions=") + activeRegionsAsString());
+        break;
+
+    case NewsModel::Sport:
+        url.append(QStringLiteral("?ressort=sport"));
+        break;
+
+    case NewsModel::Video:
+        url.append(QStringLiteral("?ressort=video"));
+        break;
+
+    case NewsModel::Wirtschaft:
+        url.append(QStringLiteral("?ressort=wirtschaft"));
+        break;
+
+    default:
+        return;
     }
+
+    QNetworkReply *reply = m_manager->get(getRequest(url));
+    reply->setProperty("news_type", newsType);
+    connect(reply, &QNetworkReply::finished, this, &ApiInterface::onNewsRequestFinished);
 }
 
-void ApiInterface::getNewStoriesCount()
+void ApiInterface::getNewStoriesCount(NewsModel *model)
 {
-    QNetworkReply *reply = m_manager->get(getRequest(m_newStoriesCountLink));
+    QNetworkReply *reply = m_manager->get(getRequest(model->newStoriesCountLink()));
+    reply->setProperty("news_type", model->newsType());
     connect(reply, &QNetworkReply::finished, this, &ApiInterface::onNewStoriesCountRequestFinished);
 }
 
@@ -339,11 +401,17 @@ News *ApiInterface::parseNews(const QJsonObject &obj)
                            .value(QStringLiteral("videowebm")).toObject()
                            .value(QStringLiteral("imageurl")).toString());
 
+    news->setDetails(obj.value(QStringLiteral("details")).toString());
+
     const QString type = obj.value(QStringLiteral("type")).toString();
 
-    if (type == QStringLiteral("story")) {
+    if (type == QLatin1String("story")) {
         news->setNewsType(News::Story);
-    } else if (type == QStringLiteral("webview")) {
+    } else if (type == QLatin1String("video")) {
+        news->setNewsType(News::Video);
+        news->setStream(obj.value(QStringLiteral("streams")).toObject()
+                           .value(QStringLiteral("adaptivestreaming")).toString());
+    } else if (type == QLatin1String("webview")) {
         news->setNewsType(News::WebView);
         news->setDetailsWeb(obj.value(QStringLiteral("detailsweb")).toString());
     }
@@ -546,10 +614,4 @@ bool ApiInterface::newNewsAvailable(const QJsonObject &obj)
     }
 
     return false;
-}
-
-void ApiInterface::updateNews(const QString &url)
-{
-    QNetworkReply *reply = m_manager->get(getRequest(url));
-    connect(reply, &QNetworkReply::finished, this, &ApiInterface::onUpdateNewsRequestFinished);
 }

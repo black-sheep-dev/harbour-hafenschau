@@ -4,7 +4,8 @@ import Sailfish.Silica 1.0
 import org.nubecula.harbour.hafenschau 1.0
 
 Page {
-    property NewsModel newsModel
+    property string ressortTitle
+    property NewsModel ressortModel
 
     id: page
 
@@ -12,13 +13,13 @@ Page {
 
     SilicaFlickable {
         PullDownMenu {
-            MenuItem {
-                text: qsTr("Settings")
-                onClicked: pageStack.push(Qt.resolvedUrl("settings/SettingsPage.qml"))
-            }
+            busy: ressortModel.loading
             MenuItem {
                 text: qsTr("Refresh")
-                onClicked: HafenschauProvider.refresh()
+                onClicked: {
+                    console.log(ressortModel.newsType)
+                    HafenschauProvider.refresh(ressortModel.newsType)
+                }
             }
             MenuItem {
                 text: listView.showSearch ? qsTr("Hide search") : qsTr("Search")
@@ -33,13 +34,6 @@ Page {
             }
         }
 
-        PushUpMenu {
-            MenuItem {
-                text: qsTr("Regional News")
-                onClicked: pageStack.push(Qt.resolvedUrl("NewsListPage.qml"), { newsModel: HafenschauProvider.regionalNewsModel() })
-            }
-        }
-
         anchors.fill: parent
 
         Column {
@@ -47,7 +41,7 @@ Page {
             width: parent.width
 
             PageHeader {
-                title: qsTr("Top News")
+                title: page.ressortTitle
             }
 
             SearchField {
@@ -90,7 +84,7 @@ Page {
 
             model: NewsSortFilterModel {
                 id: filterModel
-                sourceModel: newsModel
+                sourceModel: ressortModel
             }
 
             delegate: ListItem {
@@ -129,7 +123,12 @@ Page {
                     spacing: Theme.paddingSmall
 
                     Label {
-                        text: topline
+                        text: {
+                            if (model.newsType === News.Video)
+                                return model.date.toLocaleString(Qt.locale())
+
+                            return topline
+                        }
 
                         x: Theme.paddingMedium
                         width: parent.width - 2*x
@@ -148,7 +147,7 @@ Page {
                         color: Theme.highlightColor
                     }
                     Label {
-                        text: first_sentence
+                        text: firstSentence
 
                         x: Theme.paddingMedium
                         width: parent.width - 2*x
@@ -167,15 +166,30 @@ Page {
                 }
 
                 onClicked: {
-                    if (news_type === News.WebView) {
-                        pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: HafenschauProvider.newsModel().newsAt(row).detailsWeb })
+                    if (model.newsType === News.WebView) {
+                        pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: model.detailsWeb })
+                    } else if (model.newsType === News.Video) {
+                        pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {url: model.stream})
                     } else {
-                        pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {news: HafenschauProvider.newsModel().newsAt(row)})
+                        if (model.hasContent)
+                            pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {news: ressortModel.newsAt(row)})
+                        else
+                            HafenschauProvider.getInternalLink(model.details)
                     }
                 }
             }
+
+            ViewPlaceholder {
+                text: qsTr("No news available")
+            }
+
             VerticalScrollDecorator {}
         }
+    }
+
+    Connections {
+        target: HafenschauProvider
+        onInternalLinkAvailable: pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), { news: news })
     }
 
     onStatusChanged: {

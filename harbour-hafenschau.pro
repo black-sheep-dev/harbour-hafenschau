@@ -57,6 +57,7 @@ DISTFILES += qml/harbour-hafenschau.qml \
     qml/pages/GalleryPage.qml \
     qml/pages/NewsListPage.qml \
     qml/pages/ReaderPage.qml \
+    qml/pages/RessortListPage.qml \
     qml/pages/StartPage.qml \
     qml/pages/SwipeViewPage.qml \
     qml/pages/VideoPlayerPage.qml \

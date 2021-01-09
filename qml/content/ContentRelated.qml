@@ -108,6 +108,7 @@ BackgroundItem {
                 }
 
                 Separator {
+                    visible: index < (listView.count - 1)
                     id: separatorBottom
                     anchors.bottom: parent.bottom
                     width: parent.width

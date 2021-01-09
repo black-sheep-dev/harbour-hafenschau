@@ -24,6 +24,7 @@ class News : public QObject
     Q_PROPERTY(QString brandingImage READ brandingImage WRITE setBrandingImage NOTIFY brandingImageChanged)
     Q_PROPERTY(bool breakingNews READ breakingNews WRITE setBreakingNews NOTIFY breakingNewsChanged)
     Q_PROPERTY(QDateTime date READ date WRITE setDate NOTIFY dateChanged)
+    Q_PROPERTY(QString details READ details WRITE setDetails NOTIFY detailsChanged)
     Q_PROPERTY(QString detailsWeb READ detailsWeb WRITE setDetailsWeb NOTIFY detailsWebChanged)
     Q_PROPERTY(QString firstSentence READ firstSentence WRITE setFirstSentence NOTIFY firstSentenceChanged)
     Q_PROPERTY(QString image READ image WRITE setImage NOTIFY imageChanged)
@@ -31,6 +32,7 @@ class News : public QObject
     Q_PROPERTY(QString portrait READ portrait WRITE setPortrait NOTIFY portraitChanged)
     Q_PROPERTY(quint8 region READ region WRITE setRegion NOTIFY regionChanged)
     Q_PROPERTY(QString sophoraId READ sophoraId WRITE setSophoraId NOTIFY sophoraIdChanged)
+    Q_PROPERTY(QString stream READ stream WRITE setStream NOTIFY streamChanged)
     Q_PROPERTY(QString thumbnail READ thumbnail WRITE setThumbnail NOTIFY thumbnailChanged)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
     Q_PROPERTY(QString topline READ topline WRITE setTopline NOTIFY toplineChanged)
@@ -40,6 +42,7 @@ public:
     enum NewsType {
         Undefined,
         Story,              // story
+        Video,              // video
         WebView             // webview
     };
     Q_ENUM(NewsType)
@@ -72,6 +75,7 @@ public:
     Q_INVOKABLE ContentItem *contentItemAt(int index);
     QList<ContentItem *> contentItems() const;
     Q_INVOKABLE int contentItemsCount() const;
+    Q_INVOKABLE bool hasContent() const;
 
     // developer mode debug data
     QJsonObject debugData() const;
@@ -81,6 +85,7 @@ public:
     QString brandingImage() const;
     bool breakingNews() const;
     QDateTime date() const;
+    QString details() const;
     QString detailsWeb() const;
     QString firstSentence() const;
     QString image() const;
@@ -88,6 +93,7 @@ public:
     QString portrait() const;
     quint8 region() const;
     QString sophoraId() const;
+    QString stream() const;
     QString thumbnail() const;
     QString title() const;
     QString topline() const;
@@ -99,7 +105,8 @@ signals:
     // properties
     void brandingImageChanged(const QString &brandingImage);
     void breakingNewsChanged(bool breakingNews);
-    void dateChanged(const QDateTime &date);
+    void dateChanged(const QDateTime &date); 
+    void detailsChanged(const QString &details);
     void detailsWebChanged(const QString &detailsWeb);
     void firstSentenceChanged(const QString &firstSentence);
     void imageChanged(const QString &image);
@@ -107,6 +114,7 @@ signals:
     void portraitChanged(const QString &portrait);
     void regionChanged(quint8 region);
     void sophoraIdChanged(const QString &sophoraId);
+    void streamChanged(const QString &stream);
     void thumbnailChanged(const QString &thumbnail);
     void titleChanged(const QString &title);
     void toplineChanged(const QString &topline);
@@ -119,6 +127,7 @@ public slots:
     void setBrandingImage(const QString &brandingImage);
     void setBreakingNews(bool breakingNews);
     void setDate(const QDateTime &date);
+    void setDetails(const QString &details);
     void setDetailsWeb(const QString &detailsWeb);
     void setFirstSentence(const QString &firstSentence);
     void setImage(const QString &image);
@@ -126,6 +135,7 @@ public slots:
     void setPortrait(const QString &portrait);
     void setRegion(quint8 region);
     void setSophoraId(const QString &sophoraId);
+    void setStream(const QString &stream);
     void setThumbnail(const QString &thumbnail);
     void setTitle(const QString &title);
     void setTopline(const QString &topline);  
@@ -140,6 +150,7 @@ private:
     QString m_brandingImage;
     bool m_breakingNews{false};
     QDateTime m_date;
+    QString m_details;
     QString m_detailsWeb;
     QString m_firstSentence;
     quint8 m_newsType{Undefined};
@@ -147,6 +158,7 @@ private:
     quint8 m_region{RegionUndefined};
     QString m_thumbnail;
     QString m_sophoraId;
+    QString m_stream;
     QString m_title;
     QString m_topline;
     QString m_image;

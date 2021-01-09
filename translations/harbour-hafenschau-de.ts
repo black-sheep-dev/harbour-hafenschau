@@ -38,10 +38,6 @@
 <context>
     <name>NewsListPage</name>
     <message>
-        <source>Settings</source>
-        <translation>Einstellungen</translation>
-    </message>
-    <message>
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -54,19 +50,15 @@
         <translation></translation>
     </message>
     <message>
-        <source>Top News</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Regional News</source>
-        <translation>Regionalnachrichten</translation>
+        <source>No news available</source>
+        <translation>Keine Nachrichten verfügbar</translation>
     </message>
 </context>
 <context>
     <name>OpenExternalUrlDialog</name>
     <message>
         <source>Open external url?</source>
-        <translation>Externe Adresse öfffnen?</translation>
+        <translation>Externe Adresse öffnen?</translation>
     </message>
     <message>
         <source>Open</source>
@@ -82,6 +74,69 @@
     <message>
         <source>Save news data</source>
         <translation>Daten speichern</translation>
+    </message>
+</context>
+<context>
+    <name>RessortListPage</name>
+    <message>
+        <source>Domestic News</source>
+        <translation>Inland</translation>
+    </message>
+    <message>
+        <source>Browse domestic news</source>
+        <translation>Durchsuche Nachrichten aus dem Inland</translation>
+    </message>
+    <message>
+        <source>Foreign News</source>
+        <translation>Ausland</translation>
+    </message>
+    <message>
+        <source>Browse news from foreign countries</source>
+        <translation>Durchsuche Nachrichten aus dem Ausland</translation>
+    </message>
+    <message>
+        <source>Economic News</source>
+        <translation>Wirtschaft</translation>
+    </message>
+    <message>
+        <source>Browse economic news</source>
+        <translation>Dursuche Nachrichten aus der Wirtschaft</translation>
+    </message>
+    <message>
+        <source>Regional News</source>
+        <translation>Regional</translation>
+    </message>
+    <message>
+        <source>Browse regional news</source>
+        <translation>Dursuche Nachrichten aus der Region</translation>
+    </message>
+    <message>
+        <source>Sport News</source>
+        <translation>Sport</translation>
+    </message>
+    <message>
+        <source>Browse sport news</source>
+        <translation>Durchsuche Nachrichten aus dem Sport</translation>
+    </message>
+    <message>
+        <source>Ressorts</source>
+        <translation>Ressorts</translation>
+    </message>
+    <message>
+        <source>Videos</source>
+        <translation>Videos</translation>
+    </message>
+    <message>
+        <source>Browse videos</source>
+        <translation>Durchsuche Videos</translation>
+    </message>
+    <message>
+        <source>Investigative News</source>
+        <translation>Investigativ</translation>
+    </message>
+    <message>
+        <source>Browse investigative news</source>
+        <translation>Durchsuche investigative Nachrichten</translation>
     </message>
 </context>
 <context>
@@ -160,16 +215,12 @@
         <translation>Aktualisieren</translation>
     </message>
     <message>
-        <source>Hide search</source>
-        <translation>Suche ausblenden</translation>
-    </message>
-    <message>
-        <source>Search</source>
-        <translation>Suchen</translation>
-    </message>
-    <message>
         <source>Top News</source>
-        <translation>Nachrichten</translation>
+        <translation>Aktuelle Nachrichten</translation>
+    </message>
+    <message>
+        <source>All News</source>
+        <translation>Alle Nachrichten</translation>
     </message>
 </context>
 <context>

@@ -27,7 +27,7 @@ public:
     Q_INVOKABLE void getInternalLink(const QString &link);
     Q_INVOKABLE void initialize();
     Q_INVOKABLE bool isInternalLink(const QString &link) const;
-    Q_INVOKABLE NewsModel *newsModel();
+    Q_INVOKABLE NewsModel *newsModel(quint8 newsType = NewsModel::Homepage);
     Q_INVOKABLE RegionsModel *regionsModel();
     Q_INVOKABLE void saveSettings();
     Q_INVOKABLE void saveNews(News *news);
@@ -42,7 +42,8 @@ signals:
     void developerOptionsChanged(quint16 options);
 
 public slots:
-    Q_INVOKABLE void refresh();
+    Q_INVOKABLE void refresh(bool complete = false);
+    Q_INVOKABLE void refresh(quint8 newsType, bool complete = false);
 
     // properties
     void setDeveloperOptions(quint16 options);

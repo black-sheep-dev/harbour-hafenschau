@@ -1,12 +1,12 @@
 #ifndef APIINTERFACE_H
 #define APIINTERFACE_H
 
-#define     HAFENSCHAU_API_URL                          "https://www.tagesschau.de/api2/"
-#define     HAFENSCHAU_API_ENDPOINT_REGIONAL_NEWS       "news/"
-#define     HAFENSCHAU_API_ENDPOINT_HOMEPAGE            "homepage/"
-#define     HAFENSCHAU_API_ENDPOINT_INDEX_FEED_COUNT    "https://www.tagesschau.de/api2/indexfeedcount"
-
 #include <QObject>
+
+static const QString HAFENSCHAU_API_URL                         = QStringLiteral("https://www.tagesschau.de/api2/");
+static const QString HAFENSCHAU_API_ENDPOINT_NEWS               = QStringLiteral("news/");
+static const QString HAFENSCHAU_API_ENDPOINT_HOMEPAGE           = QStringLiteral("homepage/");
+static const QString HAFENSCHAU_API_ENDPOINT_INDEX_FEED_COUNT   = QStringLiteral("https://www.tagesschau.de/api2/indexfeedcount");
 
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
@@ -26,7 +26,7 @@ public:
     void enableDeveloperMode(bool enable = true);
 
     QList<int> activeRegions() const;
-    NewsModel *newsModel();
+    NewsModel *newsModel(quint8 newsType = NewsModel::Homepage);
 
 signals:
     void internalLinkAvailable(News *news);
@@ -34,26 +34,26 @@ signals:
     void regionalNewsAvailable(const QList<News *> &news);
 
 public slots:
-    void refresh();
     void getInteralLink(const QString &link);
+    void refresh(quint8 newsType, bool complete = false);
     void setActiveRegions(const QList<int> &regions);
 
 private slots:
-    void onHomepageRequestFinished();
     void onInternalLinkRequestFinished();
+    void onNewsRequestFinished();
     void onNewStoriesCountRequestFinished();
-    void onUpdateCheckRequestFinished();
-    void onUpdateNewsRequestFinished();
 
 private:
+    QString activeRegionsAsString() const;
     QByteArray getReplyData(QNetworkReply *reply);
     QNetworkRequest getRequest(const QString &endpoint = QString());
     QByteArray gunzip(const QByteArray &data);
 
-    void checkForNewsUpdate(const QString &url);
-    void getHomepage();
-    void getNewsUpdates();
-    void getNewStoriesCount();
+    // API helper
+    void getNews(quint8 newsType);
+    void getNewStoriesCount(NewsModel *model);
+
+    // parsing
     QJsonDocument parseJson(const QByteArray &data);
     News *parseNews(const QJsonObject &obj);
     ContentItemAudio *parseContentItemAudio(const QJsonObject &obj);
@@ -63,14 +63,12 @@ private:
     ContentItemSocial *parseContentItemSocial(const QJsonObject &obj);
     ContentItemVideo *parseContentItemVideo(const QJsonObject &obj);
     bool newNewsAvailable(const QJsonObject &obj);
-    void updateNews(const QString &url);
+
 
     QList<int> m_activeRegions;
     bool m_developerMode{false};
     QNetworkAccessManager *m_manager;
-    NewsModel *m_newsModel{nullptr};
-    QString m_newStoriesCountLink;
-
+    QHash<quint8, NewsModel *> m_newsModels;
 };
 
 #endif // APIINTERFACE_H

@@ -8,170 +8,114 @@ Page {
 
     allowedOrientations: Orientation.All
 
-    SilicaFlickable {
+    SilicaListView {
         PullDownMenu {
             MenuItem {
                 text: qsTr("Settings")
                 onClicked: pageStack.push(Qt.resolvedUrl("settings/SettingsPage.qml"))
             }
             MenuItem {
+                text: qsTr("All News")
+                onClicked: pageStack.push(Qt.resolvedUrl("RessortListPage.qml"))
+            }
+            MenuItem {
                 text: qsTr("Refresh")
                 onClicked: HafenschauProvider.refresh()
             }
-            MenuItem {
-                text: listView.showSearch ? qsTr("Hide search") : qsTr("Search")
-                onClicked: {
-                    listView.showSearch = !listView.showSearch
-
-                    if (!listView.showSearch) {
-                        searchField.focus = false
-                        searchField.text = ""
-                    }
-                }
-            }
         }
+
+        id: listView
 
         anchors.fill: parent
 
-        Column {
-            id: header
-            width: parent.width
+        header: PageHeader {
+            title: qsTr("Top News")
+        }
 
-            PageHeader {
-                title: qsTr("Top News")
-            }
+        model: NewsSortFilterModel {
+            id: filterModel
+            sourceModel: HafenschauProvider.newsModel()
+        }
 
-            SearchField {
-                id: searchField
-                width: parent.width
-                height: listView.showSearch ? implicitHeight : 0
-                opacity: listView.showSearch ? 1 : 0
-                onTextChanged: {
-                    filterModel.setFilterFixedString(text)
-                }
+        delegate: ListItem {
+            id: delegate
 
-                EnterKey.onClicked: searchField.focus = false
+            contentHeight: contentRow.height + separatorBottom.height
 
-                Connections {
-                    target: listView
-                    onShowSearchChanged: {
-                        searchField.forceActiveFocus()
+            Row {
+                id: contentRow
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2*x
+                spacing: Theme.paddingSmall
+
+                Image {
+                    id: thumbnailImage
+
+                    width: Theme.itemSizeExtraLarge
+                    height: Theme.itemSizeExtraLarge * 1.4
+
+                    fillMode: Image.PreserveAspectCrop
+
+                    source: thumbnail.length > 0 ? thumbnail : "qrc:/images/dummy_image"
+                    cache: true
+                    smooth: true
+
+                    BusyIndicator {
+                        size: BusyIndicatorSize.Medium
+                        anchors.centerIn: thumbnailImage
+                        running: thumbnailImage.status != Image.Ready
                     }
                 }
 
-                Behavior on height {
-                    NumberAnimation { duration: 300 }
-                }
-                Behavior on opacity {
-                    NumberAnimation { duration: 300 }
-                }
-            }
-        }
-
-        SilicaListView {
-            property bool showSearch: false
-
-            id: listView
-
-            width: parent.width
-            anchors.top: header.bottom
-            anchors.bottom: parent.bottom
-
-            clip: true
-
-            model: NewsSortFilterModel {
-                id: filterModel
-                sourceModel: HafenschauProvider.newsModel()
-            }
-
-            delegate: ListItem {
-                id: delegate
-
-                contentHeight: contentRow.height + separatorBottom.height
-
-                Row {
-                    id: contentRow
-                    x: Theme.horizontalPageMargin
-                    width: parent.width - 2*x
+                Column {
+                    id: column
+                    width: parent.width - thumbnailImage.width - parent.spacing
                     spacing: Theme.paddingSmall
 
-                    Image {
-                        id: thumbnailImage
+                    Label {
+                        text: topline
 
-                        width: Theme.itemSizeExtraLarge
-                        height: Theme.itemSizeExtraLarge * 1.4
+                        width: parent.width
+                        wrapMode: Text.WordWrap
 
-                        fillMode: Image.PreserveAspectCrop
-
-                        source: thumbnail.length > 0 ? thumbnail : "qrc:/images/dummy_image"
-                        cache: true
-                        smooth: true
-
-                        BusyIndicator {
-                            size: BusyIndicatorSize.Medium
-                            anchors.centerIn: thumbnailImage
-                            running: thumbnailImage.status != Image.Ready
-                        }
+                        font.pixelSize: Theme.fontSizeExtraSmall
                     }
+                    Label {
+                        text: title
 
-                    Column {
-                        id: column
-                        width: parent.width - thumbnailImage.width - parent.spacing
-                        spacing: Theme.paddingSmall
+                        width: parent.width
+                        wrapMode: Text.WordWrap
 
-                        Label {
-                            text: topline
-
-                            width: parent.width
-                            wrapMode: Text.WordWrap
-
-                            font.pixelSize: Theme.fontSizeExtraSmall
-                        }
-                        Label {
-                            text: title
-
-                            width: parent.width
-                            wrapMode: Text.WordWrap
-
-                            font.pixelSize: Theme.fontSizeSmall
-                            color: Theme.highlightColor
-                        }
-                        Label {
-                            text: first_sentence
-                            width: parent.width
-                            wrapMode: Text.WordWrap
-
-                            font.pixelSize: Theme.fontSizeExtraSmall
-                        }
+                        font.pixelSize: Theme.fontSizeSmall
+                        color: Theme.highlightColor
                     }
-                }
+                    Label {
+                        text: firstSentence
+                        width: parent.width
+                        wrapMode: Text.WordWrap
 
-                Separator {
-                    id: separatorBottom
-                    visible: index < listView.count
-                    x: Theme.horizontalPageMargin
-                    width: parent.width - 2*x
-                    color: Theme.primaryColor
-                }
-
-                onClicked: {
-                    if (news_type === News.WebView) {
-                        //pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: HafenschauProvider.newsModel().newsAt(row).detailsWeb })
-                        pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), {url: HafenschauProvider.newsModel().newsAt(row).detailsWeb })
-                    } else {
-                        pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {news: HafenschauProvider.newsModel().newsAt(row)})
+                        font.pixelSize: Theme.fontSizeExtraSmall
                     }
                 }
             }
-            VerticalScrollDecorator {}
-        }
-    }
 
-    onStatusChanged: {
-        if (status === PageStatus.Deactivating) {
-            searchField.focus = false
-            searchField.text = ""
-            listView.showSearch = false
+            Separator {
+                id: separatorBottom
+                visible: index < listView.count
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2*x
+                color: Theme.primaryColor
+            }
+
+            onClicked: {
+                if (newsType === News.WebView) {
+                    //pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: HafenschauProvider.newsModel().newsAt(row).detailsWeb })
+                    pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), {url: model.detailsWeb })
+                } else {
+                    pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {news: HafenschauProvider.newsModel().newsAt(row)})
+                }
+            }
         }
+        VerticalScrollDecorator {}
     }
 }
