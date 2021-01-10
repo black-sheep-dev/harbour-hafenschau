@@ -180,7 +180,14 @@ Page {
             }
 
             ViewPlaceholder {
+                enabled: listView.count === 0
                 text: qsTr("No news available")
+                hintText: {
+                    if (ressortModel.newsType === NewsModel.Regional)
+                        return qsTr("Please select some regions in settings first!")
+                    else
+                        return qsTr("Please refresh or check internet connection!")
+                }
             }
 
             VerticalScrollDecorator {}

@@ -12,6 +12,8 @@
 
 #include <zlib.h>
 
+#include "api_keys.h"
+
 ApiInterface::ApiInterface(QObject *parent) :
     QObject(parent),
     m_manager(new QNetworkAccessManager(this))
@@ -122,7 +124,7 @@ void ApiInterface::onNewsRequestFinished()
     QList<News *> list;
 
     // news
-    const QJsonArray newsArray = doc.object().value(QStringLiteral("news")).toArray();
+    const QJsonArray newsArray = doc.object().value(HAFENSCHAU_API_KEY_NEWS).toArray();
     for (const auto &n : newsArray) {
         auto *news = parseNews(n.toObject());
 
@@ -133,7 +135,7 @@ void ApiInterface::onNewsRequestFinished()
     }
 
     // regional news
-    const QJsonArray regionalNewsArray = doc.object().value(QStringLiteral("regional")).toArray();
+    const QJsonArray regionalNewsArray = doc.object().value(HAFENSCHAU_API_KEY_REGIONAL).toArray();
     for (const auto &r : regionalNewsArray) {
         auto *news = parseNews(r.toObject());
 
@@ -143,7 +145,7 @@ void ApiInterface::onNewsRequestFinished()
         list.append(news);
     }
 
-    model->setNewStoriesCountLink(doc.object().value(QStringLiteral("newStoriesCountLink")).toString().remove(HAFENSCHAU_API_URL));
+    model->setNewStoriesCountLink(doc.object().value(HAFENSCHAU_API_KEY_NEW_STORIES_COUNT_LINK).toString().remove(HAFENSCHAU_API_URL));
     model->setNews(list);
 }
 
@@ -211,7 +213,7 @@ QNetworkRequest ApiInterface::getRequest(const QString &endpoint)
 {
     QNetworkRequest request;
 
-    if (endpoint.startsWith("http"))
+    if (endpoint.startsWith(QStringLiteral("http")))
         request.setUrl(endpoint);
     else
         request.setUrl(HAFENSCHAU_API_URL + endpoint);
@@ -303,6 +305,11 @@ void ApiInterface::getNews(quint8 newsType)
         break;
 
     case NewsModel::Regional:
+        if (m_activeRegions.isEmpty()) {
+            m_newsModels.value(NewsModel::Regional)->setLoading(false);
+            return;
+        }
+
         url.append(QStringLiteral("?regions=") + activeRegionsAsString());
         break;
 
@@ -354,12 +361,12 @@ QJsonDocument ApiInterface::parseJson(const QByteArray &data)
 News *ApiInterface::parseNews(const QJsonObject &obj)
 {
     // region filter
-    const QJsonArray regionIds = obj.value(QStringLiteral("regionIds")).toArray();
+    const QJsonArray regionIds = obj.value(HAFENSCHAU_API_KEY_REGION_IDS).toArray();
 
     quint8 region{0};
 
     if (regionIds.isEmpty()) {
-        region = quint8(obj.value(QStringLiteral("regionId")).toInt());
+        region = quint8(obj.value(HAFENSCHAU_API_KEY_REGION_ID).toInt());
         if (region != 0 && !m_activeRegions.contains(region))
             return nullptr;
     } else {
@@ -379,79 +386,79 @@ News *ApiInterface::parseNews(const QJsonObject &obj)
     if (m_developerMode)
         news->setDebugData(obj);
 
-    news->setBreakingNews(obj.value(QStringLiteral("breakingNews")).toBool());
-    news->setDate(QDateTime::fromString(obj.value(QStringLiteral("date")).toString(), Qt::ISODate));
-    news->setFirstSentence(obj.value(QStringLiteral("firstSentence")).toString());
+    news->setBreakingNews(obj.value(HAFENSCHAU_API_KEY_BREACKING_NEWS).toBool());
+    news->setDate(QDateTime::fromString(obj.value(HAFENSCHAU_API_KEY_DATE).toString(), Qt::ISODate));
+    news->setFirstSentence(obj.value(HAFENSCHAU_API_KEY_FIRST_SENTENCE).toString());
     news->setRegion(region);
-    news->setTitle(obj.value(QStringLiteral("title")).toString());
-    news->setTopline(obj.value(QStringLiteral("topline")).toString());
+    news->setTitle(obj.value(HAFENSCHAU_API_KEY_TITLE).toString());
+    news->setTopline(obj.value(HAFENSCHAU_API_KEY_TOPLINE).toString());
 
-    const QJsonObject teaserImage = obj.value(QStringLiteral("teaserImage")).toObject();
+    const QJsonObject teaserImage = obj.value(HAFENSCHAU_API_KEY_TEASER_IMAGE).toObject();
 
-    news->setThumbnail(teaserImage.value(QStringLiteral("portraetgross8x9")).toObject()
-                       .value(QStringLiteral("imageurl")).toString());
+    news->setThumbnail(teaserImage.value(HAFENSCHAU_API_KEY_PORTRAIT_GROSS_8X9).toObject()
+                       .value(HAFENSCHAU_API_KEY_IMAGE_URL).toString());
 
-    news->setImage(teaserImage.value(QStringLiteral("videowebl")).toObject()
-                   .value(QStringLiteral("imageurl")).toString());
+    news->setImage(teaserImage.value(HAFENSCHAU_API_KEY_VIDEO_WEB_L).toObject()
+                   .value(HAFENSCHAU_API_KEY_IMAGE_URL).toString());
 
-    news->setPortrait(teaserImage.value(QStringLiteral("portraetgrossplus8x9")).toObject()
-                      .value(QStringLiteral("imageurl")).toString());
+    news->setPortrait(teaserImage.value(HAFENSCHAU_API_KEY_PORTRAIT_GROSS_PLUS_8X9).toObject()
+                      .value(HAFENSCHAU_API_KEY_IMAGE_URL).toString());
 
-    news->setBrandingImage(obj.value(QStringLiteral("brandingImage")).toObject()
-                           .value(QStringLiteral("videowebm")).toObject()
-                           .value(QStringLiteral("imageurl")).toString());
+    news->setBrandingImage(obj.value(HAFENSCHAU_API_KEY_BRANDING_IMAGE).toObject()
+                           .value(HAFENSCHAU_API_KEY_VIDEO_WEB_M).toObject()
+                           .value(HAFENSCHAU_API_KEY_IMAGE_URL).toString());
 
-    news->setDetails(obj.value(QStringLiteral("details")).toString());
+    news->setDetails(obj.value(HAFENSCHAU_API_KEY_DETAILS).toString());
 
-    const QString type = obj.value(QStringLiteral("type")).toString();
+    const QString type = obj.value(HAFENSCHAU_API_KEY_TYPE).toString();
 
-    if (type == QLatin1String("story")) {
+    if (type == HAFENSCHAU_API_KEY_STORY) {
         news->setNewsType(News::Story);
-    } else if (type == QLatin1String("video")) {
+    } else if (type == HAFENSCHAU_API_KEY_VIDEO) {
         news->setNewsType(News::Video);
-        news->setStream(obj.value(QStringLiteral("streams")).toObject()
-                           .value(QStringLiteral("adaptivestreaming")).toString());
-    } else if (type == QLatin1String("webview")) {
+        news->setStream(obj.value(HAFENSCHAU_API_KEY_STREAMS).toObject()
+                           .value(HAFENSCHAU_API_KEY_ADAPTIVE_STREAMING).toString());
+    } else if (type == HAFENSCHAU_API_KEY_WEBVIEW) {
         news->setNewsType(News::WebView);
-        news->setDetailsWeb(obj.value(QStringLiteral("detailsweb")).toString());
+        news->setDetailsWeb(obj.value(HAFENSCHAU_API_KEY_DETAILS_WEB).toString());
     }
 
-    news->setUpdateCheckUrl(obj.value(QStringLiteral("updateCheckUrl")).toString());
+    news->setUpdateCheckUrl(obj.value(HAFENSCHAU_API_KEY_UPDATE_CHECK_URL).toString());
 
 
     // parse content
-    const QJsonArray content = obj.value(QStringLiteral("content")).toArray();
+    const QJsonArray content = obj.value(HAFENSCHAU_API_KEY_CONTENT).toArray();
 
     QList<ContentItem *> items;
 
     for (const QJsonValue &x : content) {
         const QJsonObject &objC = x.toObject();
 
-        const QString contentType = objC.value(QStringLiteral("type")).toString();
+        const QString contentType = objC.value(HAFENSCHAU_API_KEY_TYPE).toString();
 
         ContentItem *item{nullptr};
 
-        if (contentType == QStringLiteral("audio")) {
-            item = parseContentItemAudio(objC.value(QStringLiteral("audio")).toObject());
-        } else if (contentType == QStringLiteral("box")) {
-            item = parseContentItemBox(objC.value(QStringLiteral("box")).toObject());
-        } else if (contentType == QStringLiteral("image_gallery")) {
-            item = parseContentItemGallery(objC.value(QStringLiteral("gallery")).toArray());
-        } else if (contentType == QStringLiteral("headline")) {
+        if (contentType == HAFENSCHAU_API_KEY_AUDIO) {
+            item = parseContentItemAudio(objC.value(HAFENSCHAU_API_KEY_AUDIO).toObject());
+        } else if (contentType == HAFENSCHAU_API_KEY_BOX) {
+            item = parseContentItemBox(objC.value(HAFENSCHAU_API_KEY_BOX).toObject());
+        } else if (contentType == HAFENSCHAU_API_KEY_IMAGE_GALLERY) {
+            item = parseContentItemGallery(objC.value(HAFENSCHAU_API_KEY_GALLERY).toArray());
+        } else if (contentType == HAFENSCHAU_API_KEY_HEADLINE) {
             item = new ContentItem;
             item->setContentType(ContentItem::Headline);
-            const QString headline = objC.value(QStringLiteral("value")).toString().remove(QRegExp("<[^>]*>"));
+            const QString headline = objC.value(HAFENSCHAU_API_KEY_VALUE).toString().remove(QRegExp("<[^>]*>"));
             item->setValue(headline);
-        } else if (contentType == QStringLiteral("related")) {
-            item = parseContentItemRelated(objC.value(QStringLiteral("related")).toArray());
-        } else if (contentType == QStringLiteral("socialmedia")) {
-            item = parseContentItemSocial(objC.value(QStringLiteral("social")).toObject());
-        } else if (contentType == QStringLiteral("text")) {
+        } else if (contentType == HAFENSCHAU_API_KEY_RELATED) {
+            item = parseContentItemRelated(objC.value(HAFENSCHAU_API_KEY_RELATED).toArray());
+        } else if (contentType == HAFENSCHAU_API_KEY_SOCIAL_MEDIA) {
+            item = parseContentItemSocial(objC.value(HAFENSCHAU_API_KEY_SOCIAL).toObject());
+        } else if (contentType == HAFENSCHAU_API_KEY_TEXT) {
             item = new ContentItem;
             item->setContentType(ContentItem::Text);
-            item->setValue(objC.value(QStringLiteral("value")).toString());
-        } else if (contentType == QStringLiteral("video")) {
-            item = parseContentItemVideo(objC.value(QStringLiteral("video")).toObject());
+            item->setValue(objC.value(HAFENSCHAU_API_KEY_VALUE).toString());
+        } else if (contentType == HAFENSCHAU_API_KEY_VIDEO) {
+            item = parseContentItemVideo(objC.value(HAFENSCHAU_API_KEY_VIDEO).toObject());
         }
 
         if (!item)
@@ -470,13 +477,13 @@ ContentItemAudio *ApiInterface::parseContentItemAudio(const QJsonObject &obj)
 {
     auto *audio = new ContentItemAudio;
 
-    audio->setDate(QDateTime::fromString(obj.value(QStringLiteral("date")).toString(), Qt::ISODate));
-    audio->setText(obj.value(QStringLiteral("text")).toString());
-    audio->setTitle(obj.value(QStringLiteral("title")).toString());
-    audio->setImage(obj.value(QStringLiteral("teaserImage")).toObject()
-                    .value(QStringLiteral("videowebl")).toObject()
-                    .value(QStringLiteral("imageurl")).toString());
-    audio->setStream(obj.value(QStringLiteral("stream")).toString());
+    audio->setDate(QDateTime::fromString(obj.value(HAFENSCHAU_API_KEY_DATE).toString(), Qt::ISODate));
+    audio->setText(obj.value(HAFENSCHAU_API_KEY_TEXT).toString());
+    audio->setTitle(obj.value(HAFENSCHAU_API_KEY_TITLE).toString());
+    audio->setImage(obj.value(HAFENSCHAU_API_KEY_TEASER_IMAGE).toObject()
+                    .value(HAFENSCHAU_API_KEY_VIDEO_WEB_L).toObject()
+                    .value(HAFENSCHAU_API_KEY_IMAGE_URL).toString());
+    audio->setStream(obj.value(HAFENSCHAU_API_KEY_STREAM).toString());
 
     return audio;
 }
@@ -484,19 +491,19 @@ ContentItemAudio *ApiInterface::parseContentItemAudio(const QJsonObject &obj)
 ContentItemBox *ApiInterface::parseContentItemBox(const QJsonObject &obj)
 {
     auto *box = new ContentItemBox;
-    box->setCopyright(obj.value(QStringLiteral("copyright")).toString());
+    box->setCopyright(obj.value(HAFENSCHAU_API_KEY_COPYRIGHT).toString());
 
-    QString link = obj.value(QStringLiteral("link")).toString();
+    QString link = obj.value(HAFENSCHAU_API_KEY_LINK).toString();
     box->setLinkInternal(link.contains("type=\"intern\""));
     box->setLink(link.remove("<a href=\"").mid(0, link.indexOf("\"")));
 
-    box->setSubtitle(obj.value(QStringLiteral("subtitle")).toString());
-    box->setText(obj.value(QStringLiteral("text")).toString());
-    box->setTitle(obj.value(QStringLiteral("title")).toString());
+    box->setSubtitle(obj.value(HAFENSCHAU_API_KEY_SUBTITLE).toString());
+    box->setText(obj.value(HAFENSCHAU_API_KEY_TEXT).toString());
+    box->setTitle(obj.value(HAFENSCHAU_API_KEY_TITLE).toString());
 
-    box->setImage(obj.value(QStringLiteral("images")).toObject()
-                  .value(QStringLiteral("videowebl")).toObject()
-                  .value(QStringLiteral("imageurl")).toString());
+    box->setImage(obj.value(HAFENSCHAU_API_KEY_IMAGES).toObject()
+                  .value(HAFENSCHAU_API_KEY_VIDEO_WEB_L).toObject()
+                  .value(HAFENSCHAU_API_KEY_IMAGE_URL).toString());
 
     return box;
 }
@@ -508,10 +515,10 @@ ContentItemGallery *ApiInterface::parseContentItemGallery(const QJsonArray &arr)
         const QJsonObject obj = x.toObject();
 
         auto *item = new GalleryItem;
-        item->setCopyright(obj.value(QStringLiteral("copyright")).toString());
-        item->setTitle(obj.value(QStringLiteral("title")).toString());
-        item->setImage(obj.value(QStringLiteral("videowebl")).toObject()
-                       .value(QStringLiteral("imageurl")).toString());
+        item->setCopyright(obj.value(HAFENSCHAU_API_KEY_COPYRIGHT).toString());
+        item->setTitle(obj.value(HAFENSCHAU_API_KEY_TITLE).toString());
+        item->setImage(obj.value(HAFENSCHAU_API_KEY_VIDEO_WEB_L).toObject()
+                       .value(HAFENSCHAU_API_KEY_IMAGE_URL).toString());
 
         list.append(item);
     }
@@ -530,24 +537,24 @@ ContentItemRelated *ApiInterface::parseContentItemRelated(const QJsonArray &arr)
         const QJsonObject obj = x.toObject();
 
         auto *item = new RelatedItem;
-        item->setDate(QDateTime::fromString(obj.value(QStringLiteral("date")).toString(), Qt::ISODate));
-        item->setTitle(obj.value(QStringLiteral("title")).toString());
-        item->setTopline(obj.value(QStringLiteral("topline")).toString());
-        item->setLink(obj.value(QStringLiteral("details")).toString());
-        item->setSophoraId(obj.value(QStringLiteral("sophoraId")).toString());
-        item->setImage(obj.value(QStringLiteral("teaserImage")).toObject()
-                       .value(QStringLiteral("videowebl")).toObject()
-                       .value(QStringLiteral("imageurl")).toString());
-        item->setStream(obj.value(QStringLiteral("streams")).toObject()
-                        .value(QStringLiteral("adaptivestreaming")).toString());
+        item->setDate(QDateTime::fromString(obj.value(HAFENSCHAU_API_KEY_DATE).toString(), Qt::ISODate));
+        item->setTitle(obj.value(HAFENSCHAU_API_KEY_TITLE).toString());
+        item->setTopline(obj.value(HAFENSCHAU_API_KEY_TOPLINE).toString());
+        item->setLink(obj.value(HAFENSCHAU_API_KEY_DETAILS).toString());
+        item->setSophoraId(obj.value(HAFENSCHAU_API_KEY_SOPHORA_ID).toString());
+        item->setImage(obj.value(HAFENSCHAU_API_KEY_TEASER_IMAGE).toObject()
+                       .value(HAFENSCHAU_API_KEY_VIDEO_WEB_L).toObject()
+                       .value(HAFENSCHAU_API_KEY_IMAGE_URL).toString());
+        item->setStream(obj.value(HAFENSCHAU_API_KEY_STREAMS).toObject()
+                        .value(HAFENSCHAU_API_KEY_ADAPTIVE_STREAMING).toString());
 
-        const QString type = obj.value(QStringLiteral("type")).toString();
+        const QString type = obj.value(HAFENSCHAU_API_KEY_TYPE).toString();
 
-        if (type == QStringLiteral("video")) {
+        if (type == HAFENSCHAU_API_KEY_VIDEO) {
             item->setRelatedType(RelatedItem::RelatedVideo);
-        } else if (type == QStringLiteral("webview")) {
+        } else if (type == HAFENSCHAU_API_KEY_WEBVIEW) {
             item->setRelatedType(RelatedItem::RelatedWebView);
-            item->setLink(obj.value(QStringLiteral("detailsweb")).toString());
+            item->setLink(obj.value(HAFENSCHAU_API_KEY_DETAILS_WEB).toString());
         } else {
             item->setRelatedType(RelatedItem::RelatedStory);
         }
@@ -565,21 +572,21 @@ ContentItemSocial *ApiInterface::parseContentItemSocial(const QJsonObject &obj)
 {
     auto *social = new ContentItemSocial;
 
-    social->setAccount(obj.value(QStringLiteral("account")).toString());
-    social->setAvatar(obj.value(QStringLiteral("avatar")).toString());
-    social->setDate(QDateTime::fromString(obj.value(QStringLiteral("date")).toString(), Qt::ISODate));
-    social->setShorttext(obj.value(QStringLiteral("shorttext")).toString());
-    social->setTitle(obj.value(QStringLiteral("title")).toString());
-    social->setUrl(obj.value(QStringLiteral("url")).toString());
-    social->setUsername(obj.value(QStringLiteral("username")).toString());
+    social->setAccount(obj.value(HAFENSCHAU_API_KEY_ACCOUNT).toString());
+    social->setAvatar(obj.value(HAFENSCHAU_API_KEY_AVATAR).toString());
+    social->setDate(QDateTime::fromString(obj.value(HAFENSCHAU_API_KEY_DATE).toString(), Qt::ISODate));
+    social->setShorttext(obj.value(HAFENSCHAU_API_KEY_SHORT_TEXT).toString());
+    social->setTitle(obj.value(HAFENSCHAU_API_KEY_TITLE).toString());
+    social->setUrl(obj.value(HAFENSCHAU_API_KEY_URL).toString());
+    social->setUsername(obj.value(HAFENSCHAU_API_KEY_USERNAME).toString());
 
-    social->setImage(obj.value(QStringLiteral("images")).toObject()
-                     .value(QStringLiteral("mittel16x9")).toObject()
-                     .value(QStringLiteral("imageurl")).toString());
+    social->setImage(obj.value(HAFENSCHAU_API_KEY_IMAGES).toObject()
+                     .value(HAFENSCHAU_API_KEY_MITTEL_16X9).toObject()
+                     .value(HAFENSCHAU_API_KEY_IMAGE_URL).toString());
 
-    const QString type = obj.value(QStringLiteral("type")).toString();
+    const QString type = obj.value(HAFENSCHAU_API_KEY_TYPE).toString();
 
-    if (type == QStringLiteral("twitter")) {
+    if (type == HAFENSCHAU_API_KEY_TWITTER) {
         social->setSocialType(ContentItemSocial::Twitter);
     } else {
         social->setSocialType(ContentItemSocial::Unkown);
@@ -591,21 +598,21 @@ ContentItemSocial *ApiInterface::parseContentItemSocial(const QJsonObject &obj)
 ContentItemVideo *ApiInterface::parseContentItemVideo(const QJsonObject &obj)
 {
     auto *video = new ContentItemVideo;
-    video->setCopyright(obj.value(QStringLiteral("copyright")).toString());
-    video->setDate(QDateTime::fromString(obj.value(QStringLiteral("date")).toString(), Qt::ISODate));
-    video->setTitle(obj.value(QStringLiteral("title")).toString());
-    video->setImage(obj.value(QStringLiteral("teaserImage")).toObject()
-                  .value(QStringLiteral("videowebl")).toObject()
-                  .value(QStringLiteral("imageurl")).toString());
-    video->setStream(obj.value(QStringLiteral("streams")).toObject()
-                     .value(QStringLiteral("adaptivestreaming")).toString());
+    video->setCopyright(obj.value(HAFENSCHAU_API_KEY_COPYRIGHT).toString());
+    video->setDate(QDateTime::fromString(obj.value(HAFENSCHAU_API_KEY_DATE).toString(), Qt::ISODate));
+    video->setTitle(obj.value(HAFENSCHAU_API_KEY_TITLE).toString());
+    video->setImage(obj.value(HAFENSCHAU_API_KEY_TEASER_IMAGE).toObject()
+                  .value(HAFENSCHAU_API_KEY_VIDEO_WEB_L).toObject()
+                  .value(HAFENSCHAU_API_KEY_IMAGE_URL).toString());
+    video->setStream(obj.value(HAFENSCHAU_API_KEY_STREAMS).toObject()
+                     .value(HAFENSCHAU_API_KEY_ADAPTIVE_STREAMING).toString());
 
     return video;
 }
 
 bool ApiInterface::newNewsAvailable(const QJsonObject &obj)
 {
-    if (obj.value(QStringLiteral("tagesschau")).toInt() > 0)
+    if (obj.value(HAFENSCHAU_API_KEY_TAGESSCHAU).toInt() > 0)
         return true;
 
     for (const int region : m_activeRegions) {

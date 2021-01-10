@@ -10,7 +10,7 @@
 #   - translation filenames have to be changed
 
 # VERSION
-VERSION = 0.1.0-1
+VERSION = 0.1.1-1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # The name of your application
@@ -85,6 +85,7 @@ CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/harbour-hafenschau-de.ts
 
 HEADERS += \
+    src/api/api_keys.h \
     src/api/apiinterface.h \
     src/content/contentitem.h \
     src/content/contentitemaudio.h \

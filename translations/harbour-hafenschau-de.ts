@@ -53,6 +53,14 @@
         <source>No news available</source>
         <translation>Keine Nachrichten verfügbar</translation>
     </message>
+    <message>
+        <source>Please select some regions in settings first!</source>
+        <translation>Bitte zuerst einige Regionen in den Einstellungen festlegen!</translation>
+    </message>
+    <message>
+        <source>Please refresh or check internet connection!</source>
+        <translation>Bitte aktualisieren oder die Internetverbindung prüfen!</translation>
+    </message>
 </context>
 <context>
     <name>OpenExternalUrlDialog</name>

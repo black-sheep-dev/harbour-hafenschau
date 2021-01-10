@@ -53,6 +53,14 @@
         <source>No news available</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Please select some regions in settings first!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please refresh or check internet connection!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OpenExternalUrlDialog</name>
