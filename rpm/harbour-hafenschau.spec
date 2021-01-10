@@ -9,8 +9,8 @@ Name:       harbour-hafenschau
 # << macros
 
 Summary:    Hafenschau
-Version:    0.1.2
-Release:    1
+Version:    0.1.3
+Release:    2
 Group:      Qt/Qt
 License:    MIT
 URL:        https://github.com/black-sheep-dev/harbour-hafenschau

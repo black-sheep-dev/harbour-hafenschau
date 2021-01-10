@@ -20,7 +20,7 @@ Page {
             }
             MenuItem {
                 text: qsTr("Refresh")
-                onClicked: HafenschauProvider.refresh()
+                onClicked: HafenschauProvider.refresh(NewsModel.Homepage)
             }
         }
 

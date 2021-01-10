@@ -153,14 +153,7 @@ void ApiInterface::onNewStoriesCountRequestFinished()
 {
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
 
-    QJsonParseError error;
-
     const QJsonDocument doc = parseJson(getReplyData(reply));
-
-    if (error.error) {
-        reply->deleteLater();
-        return;
-    }
 
     const quint8 newsType = reply->property("news_type").toInt();
 
