@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<ContentItemAudio>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemAudio");
     qmlRegisterType<ContentItemBox>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemBox");
     qmlRegisterType<ContentItemGallery>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemGallery");
+    qmlRegisterType<ContentItemList>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemList");
     qmlRegisterType<ContentItemRelated>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemRelated");
     qmlRegisterType<ContentItemSocial>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemSocial");
     qmlRegisterType<ContentItemVideo>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemVideo");

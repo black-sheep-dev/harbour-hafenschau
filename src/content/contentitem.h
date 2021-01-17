@@ -18,6 +18,7 @@ public:
         Gallery,            // image_gallery
         Headline,           // headline
         List,               // list
+        Quotation,          // quotation
         Related,            // related
         Social,             // socialmedia
         Text,               // text

@@ -1,3 +1,8 @@
+* Sun Jan 17 2021 Black Sheep <blacksheep@nubecula.org> 0.1.4-1
+- UI improvements
+- Added new content items quotation and link list
+- i486 support (not tested)
+
 * Sun Jan 10 2021 Black Sheep <blacksheep@nubecula.org> 0.1.3-1
 - Fixed refresh mot working on top news page
 

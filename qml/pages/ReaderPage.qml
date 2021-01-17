@@ -167,6 +167,10 @@ Page {
                         component = Qt.createComponent("../content/ContentVideo.qml")
                     } else if (item.contentType === ContentItem.Gallery) {
                         component = Qt.createComponent("../content/ContentGallery.qml")
+                    } else if (item.contentType === ContentItem.List) {
+                        component = Qt.createComponent("../content/ContentList.qml")
+                    } else if (item.contentType === ContentItem.Quotation) {
+                        component = Qt.createComponent("../content/ContentQuotation.qml")
                     } else if (item.contentType === ContentItem.Related) {
                         component = Qt.createComponent("../content/ContentRelated.qml")
                     } else if (item.contentType === ContentItem.Audio) {

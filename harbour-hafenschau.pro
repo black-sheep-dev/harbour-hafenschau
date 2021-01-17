@@ -10,7 +10,7 @@
 #   - translation filenames have to be changed
 
 # VERSION
-VERSION = 0.1.3-2
+VERSION = 0.1.4-1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # The name of your application
@@ -19,7 +19,7 @@ DEFINES += APP_TARGET=\\\"$$TARGET\\\"
 
 QT += multimedia
 
-CONFIG += sailfishapp
+CONFIG += link_pkgconfig sailfishapp
 PKGCONFIG += qt5embedwidget
 
 LIBS += -lz
@@ -30,6 +30,7 @@ SOURCES += src/harbour-hafenschau.cpp \
     src/content/contentitemaudio.cpp \
     src/content/contentitembox.cpp \
     src/content/contentitemgallery.cpp \
+    src/content/contentitemlist.cpp \
     src/content/contentitemrelated.cpp \
     src/content/contentitemsocial.cpp \
     src/content/contentitemvideo.cpp \
@@ -48,6 +49,8 @@ DISTFILES += qml/harbour-hafenschau.qml \
     qml/content/ContentBox.qml \
     qml/content/ContentGallery.qml \
     qml/content/ContentHeadline.qml \
+    qml/content/ContentList.qml \
+    qml/content/ContentQuotation.qml \
     qml/content/ContentRelated.qml \
     qml/content/ContentSocial.qml \
     qml/content/ContentText.qml \
@@ -65,7 +68,7 @@ DISTFILES += qml/harbour-hafenschau.qml \
     qml/pages/settings/SettingsDeveloperPage.qml \
     qml/pages/settings/SettingsPage.qml \
     qml/pages/settings/SettingsRegionsPage.qml \
-    rpm/harbour-hafenschau.changes.in \
+    rpm/harbour-hafenschau.changes \
     rpm/harbour-hafenschau.changes.run.in \
     rpm/harbour-hafenschau.spec \
     rpm/harbour-hafenschau.yaml \
@@ -91,6 +94,7 @@ HEADERS += \
     src/content/contentitemaudio.h \
     src/content/contentitembox.h \
     src/content/contentitemgallery.h \
+    src/content/contentitemlist.h \
     src/content/contentitemrelated.h \
     src/content/contentitemsocial.h \
     src/content/contentitemvideo.h \

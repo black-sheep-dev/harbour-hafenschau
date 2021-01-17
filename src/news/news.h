@@ -11,6 +11,7 @@
 #include "src/content/contentitemaudio.h"
 #include "src/content/contentitembox.h"
 #include "src/content/contentitemgallery.h"
+#include "src/content/contentitemlist.h"
 #include "src/content/contentitemrelated.h"
 #include "src/content/contentitemsocial.h"
 #include "src/content/contentitemvideo.h"

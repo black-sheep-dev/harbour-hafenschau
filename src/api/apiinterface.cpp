@@ -442,6 +442,13 @@ News *ApiInterface::parseNews(const QJsonObject &obj)
             item->setContentType(ContentItem::Headline);
             const QString headline = objC.value(HAFENSCHAU_API_KEY_VALUE).toString().remove(QRegExp("<[^>]*>"));
             item->setValue(headline);
+        } else if (contentType == HAFENSCHAU_API_KEY_LIST) {
+            item = parseContentItemList(objC.value(HAFENSCHAU_API_KEY_LIST).toObject());
+        } else if (contentType == HAFENSCHAU_API_KEY_QUOTATION) {
+            item = new ContentItem;
+            item->setContentType(ContentItem::Quotation);
+            item->setValue(objC.value(HAFENSCHAU_API_KEY_QUOTATION).toObject()
+                           .value(HAFENSCHAU_API_KEY_TEXT).toString());
         } else if (contentType == HAFENSCHAU_API_KEY_RELATED) {
             item = parseContentItemRelated(objC.value(HAFENSCHAU_API_KEY_RELATED).toArray());
         } else if (contentType == HAFENSCHAU_API_KEY_SOCIAL_MEDIA) {
@@ -520,6 +527,25 @@ ContentItemGallery *ApiInterface::parseContentItemGallery(const QJsonArray &arr)
     gallery->model()->setItems(list);
 
     return gallery;
+}
+
+ContentItemList *ApiInterface::parseContentItemList(const QJsonObject &obj)
+{
+    ContentItemList *list = new ContentItemList;
+    list->setTitle(obj.value(HAFENSCHAU_API_KEY_TITLE).toString());
+
+    QStringList items;
+    const QJsonArray array = obj.value(HAFENSCHAU_API_KEY_ITEMS).toArray();
+    for (const auto &item : array) {
+        const QString str = item.toObject().value(HAFENSCHAU_API_KEY_URL).toString();
+        if (str.isEmpty())
+            continue;
+
+        items.append(str);
+    }
+    list->setItems(items);
+
+    return list;
 }
 
 ContentItemRelated *ApiInterface::parseContentItemRelated(const QJsonArray &arr)

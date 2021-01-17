@@ -6,6 +6,11 @@ The copyright belongs to tagesschau.de!
 
 >![](icons/128x128/harbour-hafenschau.png)
 
+#### Sailfish OS
+This application is tested with Sailfish OS Versions:
+
+- 3.4.0.24 (Pallas Yllästunturi) (armv7hl)
+- 3.4.0.24 (Pallas Yllästunturi) (i486)
 
 #### Current state of development
 
@@ -19,6 +24,7 @@ With this option you are able to save the news item data for debugging purpose. 
 -     News Reader
 -     Audio Player
 -     Video Player
+-     Integrated Web View (crashes on i486)
 
 #### Intention of this project
 

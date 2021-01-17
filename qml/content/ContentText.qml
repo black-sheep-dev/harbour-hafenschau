@@ -16,7 +16,7 @@ Item {
 
         font.pixelSize: Theme.fontSizeSmall
         wrapMode: Text.WordWrap
-        linkColor: Theme.secondaryHighlightColor
+        linkColor: Theme.highlightColor
 
         text: item.value
 

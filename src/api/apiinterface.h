@@ -59,6 +59,7 @@ private:
     ContentItemAudio *parseContentItemAudio(const QJsonObject &obj);
     ContentItemBox *parseContentItemBox(const QJsonObject &obj);
     ContentItemGallery *parseContentItemGallery(const QJsonArray &arr);
+    ContentItemList *parseContentItemList(const QJsonObject &obj);
     ContentItemRelated *parseContentItemRelated(const QJsonArray &arr);
     ContentItemSocial *parseContentItemSocial(const QJsonObject &obj);
     ContentItemVideo *parseContentItemVideo(const QJsonObject &obj);

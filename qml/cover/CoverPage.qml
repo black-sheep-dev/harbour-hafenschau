@@ -16,15 +16,15 @@ CoverBackground {
 
         opacity: 0.4
 
-        source: model.newsAt(index).portrait.length > 0 ? model.newsAt(index).portrait : "qrc:/images/dummy_image"
+        source: model.newsAt(index).portrait.length > 0 ? model.newsAt(index).portrait : "qrc://images/dummy_image"
         cache: true
         smooth: true
 
-        BusyIndicator {
-            size: BusyIndicatorSize.Small
-            anchors.centerIn: imageDelegate
-            running: imageDelegate.status != Image.Ready
-        }
+//        BusyIndicator {
+//            size: BusyIndicatorSize.Small
+//            anchors.centerIn: imageDelegate
+//            running: imageDelegate.status != Image.Ready
+//        }
     }
 
     Column {
