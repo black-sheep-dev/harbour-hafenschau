@@ -1,3 +1,6 @@
+* Wed Jan 27 2021 Black Sheep <blacksheep@nubecula.org> 0.1.5-1
+- Prevent display blanking during video playback
+
 * Sun Jan 17 2021 Black Sheep <blacksheep@nubecula.org> 0.1.4-1
 - UI improvements
 - Added new content items quotation and link list

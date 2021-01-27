@@ -3,6 +3,8 @@ import Sailfish.Silica 1.0
 
 import QtMultimedia 5.6
 
+import org.nubecula.harbour.hafenschau 1.0
+
 Page {
     property bool playing: true
     property string url
@@ -62,5 +64,7 @@ Page {
 
         }
     }
+
+    onStatusChanged: HafenschauProvider.preventDisplayBlanking(status === PageStatus.Active)
 }
 

@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include "keepalive/displayblanking.h"
+
 #include "api/apiinterface.h"
 #include "news/newsmodel.h"
 #include "region/regionsmodel.h"
@@ -32,6 +34,8 @@ public:
     Q_INVOKABLE void saveSettings();
     Q_INVOKABLE void saveNews(News *news);
 
+    Q_INVOKABLE void preventDisplayBlanking(bool enabled = true);
+
     // properties
     quint16 developerOptions() const;
 
@@ -54,6 +58,8 @@ private:
 
     ApiInterface *m_api{nullptr};
     NewsModel *m_newsModel{nullptr};
+
+    DisplayBlanking *m_displayBlanking{new DisplayBlanking(this)};
 
     // properties
     quint16 m_developerOptions{DevOptNone};

@@ -5,6 +5,7 @@
 #include <QJsonDocument>
 #include <QStandardPaths>
 
+
 HafenschauProvider::HafenschauProvider(QObject *parent) :
     QObject(parent),
     m_api(new ApiInterface(this)),
@@ -72,6 +73,11 @@ void HafenschauProvider::saveNews(News *news)
     out << QString(QJsonDocument(news->debugData()).toJson(QJsonDocument::Indented));
 
     file.close();
+}
+
+void HafenschauProvider::preventDisplayBlanking(bool enabled)
+{
+    m_displayBlanking->setPreventBlanking(enabled);
 }
 
 quint16 HafenschauProvider::developerOptions() const

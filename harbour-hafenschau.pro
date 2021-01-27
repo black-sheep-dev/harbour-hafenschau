@@ -10,18 +10,19 @@
 #   - translation filenames have to be changed
 
 # VERSION
-VERSION = 0.1.4-1
+VERSION = 0.1.5-1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # The name of your application
 TARGET = harbour-hafenschau
 DEFINES += APP_TARGET=\\\"$$TARGET\\\"
 
-QT += multimedia
+QT += multimedia dbus
 
 CONFIG += link_pkgconfig sailfishapp
 PKGCONFIG += qt5embedwidget
 
+LIBS        += -L../../lib -lkeepalive
 LIBS += -lz
 
 SOURCES += src/harbour-hafenschau.cpp \
