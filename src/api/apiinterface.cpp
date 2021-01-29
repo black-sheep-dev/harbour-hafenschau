@@ -153,10 +153,20 @@ void ApiInterface::onNewStoriesCountRequestFinished()
 {
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
 
+    if (reply == nullptr)
+        return;
+
     const QJsonDocument doc = parseJson(getReplyData(reply));
 
     const quint8 newsType = reply->property("news_type").toInt();
 
+    // force complete update if error occurs
+    if (doc.isEmpty()) {
+        getNews(newsType);
+        return;
+    }
+
+    //
     if (newNewsAvailable(doc.object())) {
         getNews(newsType);
     } else {
@@ -189,13 +199,18 @@ QByteArray ApiInterface::getReplyData(QNetworkReply *reply)
     if (reply->error()) {
 #ifdef QT_DEBUG
         qDebug() << QStringLiteral("Reply Error");
-        qDebug() << reply->error();
+        qDebug() << reply->errorString();
+        qDebug() << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 #endif
         reply->deleteLater();
         return QByteArray();
     }
 
-    const QByteArray data = gunzip(reply->readAll());
+    const QByteArray raw = reply->readAll();
+
+    QByteArray data = gunzip(raw);
+    if (data.isEmpty())
+        data = raw;
 
     reply->deleteLater();
 

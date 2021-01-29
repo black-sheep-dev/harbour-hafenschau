@@ -10,7 +10,7 @@
 #   - translation filenames have to be changed
 
 # VERSION
-VERSION = 0.1.5-1
+VERSION = 0.1.6-1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # The name of your application
@@ -22,7 +22,7 @@ QT += multimedia dbus
 CONFIG += link_pkgconfig sailfishapp
 PKGCONFIG += qt5embedwidget
 
-LIBS        += -L../../lib -lkeepalive
+LIBS += -L../../lib -lkeepalive
 LIBS += -lz
 
 SOURCES += src/harbour-hafenschau.cpp \
