@@ -35,7 +35,7 @@ News *NewsModel::newsAt(int index)
 
 News *NewsModel::newsById(const QString &sophoraId)
 {
-    for (auto *news : m_news) {
+    for (auto &news : m_news) {
         if (news->sophoraId() == sophoraId)
             return news;
     }
@@ -84,7 +84,8 @@ QString NewsModel::nextPage() const
 void NewsModel::setNews(const QList<News *> &news)
 {
     beginResetModel();
-    for (auto *old : m_news) {
+
+    for (auto &old : m_news) {
         old->deleteLater();
     }
 

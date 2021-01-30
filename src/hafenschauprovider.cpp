@@ -43,7 +43,7 @@ NewsModel *HafenschauProvider::newsModel(quint8 newsType)
 
 RegionsModel *HafenschauProvider::regionsModel()
 {
-    auto *model = new RegionsModel();
+    auto model = new RegionsModel();
     model->setActiveRegions(m_api->activeRegions());
     connect(model, &RegionsModel::activeRegionsChanged, m_api, &ApiInterface::setActiveRegions);
 

@@ -9,7 +9,7 @@
 //some constants to parameterize.
 const qint64 LOG_FILE_LIMIT = 3000000;
 const QString LOG_PATH = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-const QString LOG_FILENAME = "/hafenschau.log";
+static const QString LOG_FILENAME = QStringLiteral("/hafenschau.log");
 
 void redirectDebugMessages(QtMsgType type, const QMessageLogContext & context, const QString & str)
 {
@@ -72,24 +72,26 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName(QStringLiteral("nubecula.org"));
     QCoreApplication::setOrganizationDomain(QStringLiteral("nubecula.org"));
 
-    qmlRegisterType<ContentItem>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItem");
-    qmlRegisterType<ContentItemAudio>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemAudio");
-    qmlRegisterType<ContentItemBox>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemBox");
-    qmlRegisterType<ContentItemGallery>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemGallery");
-    qmlRegisterType<ContentItemList>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemList");
-    qmlRegisterType<ContentItemRelated>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemRelated");
-    qmlRegisterType<ContentItemSocial>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemSocial");
-    qmlRegisterType<ContentItemVideo>("org.nubecula.harbour.hafenschau", 1, 0, "ContentItemVideo");
-    qmlRegisterType<GalleryItem>("org.nubecula.harbour.hafenschau", 1, 0, "GalleryItem");
-    qmlRegisterType<GalleryModel>("org.nubecula.harbour.hafenschau", 1, 0, "GalleryModel");
-    qmlRegisterType<News>("org.nubecula.harbour.hafenschau", 1, 0, "News");
-    qmlRegisterType<NewsModel>("org.nubecula.harbour.hafenschau", 1, 0, "NewsModel");
-    qmlRegisterType<NewsSortFilterModel>("org.nubecula.harbour.hafenschau", 1, 0, "NewsSortFilterModel");
-    qmlRegisterType<RegionsModel>("org.nubecula.harbour.hafenschau", 1, 0, "RegionsModel");
-    qmlRegisterType<RelatedItem>("org.nubecula.harbour.hafenschau", 1, 0, "RelatedItem");
-    qmlRegisterType<RelatedModel>("org.nubecula.harbour.hafenschau", 1, 0, "RelatedModel");
+    auto uri = "org.nubecula.harbour.hafenschau";
 
-    qmlRegisterSingletonType<HafenschauProvider>("org.nubecula.harbour.hafenschau",
+    qmlRegisterType<ContentItem>(uri, 1, 0, "ContentItem");
+    qmlRegisterType<ContentItemAudio>(uri, 1, 0, "ContentItemAudio");
+    qmlRegisterType<ContentItemBox>(uri, 1, 0, "ContentItemBox");
+    qmlRegisterType<ContentItemGallery>(uri, 1, 0, "ContentItemGallery");
+    qmlRegisterType<ContentItemList>(uri, 1, 0, "ContentItemList");
+    qmlRegisterType<ContentItemRelated>(uri, 1, 0, "ContentItemRelated");
+    qmlRegisterType<ContentItemSocial>(uri, 1, 0, "ContentItemSocial");
+    qmlRegisterType<ContentItemVideo>(uri, 1, 0, "ContentItemVideo");
+    qmlRegisterType<GalleryItem>(uri, 1, 0, "GalleryItem");
+    qmlRegisterType<GalleryModel>(uri, 1, 0, "GalleryModel");
+    qmlRegisterType<News>(uri, 1, 0, "News");
+    qmlRegisterType<NewsModel>(uri, 1, 0, "NewsModel");
+    qmlRegisterType<NewsSortFilterModel>(uri, 1, 0, "NewsSortFilterModel");
+    qmlRegisterType<RegionsModel>(uri, 1, 0, "RegionsModel");
+    qmlRegisterType<RelatedItem>(uri, 1, 0, "RelatedItem");
+    qmlRegisterType<RelatedModel>(uri, 1, 0, "RelatedModel");
+
+    qmlRegisterSingletonType<HafenschauProvider>(uri,
                                                        1,
                                                        0,
                                                        "HafenschauProvider",
@@ -98,7 +100,7 @@ int main(int argc, char *argv[])
                 Q_UNUSED(engine)
                 Q_UNUSED(scriptEngine)
 
-                auto *provider = new HafenschauProvider();
+                auto provider = new HafenschauProvider();
 
                 return provider;
             });
