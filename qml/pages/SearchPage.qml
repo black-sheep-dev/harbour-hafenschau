@@ -6,9 +6,6 @@ import org.nubecula.harbour.hafenschau 1.0
 import "../delegates"
 
 Page {
-    property string ressortTitle
-    property NewsModel ressortModel
-
     id: page
 
     allowedOrientations: Orientation.All
@@ -23,26 +20,6 @@ Page {
                     HafenschauProvider.refresh(ressortModel.newsType)
                 }
             }
-            MenuItem {
-                text: listView.showSearch ? qsTr("Hide search") : qsTr("Search")
-                onClicked: {
-                    listView.showSearch = !listView.showSearch
-
-                    if (!listView.showSearch) {
-                        searchField.focus = false
-                        searchField.text = ""
-                    }
-                }
-            }
-        }
-
-        PushUpMenu {
-            busy: ressortModel.loading
-            visible: ressortModel.nextPage.length > 0
-            MenuItem {
-                text: qsTr("Load more")
-                onClicked: HafenschauProvider.getNextPage(ressortModel.newsType)
-            }
         }
 
         anchors.fill: parent
@@ -52,7 +29,7 @@ Page {
             width: parent.width
 
             PageHeader {
-                title: page.ressortTitle
+                title: qsTr("Search Content")
             }
 
             SearchField {
@@ -62,15 +39,6 @@ Page {
                 opacity: listView.showSearch ? 1 : 0
                 onTextChanged: {
                     filterModel.setFilterFixedString(text)
-                }
-
-                EnterKey.onClicked: searchField.focus = false
-
-                Connections {
-                    target: listView
-                    onShowSearchChanged: {
-                        searchField.forceActiveFocus()
-                    }
                 }
 
                 Behavior on height {
@@ -122,13 +90,8 @@ Page {
 
             ViewPlaceholder {
                 enabled: listView.count === 0
-                text: qsTr("No news available")
-                hintText: {
-                    if (ressortModel.newsType === NewsModel.Regional)
-                        return qsTr("Please select some regions in settings first!")
-                    else
-                        return qsTr("Please refresh or check internet connection!")
-                }
+                text: qsTr("No content found")
+                hintText: qsTr("Type in a search pattern to find content")
             }
 
             VerticalScrollDecorator {}
@@ -148,4 +111,5 @@ Page {
         }
     }
 }
+
 

@@ -24,6 +24,7 @@ const QString ApiKey::list                      = QStringLiteral("list");
 const QString ApiKey::mittel16x9                = QStringLiteral("mittel16x9");
 const QString ApiKey::news                      = QStringLiteral("news");
 const QString ApiKey::newStoriesCountLink       = QStringLiteral("newStoriesCountLink");
+const QString ApiKey::nextPage                  = QStringLiteral("nextPage");
 const QString ApiKey::portraetGross8x9          = QStringLiteral("portraetgross8x9");
 const QString ApiKey::portraetGrossPlus8x9      = QStringLiteral("portraetgrossplus8x9");
 const QString ApiKey::quotation                 = QStringLiteral("quotation");

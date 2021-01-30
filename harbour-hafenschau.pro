@@ -10,7 +10,7 @@
 #   - translation filenames have to be changed
 
 # VERSION
-VERSION = 0.1.6-1
+VERSION = 0.1.7-1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # The name of your application
@@ -26,6 +26,7 @@ LIBS += -L../../lib -lkeepalive
 LIBS += -lz
 
 SOURCES += src/harbour-hafenschau.cpp \
+    src/api/api_keys.cpp \
     src/api/apiinterface.cpp \
     src/content/contentitem.cpp \
     src/content/contentitemaudio.cpp \
@@ -57,13 +58,14 @@ DISTFILES += qml/harbour-hafenschau.qml \
     qml/content/ContentText.qml \
     qml/content/ContentVideo.qml \
     qml/cover/CoverPage.qml \
+    qml/delegates/NewsListItem.qml \
     qml/dialogs/OpenExternalUrlDialog.qml \
     qml/pages/GalleryPage.qml \
     qml/pages/NewsListPage.qml \
     qml/pages/ReaderPage.qml \
     qml/pages/RessortListPage.qml \
+    qml/pages/SearchPage.qml \
     qml/pages/StartPage.qml \
-    qml/pages/SwipeViewPage.qml \
     qml/pages/VideoPlayerPage.qml \
     qml/pages/WebViewPage.qml \
     qml/pages/settings/SettingsDeveloperPage.qml \

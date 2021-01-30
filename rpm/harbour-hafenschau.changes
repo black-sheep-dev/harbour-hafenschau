@@ -1,3 +1,8 @@
+* Sat Jan 30 2021 Black Sheep <blacksheep@nubecula.org> 0.1.7-1
+- Add menu item to load older news on news list in the different ressorts (not only current day)
+- Fixed translations
+- Code improvements
+
 * Fri Jan 29 2021 Black Sheep <blacksheep@nubecula.org> 0.1.6-1
 - Fixed issue with refresh on top news page
 

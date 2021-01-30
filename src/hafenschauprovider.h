@@ -27,6 +27,7 @@ public:
     ~HafenschauProvider() override;
 
     Q_INVOKABLE void getInternalLink(const QString &link);
+    Q_INVOKABLE void getNextPage(quint8 newsType);
     Q_INVOKABLE void initialize();
     Q_INVOKABLE bool isInternalLink(const QString &link) const;
     Q_INVOKABLE NewsModel *newsModel(quint8 newsType = NewsModel::Homepage);

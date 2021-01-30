@@ -12,10 +12,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sources</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Hafenschau is an inoffical content viewer for german news portal www.tagesschau.de with native Sailfish OS look &amp; feel.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25,6 +21,10 @@
     </message>
     <message>
         <source>This project tries to offer a solution to consume the contents of the German public broadcasting under Sailfish OS, since there is no native application.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sources</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -61,6 +61,10 @@
         <source>Please refresh or check internet connection!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Load more</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OpenExternalUrlDialog</name>
@@ -76,11 +80,11 @@
 <context>
     <name>ReaderPage</name>
     <message>
-        <source>Time:</source>
+        <source>Save news data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save news data</source>
+        <source>Time:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -111,6 +115,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Investigative News</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse investigative news</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Regional News</source>
         <translation type="unfinished"></translation>
     </message>
@@ -127,10 +139,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ressorts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Videos</source>
         <translation type="unfinished"></translation>
     </message>
@@ -139,11 +147,26 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Investigative News</source>
+        <source>Ressorts</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SearchPage</name>
+    <message>
+        <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Browse investigative news</source>
+        <source>Search Content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No content found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type in a search pattern to find content</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -181,6 +204,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Developer Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage developer options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
@@ -192,23 +223,15 @@
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Developer Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Manage developer options</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SettingsRegionsPage</name>
     <message>
-        <source>Regional News</source>
+        <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reset</source>
+        <source>Regional News</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -219,30 +242,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>All News</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Top News</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All News</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SwipeViewPage</name>
-    <message>
-        <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

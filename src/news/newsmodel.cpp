@@ -66,6 +66,11 @@ bool NewsModel::loading() const
     return m_loading;
 }
 
+bool NewsModel::loadingNextPage() const
+{
+    return m_loadingNextPage;
+}
+
 QString NewsModel::newStoriesCountLink() const
 {
     return m_newStoriesCountLink;
@@ -79,6 +84,19 @@ quint8 NewsModel::newsType() const
 QString NewsModel::nextPage() const
 {
     return m_nextPage;
+}
+
+void NewsModel::addNews(const QList<News *> &news)
+{
+    beginInsertRows(QModelIndex(), m_news.count(), m_news.count() + news.count() - 1);
+    for (auto *n : news) {
+        n->setParent(this);
+    }
+
+    m_news.append(news);
+    endInsertRows();
+
+    setLoading(false);
 }
 
 void NewsModel::setNews(const QList<News *> &news)
@@ -108,6 +126,15 @@ void NewsModel::setLoading(bool loading)
 
     m_loading = loading;
     emit loadingChanged(m_loading);
+}
+
+void NewsModel::setLoadingNextPage(bool loadingNextPage)
+{
+    if (m_loadingNextPage == loadingNextPage)
+        return;
+
+    m_loadingNextPage = loadingNextPage;
+    emit loadingNextPageChanged(m_loadingNextPage);
 }
 
 void NewsModel::setNewsType(quint8 newsType)

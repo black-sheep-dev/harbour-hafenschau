@@ -10,9 +10,11 @@ class NewsModel : public QAbstractListModel
     Q_OBJECT
 
     Q_PROPERTY(bool loading READ loading WRITE setLoading NOTIFY loadingChanged)
+    Q_PROPERTY(bool loadingNextPage READ loadingNextPage WRITE setLoadingNextPage NOTIFY loadingNextPageChanged)
     Q_PROPERTY(QString newStoriesCountLink READ newStoriesCountLink WRITE setNewStoriesCountLink NOTIFY newStoriesCountLinkChanged)
     Q_PROPERTY(quint8 newsType READ newsType WRITE setNewsType NOTIFY newsTypeChanged)
     Q_PROPERTY(QString nextPage READ nextPage WRITE setNextPage NOTIFY nextPageChanged)
+
 
 public:
     enum NewsRoles {
@@ -62,6 +64,7 @@ public:
 
     // properties
     bool loading() const;
+    bool loadingNextPage() const;
     QString newStoriesCountLink() const;
     quint8 newsType() const;
     QString nextPage() const;
@@ -71,15 +74,18 @@ signals:
 
     // properties
     void loadingChanged(bool loading);
+    void loadingNextPageChanged(bool loadingNextPage);
     void newStoriesCountLinkChanged(const QString &link);
     void newsTypeChanged(quint8 newsType);
     void nextPageChanged(const QString &nextPage);
 
 public slots:
-    void setNews(const QList<News *> &newsAt);
+    void addNews(const QList<News *> &news);
+    void setNews(const QList<News *> &news);
 
     // properties
     void setLoading(bool loading);
+    void setLoadingNextPage(bool loadingNextPage);
     void setNewsType(quint8 newsType);
     void setNewStoriesCountLink(const QString &link);
     void setNextPage(const QString &nextPage);
@@ -89,6 +95,7 @@ private:
 
     // properties
     bool m_loading{false};
+    bool m_loadingNextPage{false};
     QString m_newStoriesCountLink;
     quint8 m_newsType{Undefined};
     QString m_nextPage;

@@ -26,6 +26,11 @@ void HafenschauProvider::getInternalLink(const QString &link)
     m_api->getInteralLink(link);
 }
 
+void HafenschauProvider::getNextPage(quint8 newsType)
+{
+    m_api->getNextPage(newsType);
+}
+
 void HafenschauProvider::initialize()
 {
     m_api->refresh(NewsModel::Homepage);

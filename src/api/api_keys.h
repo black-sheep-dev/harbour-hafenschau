@@ -28,6 +28,7 @@ struct ApiKey {
     static const QString mittel16x9;
     static const QString news;
     static const QString newStoriesCountLink;
+    static const QString nextPage;
     static const QString portraetGross8x9;
     static const QString portraetGrossPlus8x9;
     static const QString quotation;

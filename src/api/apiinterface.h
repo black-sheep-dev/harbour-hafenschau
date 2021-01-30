@@ -26,12 +26,11 @@ public:
     void enableDeveloperMode(bool enable = true);
 
     QList<int> activeRegions() const;
+    void getNextPage(quint8 newsType);
     NewsModel *newsModel(quint8 newsType = NewsModel::Homepage);
 
 signals:
     void internalLinkAvailable(News *news);
-    void newsAvailable(const QList<News *> &news);
-    void regionalNewsAvailable(const QList<News *> &news);
 
 public slots:
     void getInteralLink(const QString &link);

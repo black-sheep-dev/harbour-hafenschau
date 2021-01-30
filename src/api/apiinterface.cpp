@@ -31,6 +31,20 @@ QList<int> ApiInterface::activeRegions() const
     return m_activeRegions;
 }
 
+void ApiInterface::getNextPage(quint8 newsType)
+{
+    auto model = m_newsModels.value(newsType, nullptr);
+
+    if (model == nullptr)
+        return;
+
+    if (model->nextPage().isEmpty())
+        return;
+
+    model->setLoadingNextPage(true);
+    getNews(newsType);
+}
+
 NewsModel *ApiInterface::newsModel(quint8 newsType)
 {
     auto model = m_newsModels.value(newsType, nullptr);
@@ -116,15 +130,18 @@ void ApiInterface::onNewsRequestFinished()
         //qDebug() << data;
 #endif
 
-    const QJsonDocument doc = parseJson(data);
+    const QJsonObject obj = parseJson(data).object();
 
-    if (doc.isEmpty())
+    if (obj.isEmpty())
         return;
 
     QList<News *> list;
 
+    // get next page
+    model->setNextPage(obj.value(ApiKey::nextPage).toString());
+
     // news
-    const QJsonArray newsArray = doc.object().value(ApiKey::news).toArray();
+    const QJsonArray newsArray = obj.value(ApiKey::news).toArray();
     for (const auto &n : newsArray) {
         auto *news = parseNews(n.toObject());
 
@@ -135,7 +152,7 @@ void ApiInterface::onNewsRequestFinished()
     }
 
     // regional news
-    const QJsonArray regionalNewsArray = doc.object().value(ApiKey::regional).toArray();
+    const QJsonArray regionalNewsArray = obj.value(ApiKey::regional).toArray();
     for (const auto &r : regionalNewsArray) {
         auto *news = parseNews(r.toObject());
 
@@ -145,8 +162,14 @@ void ApiInterface::onNewsRequestFinished()
         list.append(news);
     }
 
-    model->setNewStoriesCountLink(doc.object().value(ApiKey::newStoriesCountLink).toString().remove(HAFENSCHAU_API_URL));
-    model->setNews(list);
+    model->setNewStoriesCountLink(obj.value(ApiKey::newStoriesCountLink).toString().remove(HAFENSCHAU_API_URL));
+
+    if (model->loadingNextPage()) {
+        model->addNews(list);
+        model->setLoadingNextPage(false);
+    } else {
+        model->setNews(list);
+    }
 }
 
 void ApiInterface::onNewStoriesCountRequestFinished()

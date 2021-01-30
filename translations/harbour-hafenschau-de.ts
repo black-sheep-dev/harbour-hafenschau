@@ -12,10 +12,6 @@
         <translation>Hafenschau</translation>
     </message>
     <message>
-        <source>Sources</source>
-        <translation>Quellen</translation>
-    </message>
-    <message>
         <source>Hafenschau is an inoffical content viewer for german news portal www.tagesschau.de with native Sailfish OS look &amp; feel.</source>
         <translation>Hafenschau ist ein inoffizeller Content Viewer für das deutsche Nachrichtenportal www.tagesschau.de mit einem nativen Sailfish OS Stil.</translation>
     </message>
@@ -26,6 +22,10 @@
     <message>
         <source>This project tries to offer a solution to consume the contents of the German public broadcasting under Sailfish OS, since there is no native application.</source>
         <translation>Dieses Projekt versucht eine Lösung zu bieten, um die Inhalte des deutschen öffentlichen Rundfunks unter Sailfish OS zu konsumieren,  da es keine native Anwendung hierfür gibt.</translation>
+    </message>
+    <message>
+        <source>Sources</source>
+        <translation>Quellen</translation>
     </message>
 </context>
 <context>
@@ -43,11 +43,11 @@
     </message>
     <message>
         <source>Hide search</source>
-        <translation></translation>
+        <translation>Suche ausblenden</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation></translation>
+        <translation>Suchen</translation>
     </message>
     <message>
         <source>No news available</source>
@@ -60,6 +60,10 @@
     <message>
         <source>Please refresh or check internet connection!</source>
         <translation>Bitte aktualisieren oder die Internetverbindung prüfen!</translation>
+    </message>
+    <message>
+        <source>Load more</source>
+        <translation>Mehr laden</translation>
     </message>
 </context>
 <context>
@@ -76,12 +80,12 @@
 <context>
     <name>ReaderPage</name>
     <message>
-        <source>Time:</source>
-        <translation>Zeit:</translation>
-    </message>
-    <message>
         <source>Save news data</source>
         <translation>Daten speichern</translation>
+    </message>
+    <message>
+        <source>Time:</source>
+        <translation>Zeit:</translation>
     </message>
 </context>
 <context>
@@ -108,7 +112,15 @@
     </message>
     <message>
         <source>Browse economic news</source>
-        <translation>Dursuche Nachrichten aus der Wirtschaft</translation>
+        <translation>Durchsuche Nachrichten aus der Wirtschaft</translation>
+    </message>
+    <message>
+        <source>Investigative News</source>
+        <translation>Investigativ</translation>
+    </message>
+    <message>
+        <source>Browse investigative news</source>
+        <translation>Durchsuche investigative Nachrichten</translation>
     </message>
     <message>
         <source>Regional News</source>
@@ -116,7 +128,7 @@
     </message>
     <message>
         <source>Browse regional news</source>
-        <translation>Dursuche Nachrichten aus der Region</translation>
+        <translation>Durchsuche Nachrichten aus der Region</translation>
     </message>
     <message>
         <source>Sport News</source>
@@ -127,10 +139,6 @@
         <translation>Durchsuche Nachrichten aus dem Sport</translation>
     </message>
     <message>
-        <source>Ressorts</source>
-        <translation>Ressorts</translation>
-    </message>
-    <message>
         <source>Videos</source>
         <translation>Videos</translation>
     </message>
@@ -139,12 +147,27 @@
         <translation>Durchsuche Videos</translation>
     </message>
     <message>
-        <source>Investigative News</source>
-        <translation>Investigativ</translation>
+        <source>Ressorts</source>
+        <translation>Ressorts</translation>
+    </message>
+</context>
+<context>
+    <name>SearchPage</name>
+    <message>
+        <source>Refresh</source>
+        <translation>Aktualisieren</translation>
     </message>
     <message>
-        <source>Browse investigative news</source>
-        <translation>Durchsuche investigative Nachrichten</translation>
+        <source>Search Content</source>
+        <translation>Inhalt suchen</translation>
+    </message>
+    <message>
+        <source>No content found</source>
+        <translation>Keine Inhalte gefunden</translation>
+    </message>
+    <message>
+        <source>Type in a search pattern to find content</source>
+        <translation>Einen Suchbegriff eingeben um Inhalte zu finden</translation>
     </message>
 </context>
 <context>
@@ -174,11 +197,19 @@
     <name>SettingsPage</name>
     <message>
         <source>Regional News</source>
-        <translation>Regionale Nachrichten</translation>
+        <translation>Regional</translation>
     </message>
     <message>
         <source>Select regional news</source>
         <translation>Regionale Nachrichten auswählen</translation>
+    </message>
+    <message>
+        <source>Developer Settings</source>
+        <translation>Entwickler Optionen</translation>
+    </message>
+    <message>
+        <source>Manage developer options</source>
+        <translation>Entwickler Optionen verwalten</translation>
     </message>
     <message>
         <source>About</source>
@@ -192,24 +223,16 @@
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
-    <message>
-        <source>Developer Settings</source>
-        <translation>Entwickler Optionen</translation>
-    </message>
-    <message>
-        <source>Manage developer options</source>
-        <translation>Entwickler Optionen verwalten</translation>
-    </message>
 </context>
 <context>
     <name>SettingsRegionsPage</name>
     <message>
-        <source>Regional News</source>
-        <translation>Regionale Nachrichten</translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation>Zurücksetzen</translation>
+    </message>
+    <message>
+        <source>Regional News</source>
+        <translation>Regional Nachrichten</translation>
     </message>
 </context>
 <context>
@@ -219,31 +242,16 @@
         <translation>Einstellungen</translation>
     </message>
     <message>
+        <source>All News</source>
+        <translation>Alle Nachrichten</translation>
+    </message>
+    <message>
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
     </message>
     <message>
         <source>Top News</source>
         <translation>Aktuelle Nachrichten</translation>
-    </message>
-    <message>
-        <source>All News</source>
-        <translation>Alle Nachrichten</translation>
-    </message>
-</context>
-<context>
-    <name>SwipeViewPage</name>
-    <message>
-        <source>About</source>
-        <translation>Über</translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation>Einstellungen</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>Aktualisieren</translation>
     </message>
 </context>
 </TS>
