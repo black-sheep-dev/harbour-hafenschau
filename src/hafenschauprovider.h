@@ -34,6 +34,7 @@ public:
     Q_INVOKABLE RegionsModel *regionsModel();
     Q_INVOKABLE void saveSettings();
     Q_INVOKABLE void saveNews(News *news);
+    Q_INVOKABLE void searchContent(const QString &pattern, quint16 page = 1);
 
     Q_INVOKABLE void preventDisplayBlanking(bool enabled = true);
 

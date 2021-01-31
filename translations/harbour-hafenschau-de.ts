@@ -150,24 +150,28 @@
         <source>Ressorts</source>
         <translation>Ressorts</translation>
     </message>
+    <message>
+        <source>Search</source>
+        <translation>Suchen</translation>
+    </message>
+    <message>
+        <source>Search content</source>
+        <translation>Inhalte suchen</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
-    <message>
-        <source>Refresh</source>
-        <translation>Aktualisieren</translation>
-    </message>
-    <message>
-        <source>Search Content</source>
-        <translation>Inhalt suchen</translation>
-    </message>
     <message>
         <source>No content found</source>
         <translation>Keine Inhalte gefunden</translation>
     </message>
     <message>
         <source>Type in a search pattern to find content</source>
-        <translation>Einen Suchbegriff eingeben um Inhalte zu finden</translation>
+        <translation>Gib einen Suchbegriff ein um Inhalte zu finden</translation>
+    </message>
+    <message>
+        <source>Load more</source>
+        <translation>Mehr laden</translation>
     </message>
 </context>
 <context>

@@ -150,23 +150,27 @@
         <source>Ressorts</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search content</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
-    <message>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Search Content</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>No content found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Type in a search pattern to find content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load more</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

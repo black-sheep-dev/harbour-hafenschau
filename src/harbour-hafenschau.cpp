@@ -40,6 +40,8 @@ void redirectDebugMessages(QtMsgType type, const QMessageLogContext & context, c
         txt = QString("[Fatal] ");
     }
 
+    qDebug() << txt;
+
     QString filePath = LOG_PATH + LOG_FILENAME;
     QFile outFile(filePath);
 
@@ -64,7 +66,7 @@ void redirectDebugMessages(QtMsgType type, const QMessageLogContext & context, c
 int main(int argc, char *argv[])
 {
 #ifdef QT_DEBUG
-    qInstallMessageHandler(redirectDebugMessages);
+    //qInstallMessageHandler(redirectDebugMessages);
 #endif
 
     QCoreApplication::setApplicationName(QStringLiteral("Hafenschau"));
@@ -72,7 +74,11 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName(QStringLiteral("nubecula.org"));
     QCoreApplication::setOrganizationDomain(QStringLiteral("nubecula.org"));
 
+#ifndef QT_DEBUG
     auto uri = "org.nubecula.harbour.hafenschau";
+#else
+#   define uri "org.nubecula.harbour.hafenschau"
+#endif
 
     qmlRegisterType<ContentItem>(uri, 1, 0, "ContentItem");
     qmlRegisterType<ContentItemAudio>(uri, 1, 0, "ContentItemAudio");

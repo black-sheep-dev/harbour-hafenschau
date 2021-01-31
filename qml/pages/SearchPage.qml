@@ -6,19 +6,20 @@ import org.nubecula.harbour.hafenschau 1.0
 import "../delegates"
 
 Page {
+    property string ressortTitle
+    property NewsModel ressortModel
+
     id: page
 
     allowedOrientations: Orientation.All
 
     SilicaFlickable {
-        PullDownMenu {
+        PushUpMenu {
             busy: ressortModel.loading
+            visible: ressortModel.pages > ressortModel.currentPage
             MenuItem {
-                text: qsTr("Refresh")
-                onClicked: {
-                    console.log(ressortModel.newsType)
-                    HafenschauProvider.refresh(ressortModel.newsType)
-                }
+                text: qsTr("Load more") + " (" + ressortModel.currentPage + "/" + ressortModel.pages + ")"
+                onClicked: HafenschauProvider.searchContent(searchField.text, ressortModel.currentPage + 1)
             }
         }
 
@@ -29,30 +30,26 @@ Page {
             width: parent.width
 
             PageHeader {
-                title: qsTr("Search Content")
+                title: ressortTitle
             }
 
             SearchField {
                 id: searchField
                 width: parent.width
-                height: listView.showSearch ? implicitHeight : 0
-                opacity: listView.showSearch ? 1 : 0
-                onTextChanged: {
-                    filterModel.setFilterFixedString(text)
-                }
+                height: implicitHeight
 
-                Behavior on height {
-                    NumberAnimation { duration: 300 }
-                }
-                Behavior on opacity {
-                    NumberAnimation { duration: 300 }
+                focus: true
+
+                onTextChanged: if (text.length === 0) ressortModel.reset()
+
+                EnterKey.onClicked: {
+                    focus = false
+                    HafenschauProvider.searchContent(text, ressortModel.currentPage)
                 }
             }
         }
 
         SilicaListView {
-            property bool showSearch: false
-
             id: listView
 
             width: parent.width
@@ -61,18 +58,10 @@ Page {
 
             clip: true
 
-            model: NewsSortFilterModel {
-                id: filterModel
-                sourceModel: ressortModel
-            }
+            model: ressortModel
 
             delegate: NewsListItem {
                 id: delegate
-
-                thumbnail: model.thumbnail
-                title: model.title
-                firstSentence: model.firstSentence
-                topline: model.topline
 
                 onClicked: {
                     if (model.newsType === News.WebView) {
@@ -101,14 +90,6 @@ Page {
     Connections {
         target: HafenschauProvider
         onInternalLinkAvailable: pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), { news: news })
-    }
-
-    onStatusChanged: {
-        if (status === PageStatus.Deactivating) {
-            searchField.focus = false
-            searchField.text = ""
-            listView.showSearch = false
-        }
     }
 }
 

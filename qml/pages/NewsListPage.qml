@@ -101,11 +101,6 @@ Page {
             delegate: NewsListItem {
                 id: delegate
 
-                thumbnail: model.thumbnail
-                title: model.title
-                firstSentence: model.firstSentence
-                topline: model.topline
-
                 onClicked: {
                     if (model.newsType === News.WebView) {
                         pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: model.detailsWeb })

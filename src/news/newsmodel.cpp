@@ -61,6 +61,11 @@ void NewsModel::updateNews(News *news)
     old->deleteLater();
 }
 
+quint16 NewsModel::currentPage() const
+{
+    return m_currentPage;
+}
+
 bool NewsModel::loading() const
 {
     return m_loading;
@@ -84,6 +89,11 @@ quint8 NewsModel::newsType() const
 QString NewsModel::nextPage() const
 {
     return m_nextPage;
+}
+
+quint16 NewsModel::pages() const
+{
+    return m_pages;
 }
 
 void NewsModel::addNews(const QList<News *> &news)
@@ -117,6 +127,26 @@ void NewsModel::setNews(const QList<News *> &news)
     emit newsChanged();
 
     setLoading(false);
+}
+
+void NewsModel::reset()
+{
+    beginResetModel();
+    qDeleteAll(m_news.begin(), m_news.end());
+    m_news.clear();
+    setCurrentPage(1);
+    setPages(1);
+    setNextPage(QString());
+    endResetModel();
+}
+
+void NewsModel::setCurrentPage(quint16 page)
+{
+    if (m_currentPage == page)
+        return;
+
+    m_currentPage = page;
+    emit currentPageChanged(m_currentPage);
 }
 
 void NewsModel::setLoading(bool loading)
@@ -162,6 +192,15 @@ void NewsModel::setNextPage(const QString &nextPage)
 
     m_nextPage = nextPage;
     emit nextPageChanged(m_nextPage);
+}
+
+void NewsModel::setPages(quint16 pages)
+{
+    if (m_pages == pages)
+        return;
+
+    m_pages = pages;
+    emit pagesChanged(m_pages);
 }
 
 int NewsModel::rowCount(const QModelIndex &parent) const

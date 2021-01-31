@@ -36,6 +36,7 @@ public slots:
     void getInteralLink(const QString &link);
     void refresh(quint8 newsType, bool complete = false);
     void setActiveRegions(const QList<int> &regions);
+    void searchContent(const QString &pattern, quint16 page = 1);
 
 private slots:
     void onInternalLinkRequestFinished();

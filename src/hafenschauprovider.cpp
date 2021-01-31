@@ -80,6 +80,12 @@ void HafenschauProvider::saveNews(News *news)
     file.close();
 }
 
+void HafenschauProvider::searchContent(const QString &pattern, quint16 page)
+{
+    qDebug() << "SEARCH";
+    m_api->searchContent(pattern, page);
+}
+
 void HafenschauProvider::preventDisplayBlanking(bool enabled)
 {
     m_displayBlanking->setPreventBlanking(enabled);

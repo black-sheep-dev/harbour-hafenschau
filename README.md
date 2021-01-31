@@ -25,6 +25,7 @@ With this option you are able to save the news item data for debugging purpose. 
 -     Audio Player
 -     Video Player
 -     Integrated Web View (crashes on i486)
+-     Search for news content
 
 #### Intention of this project
 

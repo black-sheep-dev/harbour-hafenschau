@@ -36,6 +36,8 @@ struct ApiKey {
     static const QString regionId;
     static const QString regionIds;
     static const QString related;
+    static const QString resultPage;
+    static const QString searchResults;
     static const QString shortText;
     static const QString social;
     static const QString socialMedia;
@@ -49,6 +51,7 @@ struct ApiKey {
     static const QString text;
     static const QString title;
     static const QString topline;
+    static const QString totalItemCount;
     static const QString twitter;
     static const QString type;
     static const QString updateCheckUrl;

@@ -62,13 +62,13 @@ Page {
                 page: "NewsListPage.qml"
                 ressort: NewsModel.Video
             }
-//            ListElement {
-//                title: qsTr("Search");
-//                description: qsTr("Search content")
-//                icon: "image://theme/icon-m-search"
-//                page: "SearchPage.qml"
-//                ressort: NewsModel.Video
-//            }
+            ListElement {
+                title: qsTr("Search");
+                description: qsTr("Search content")
+                icon: "image://theme/icon-m-search"
+                page: "SearchPage.qml"
+                ressort: NewsModel.Search
+            }
         }
 
         anchors.fill: parent
@@ -126,10 +126,12 @@ Page {
                 }
             }
 
-            onClicked: pageStack.push(Qt.resolvedUrl(page), {
+            onClicked: {
+                pageStack.push(Qt.resolvedUrl(page), {
                                                  ressortModel: HafenschauProvider.newsModel(ressort),
                                                  ressortTitle: title
                                             })
+            }
         }
 
         VerticalScrollDecorator {}

@@ -1,12 +1,9 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-ListItem {
-    property string thumbnail
-    property string topline
-    property string title
-    property string firstSentence
+import org.nubecula.harbour.hafenschau 1.0
 
+ListItem {
     contentHeight: contentRow.height + separatorBottom.height
 
     Row {
@@ -23,7 +20,7 @@ ListItem {
 
             fillMode: Image.PreserveAspectCrop
 
-            source: thumbnail.length > 0 ? thumbnail : "qrc:/images/dummy_image"
+            source: model.thumbnail.length > 0 ? model.thumbnail : "qrc:/images/dummy_image"
             cache: true
             smooth: true
 
@@ -31,6 +28,12 @@ ListItem {
                 size: BusyIndicatorSize.Medium
                 anchors.centerIn: thumbnailImage
                 running: thumbnailImage.status != Image.Ready
+            }
+
+            Image {
+                visible: model.newsType === News.Video
+                anchors.centerIn: parent
+                source: "image://theme/icon-m-play"
             }
         }
 
@@ -40,7 +43,12 @@ ListItem {
             spacing: Theme.paddingSmall
 
             Label {
-                text: topline
+                text: {
+                    if (model.newsType === News.Video)
+                        return model.date.toLocaleString()
+                    else
+                        return model.topline
+                }
 
                 width: parent.width
                 wrapMode: Text.WordWrap
@@ -48,7 +56,7 @@ ListItem {
                 font.pixelSize: Theme.fontSizeExtraSmall
             }
             Label {
-                text: title
+                text: model.title
 
                 width: parent.width
                 wrapMode: Text.WordWrap
@@ -57,7 +65,7 @@ ListItem {
                 color: Theme.highlightColor
             }
             Label {
-                text: firstSentence
+                text: model.firstSentence
                 width: parent.width
                 wrapMode: Text.WordWrap
 

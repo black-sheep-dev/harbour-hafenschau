@@ -14,6 +14,8 @@
 
 #include "api_keys.h"
 
+static const quint8 pageSize = 20;
+
 ApiInterface::ApiInterface(QObject *parent) :
     QObject(parent),
     m_manager(new QNetworkAccessManager(this))
@@ -89,6 +91,25 @@ void ApiInterface::setActiveRegions(const QList<int> &regions)
     m_activeRegions = regions;
 }
 
+void ApiInterface::searchContent(const QString &pattern, quint16 page)
+{
+    qDebug() << "SEARCH";
+
+    auto model = m_newsModels.value(NewsModel::Search, nullptr);
+
+    if (!model)
+        return;
+
+    model->setLoadingNextPage(page > 1);
+
+    const QString url = QStringLiteral("search/?searchText=%1&pageSize=%2&resultPage=%3")
+            .arg(pattern, QString::number(pageSize), QString::number(page));
+
+    QNetworkReply *reply = m_manager->get(getRequest(url));
+    reply->setProperty("news_type", NewsModel::Search);
+    connect(reply, &QNetworkReply::finished, this, &ApiInterface::onNewsRequestFinished);
+}
+
 void ApiInterface::onInternalLinkRequestFinished()
 {
 #ifdef QT_DEBUG
@@ -126,10 +147,6 @@ void ApiInterface::onNewsRequestFinished()
     // parse data
     const QByteArray data = getReplyData(reply);
 
-#ifdef QT_DEBUG
-        //qDebug() << data;
-#endif
-
     const QJsonObject obj = parseJson(data).object();
 
     if (obj.isEmpty())
@@ -137,32 +154,50 @@ void ApiInterface::onNewsRequestFinished()
 
     QList<News *> list;
 
-    // get next page
-    model->setNextPage(obj.value(ApiKey::nextPage).toString());
+    // parse content
+    if (newsType == NewsModel::Search) {
+        model->setCurrentPage(obj.value(ApiKey::resultPage).toInt());
+        model->setPages(qRound((obj.value(ApiKey::totalItemCount).toInt() + 0.5) / pageSize));
 
-    // news
-    const QJsonArray newsArray = obj.value(ApiKey::news).toArray();
-    for (const auto &n : newsArray) {
-        auto *news = parseNews(n.toObject());
+        // news
+        const QJsonArray newsArray = obj.value(ApiKey::searchResults).toArray();
+        for (const auto &n : newsArray) {
+            auto news = parseNews(n.toObject());
 
-        if (news == nullptr)
-            continue;
+            if (news == nullptr)
+                continue;
 
-        list.append(news);
+            list.append(news);
+        }
+
+    } else {
+        // get next page
+        model->setNextPage(obj.value(ApiKey::nextPage).toString());
+
+        // news
+        const QJsonArray newsArray = obj.value(ApiKey::news).toArray();
+        for (const auto &n : newsArray) {
+            auto news = parseNews(n.toObject());
+
+            if (news == nullptr)
+                continue;
+
+            list.append(news);
+        }
+
+        // regional news
+        const QJsonArray regionalNewsArray = obj.value(ApiKey::regional).toArray();
+        for (const auto &r : regionalNewsArray) {
+            auto news = parseNews(r.toObject());
+
+            if (news == nullptr)
+                continue;
+
+            list.append(news);
+        }
+
+        model->setNewStoriesCountLink(obj.value(ApiKey::newStoriesCountLink).toString().remove(HAFENSCHAU_API_URL));
     }
-
-    // regional news
-    const QJsonArray regionalNewsArray = obj.value(ApiKey::regional).toArray();
-    for (const auto &r : regionalNewsArray) {
-        auto *news = parseNews(r.toObject());
-
-        if (news == nullptr)
-            continue;
-
-        list.append(news);
-    }
-
-    model->setNewStoriesCountLink(obj.value(ApiKey::newStoriesCountLink).toString().remove(HAFENSCHAU_API_URL));
 
     if (model->loadingNextPage()) {
         model->addNews(list);
