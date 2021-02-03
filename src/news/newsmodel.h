@@ -22,6 +22,7 @@ public:
     enum NewsRoles {
         BrandingImageRole       = Qt::UserRole + 1,
         BreakingNewsRole,
+        CommentsRole,
         DateRole,
         DetailsRole,
         DetailsWebRole,

@@ -4,6 +4,7 @@
 #include <sailfishapp.h>
 
 #include "hafenschauprovider.h"
+#include "comments/commentssortfiltermodel.h"
 #include "news/newssortfiltermodel.h"
 
 //some constants to parameterize.
@@ -80,6 +81,8 @@ int main(int argc, char *argv[])
 #   define uri "org.nubecula.harbour.hafenschau"
 #endif
 
+    qmlRegisterType<CommentsModel>(uri, 1, 0, "CommentsModel");
+    qmlRegisterType<CommentsSortFilterModel>(uri, 1, 0, "CommentsSortFilterModel");
     qmlRegisterType<ContentItem>(uri, 1, 0, "ContentItem");
     qmlRegisterType<ContentItemAudio>(uri, 1, 0, "ContentItemAudio");
     qmlRegisterType<ContentItemBox>(uri, 1, 0, "ContentItemBox");

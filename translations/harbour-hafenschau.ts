@@ -29,6 +29,37 @@
     </message>
 </context>
 <context>
+    <name>CommentsListPage</name>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No comments available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comments (closed)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ContentRelated</name>
     <message>
         <source>More on the subject</source>
@@ -85,6 +116,10 @@
     </message>
     <message>
         <source>Time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Comments</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

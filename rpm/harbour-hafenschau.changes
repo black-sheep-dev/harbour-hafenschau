@@ -1,3 +1,7 @@
+* Wed Feb 03 2021 Black Sheep <blacksheep@nubecula.org> 0.2.0-1
+- Show comments for content if available (PushUpMenu at bottom of reader page)
+- Code improvments
+
 * Sun Jan 31 2021 Black Sheep <blacksheep@nubecula.org> 0.1.8-1
 - Add option to search for news content
 - Code cleanup

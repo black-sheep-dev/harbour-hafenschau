@@ -7,6 +7,8 @@ const QString ApiKey::avatar                    = QStringLiteral("avatar");
 const QString ApiKey::box                       = QStringLiteral("box");
 const QString ApiKey::brandingImage             = QStringLiteral("brandingImage");
 const QString ApiKey::breakingNews              = QStringLiteral("breakingNews");
+const QString ApiKey::comments                  = QStringLiteral("comments");
+const QString ApiKey::commentsAllowed           = QStringLiteral("commentsAllowed");
 const QString ApiKey::content                   = QStringLiteral("content");
 const QString ApiKey::copyright                 = QStringLiteral("copyright");
 const QString ApiKey::date                      = QStringLiteral("date");
@@ -58,3 +60,10 @@ const QString ApiKey::video                     = QStringLiteral("video");
 const QString ApiKey::videoWebL                 = QStringLiteral("videowebl");
 const QString ApiKey::videoWebM                 = QStringLiteral("videowebm");
 const QString ApiKey::webview                   = QStringLiteral("webview");
+
+
+// comments
+const QString ApiKey::benutzer                  = QStringLiteral("Benutzer");
+const QString ApiKey::beitragsdatum             = QStringLiteral("Beitragsdatum");
+const QString ApiKey::titel                     = QStringLiteral("Titel");
+const QString ApiKey::kommentar                 = QStringLiteral("Kommentar");

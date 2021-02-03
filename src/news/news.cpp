@@ -66,6 +66,11 @@ bool News::breakingNews() const
     return m_breakingNews;
 }
 
+QString News::comments() const
+{
+    return m_comments;
+}
+
 QDateTime News::date() const
 {
     return m_date;
@@ -164,6 +169,15 @@ void News::setBreakingNews(bool breakingNews)
 
     m_breakingNews = breakingNews;
     emit breakingNewsChanged(m_breakingNews);
+}
+
+void News::setComments(const QString &comments)
+{
+    if (m_comments == comments)
+        return;
+
+    m_comments = comments;
+    emit commentsChanged(m_comments);
 }
 
 void News::setDate(const QDateTime &date)

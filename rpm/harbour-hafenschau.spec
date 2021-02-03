@@ -9,7 +9,7 @@ Name:       harbour-hafenschau
 # << macros
 
 Summary:    Hafenschau
-Version:    0.1.8
+Version:    0.2.0
 Release:    1
 Group:      Qt/Qt
 License:    MIT

@@ -61,6 +61,12 @@ NewsModel *ApiInterface::newsModel(quint8 newsType)
     return model;
 }
 
+void ApiInterface::getComments(const QString &link)
+{
+    QNetworkReply *reply = m_manager->get(getRequest(link));
+    connect(reply, &QNetworkReply::finished, this, &ApiInterface::onCommentsMetaLinkAvailable);
+}
+
 void ApiInterface::getInteralLink(const QString &link)
 {
     QNetworkReply *reply = m_manager->get(getRequest(link));
@@ -108,6 +114,59 @@ void ApiInterface::searchContent(const QString &pattern, quint16 page)
     QNetworkReply *reply = m_manager->get(getRequest(url));
     reply->setProperty("news_type", NewsModel::Search);
     connect(reply, &QNetworkReply::finished, this, &ApiInterface::onNewsRequestFinished);
+}
+
+void ApiInterface::onCommentsAvailable()
+{
+#ifdef QT_DEBUG
+        qDebug() << QStringLiteral("COMMENTS");
+#endif
+
+    auto reply = qobject_cast<QNetworkReply *>(sender());
+
+    const bool closed = reply->property("closed").toBool();
+
+    const auto obj = parseJson(getReplyData(reply)).object();
+
+    if (obj.isEmpty())
+        return;
+
+    const auto items = obj.value(QStringLiteral("Items")).toArray();
+
+    QList<Comment> comments;
+    for (const auto &item : items) {
+        const auto data = item.toObject();
+
+        Comment comment;
+        comment.author = data.value(ApiKey::benutzer).toString();
+        comment.text = data.value(ApiKey::kommentar).toString();
+        comment.timestamp = QDateTime::fromString(data.value(ApiKey::beitragsdatum).toString(), Qt::ISODate);
+        comment.title = data.value(ApiKey::titel).toString();
+
+        comments.append(comment);
+    }
+
+    auto model = new CommentsModel;
+    model->setClosed(closed);
+    model->setComments(comments);
+
+    emit commentsModelAvailable(model);
+}
+
+void ApiInterface::onCommentsMetaLinkAvailable()
+{
+#ifdef QT_DEBUG
+        qDebug() << QStringLiteral("COMMENTS META LINK");
+#endif
+
+    const auto obj = parseJson(getReplyData(qobject_cast<QNetworkReply *>(sender()))).object();
+
+    if (obj.isEmpty())
+        return;
+
+    QNetworkReply *reply = m_manager->get(getRequest(obj.value(ApiKey::details).toString()));
+    reply->setProperty("closed", !obj.value(ApiKey::commentsAllowed).toBool());
+    connect(reply, &QNetworkReply::finished, this, &ApiInterface::onCommentsAvailable);
 }
 
 void ApiInterface::onInternalLinkRequestFinished()
@@ -427,7 +486,7 @@ QJsonDocument ApiInterface::parseJson(const QByteArray &data)
 News *ApiInterface::parseNews(const QJsonObject &obj)
 {
     // region filter
-    const QJsonArray regIds = obj.value(ApiKey::regionIds).toArray();
+    const auto regIds = obj.value(ApiKey::regionIds).toArray();
 
     quint8 region{0};
 
@@ -459,7 +518,7 @@ News *ApiInterface::parseNews(const QJsonObject &obj)
     news->setTitle(obj.value(ApiKey::title).toString());
     news->setTopline(obj.value(ApiKey::topline).toString());
 
-    const QJsonObject teaserImage = obj.value(ApiKey::teaserImage).toObject();
+    const auto teaserImage = obj.value(ApiKey::teaserImage).toObject();
 
     news->setThumbnail(teaserImage.value(ApiKey::portraetGross8x9).toObject()
                        .value(ApiKey::imageUrl).toString());
@@ -476,7 +535,9 @@ News *ApiInterface::parseNews(const QJsonObject &obj)
 
     news->setDetails(obj.value(ApiKey::details).toString());
 
-    const QString type = obj.value(ApiKey::type).toString();
+    news->setComments(obj.value(ApiKey::comments).toString());
+
+    const auto type = obj.value(ApiKey::type).toString();
 
     if (type == ApiKey::story) {
         news->setNewsType(News::Story);
@@ -493,7 +554,7 @@ News *ApiInterface::parseNews(const QJsonObject &obj)
 
 
     // parse content
-    const QJsonArray content = obj.value(ApiKey::content).toArray();
+    const auto content = obj.value(ApiKey::content).toArray();
 
     QList<ContentItem *> items;
 

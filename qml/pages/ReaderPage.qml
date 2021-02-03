@@ -24,6 +24,14 @@ Page {
             }
         }
 
+        PushUpMenu {
+            visible: news.comments.length > 0
+            MenuItem {
+                text: qsTr("Show Comments")
+                onClicked: pageStack.push(Qt.resolvedUrl("CommentsListPage.qml"), {link: news.comments})
+            }
+        }
+
         Timer {
             id: refreshTimer
             interval: 1000

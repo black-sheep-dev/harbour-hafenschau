@@ -11,6 +11,8 @@ struct ApiKey {
     static const QString box;
     static const QString brandingImage;
     static const QString breakingNews;
+    static const QString comments;
+    static const QString commentsAllowed;
     static const QString content;
     static const QString copyright;
     static const QString date;
@@ -62,6 +64,12 @@ struct ApiKey {
     static const QString videoWebL;
     static const QString videoWebM;
     static const QString webview;
+
+    // comments
+    static const QString benutzer;
+    static const QString beitragsdatum;
+    static const QString titel;
+    static const QString kommentar;
 };
 
 #endif // API_KEYS_H

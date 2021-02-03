@@ -29,6 +29,37 @@
     </message>
 </context>
 <context>
+    <name>CommentsListPage</name>
+    <message>
+        <source>Refresh</source>
+        <translation>Aktualisieren</translation>
+    </message>
+    <message>
+        <source>Hide search</source>
+        <translation>Suche ausblenden</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>Suchen</translation>
+    </message>
+    <message>
+        <source>Comments</source>
+        <translation>Kommentare</translation>
+    </message>
+    <message>
+        <source>No comments available</source>
+        <translation>Keine Kommentare vorhanden</translation>
+    </message>
+    <message>
+        <source>From</source>
+        <translation>Von</translation>
+    </message>
+    <message>
+        <source>Comments (closed)</source>
+        <translation>Kommentare (geschlossen)</translation>
+    </message>
+</context>
+<context>
     <name>ContentRelated</name>
     <message>
         <source>More on the subject</source>
@@ -86,6 +117,10 @@
     <message>
         <source>Time:</source>
         <translation>Zeit:</translation>
+    </message>
+    <message>
+        <source>Show Comments</source>
+        <translation>Zeige Kommentare</translation>
     </message>
 </context>
 <context>

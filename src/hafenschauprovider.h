@@ -26,6 +26,7 @@ public:
     explicit HafenschauProvider(QObject *parent = nullptr);
     ~HafenschauProvider() override;
 
+    Q_INVOKABLE void getComments(const QString &link);
     Q_INVOKABLE void getInternalLink(const QString &link);
     Q_INVOKABLE void getNextPage(quint8 newsType);
     Q_INVOKABLE void initialize();
@@ -42,6 +43,7 @@ public:
     quint16 developerOptions() const;
 
 signals:
+    void commentsModelAvailable(CommentsModel *model);
     void internalLinkAvailable(News *news);
 
     // properties

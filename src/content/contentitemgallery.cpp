@@ -1,8 +1,7 @@
 #include "contentitemgallery.h"
 
 ContentItemGallery::ContentItemGallery(QObject *parent) :
-    ContentItem(parent),
-    m_model(new GalleryModel(this))
+    ContentItem(parent)
 {
     setContentType(ContentItem::Gallery);
 }

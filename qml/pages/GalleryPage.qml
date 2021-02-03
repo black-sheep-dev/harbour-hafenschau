@@ -10,31 +10,28 @@ Page {
 
     allowedOrientations: Orientation.All
 
-    SilicaFlickable {
+    SlideshowView {
+        id: view
         anchors.fill: parent
 
-        SlideshowView {
-            id: view
-            anchors.fill: parent
+        itemHeight: parent.height
+        itemWidth: parent.width
 
-            itemWidth: parent.width / 2
+        model: page.model
 
-            model: model
+        delegate: Image {
+            id: imageItem
+            source: image
+            cache: true
+            smooth: true
 
-            delegate: Image {
-                id: imageItem
-                source: image
-                cache: true
-                smooth: true
+            width: parent.width
+            fillMode: Image.PreserveAspectCrop
 
-                width: parent.width
-                fillMode: Image.PreserveAspectCrop
-
-                BusyIndicator {
-                    size: BusyIndicatorSize.Medium
-                    anchors.centerIn: imageItem
-                    running: imageItem.status != Image.Ready
-                }
+            BusyIndicator {
+                size: BusyIndicatorSize.Medium
+                anchors.centerIn: imageItem
+                running: imageItem.status != Image.Ready
             }
         }
     }

@@ -14,7 +14,7 @@ public:
     Q_INVOKABLE GalleryModel *model();
 
 private:
-    GalleryModel *m_model{nullptr};
+    GalleryModel *m_model{new GalleryModel(this)};
 };
 
 #endif // CONTENTITEMGALLERY_H

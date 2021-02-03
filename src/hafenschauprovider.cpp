@@ -13,12 +13,18 @@ HafenschauProvider::HafenschauProvider(QObject *parent) :
 {
     readSettings();
 
-    connect(m_api, &ApiInterface::internalLinkAvailable, this, &HafenschauProvider::internalLinkAvailable);
+    connect(m_api, &ApiInterface::commentsModelAvailable, this, &HafenschauProvider::commentsModelAvailable);
+    connect(m_api, &ApiInterface::internalLinkAvailable, this, &HafenschauProvider::internalLinkAvailable); 
 }
 
 HafenschauProvider::~HafenschauProvider()
 {
     writeSettings();
+}
+
+void HafenschauProvider::getComments(const QString &link)
+{
+    m_api->getComments(link);
 }
 
 void HafenschauProvider::getInternalLink(const QString &link)

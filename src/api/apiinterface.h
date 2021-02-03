@@ -13,6 +13,7 @@ static const QString HAFENSCHAU_API_ENDPOINT_INDEX_FEED_COUNT   = QStringLiteral
 #include <QNetworkReply>
 #include <QQueue>
 
+#include "src/comments/commentsmodel.h"
 #include "src/news/news.h"
 #include "src/news/newsmodel.h"
 
@@ -30,15 +31,19 @@ public:
     NewsModel *newsModel(quint8 newsType = NewsModel::Homepage);
 
 signals:
+    void commentsModelAvailable(CommentsModel *model);
     void internalLinkAvailable(News *news);
 
 public slots:
+    void getComments(const QString &link);
     void getInteralLink(const QString &link);
     void refresh(quint8 newsType, bool complete = false);
     void setActiveRegions(const QList<int> &regions);
     void searchContent(const QString &pattern, quint16 page = 1);
 
 private slots:
+    void onCommentsAvailable();
+    void onCommentsMetaLinkAvailable();
     void onInternalLinkRequestFinished();
     void onNewsRequestFinished();
     void onNewStoriesCountRequestFinished();

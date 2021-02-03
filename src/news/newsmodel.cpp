@@ -247,6 +247,9 @@ QVariant NewsModel::data(const QModelIndex &index, int role) const
     case BreakingNewsRole:
         return news->breakingNews();
 
+    case CommentsRole:
+        return news->comments();
+
     case DateRole:
         return news->date();
 
@@ -285,6 +288,7 @@ QHash<int, QByteArray> NewsModel::roleNames() const
 
     roles[BrandingImageRole]            = "brandingImage";
     roles[BreakingNewsRole]             = "breakingNews";
+    roles[CommentsRole]                 = "comments";
     roles[DateRole]                     = "date";
     roles[DetailsRole]                  = "details";
     roles[DetailsWebRole]               = "detailsWeb";

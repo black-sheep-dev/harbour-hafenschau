@@ -10,7 +10,7 @@
 #   - translation filenames have to be changed
 
 # VERSION
-VERSION = 0.1.8-1
+VERSION = 0.2.0-1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # The name of your application
@@ -28,6 +28,8 @@ LIBS += -lz
 SOURCES += src/harbour-hafenschau.cpp \
     src/api/api_keys.cpp \
     src/api/apiinterface.cpp \
+    src/comments/commentsmodel.cpp \
+    src/comments/commentssortfiltermodel.cpp \
     src/content/contentitem.cpp \
     src/content/contentitemaudio.cpp \
     src/content/contentitembox.cpp \
@@ -60,6 +62,7 @@ DISTFILES += qml/harbour-hafenschau.qml \
     qml/cover/CoverPage.qml \
     qml/delegates/NewsListItem.qml \
     qml/dialogs/OpenExternalUrlDialog.qml \
+    qml/pages/CommentsListPage.qml \
     qml/pages/GalleryPage.qml \
     qml/pages/NewsListPage.qml \
     qml/pages/ReaderPage.qml \
@@ -93,6 +96,9 @@ TRANSLATIONS += translations/harbour-hafenschau-de.ts
 HEADERS += \
     src/api/api_keys.h \
     src/api/apiinterface.h \
+    src/comments/comment.h \
+    src/comments/commentsmodel.h \
+    src/comments/commentssortfiltermodel.h \
     src/content/contentitem.h \
     src/content/contentitemaudio.h \
     src/content/contentitembox.h \
