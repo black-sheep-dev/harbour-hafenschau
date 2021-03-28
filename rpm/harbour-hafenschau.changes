@@ -1,3 +1,6 @@
+* Sun Mar 28 2021 Black Sheep <blacksheep@nubecula.org> 0.2.2-1
+- Bugfix with text in twitter widget not showing
+
 * Sun Mar 28 2021 Black Sheep <blacksheep@nubecula.org> 0.2.1-1
 - New cover implementation
 - Fixed social media widget
