@@ -28,13 +28,15 @@ BackgroundItem {
             BusyIndicator {
                 size: BusyIndicatorSize.Medium
                 anchors.centerIn: headerImage
-                running: headerImage.status != Image.Ready
+                running: headerImage.status === Image.Loading
             }
 
             Image {
                 anchors.centerIn: parent
                 source: "image://theme/icon-l-play"
             }
+
+            onStatusChanged: if (status === Image.Error) source = "qrc:///images/dummy_image"
         }
 
         Label {

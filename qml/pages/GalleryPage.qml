@@ -19,19 +19,25 @@ Page {
 
         model: page.model
 
-        delegate: Image {
-            id: imageItem
-            source: image
-            cache: true
-            smooth: true
+        delegate: Rectangle {
+            anchors.fill: parent
 
-            width: parent.width
-            fillMode: Image.PreserveAspectCrop
+            Image {
+                id: imageItem
+                source: image
+                cache: true
+                smooth: true
 
-            BusyIndicator {
-                size: BusyIndicatorSize.Medium
-                anchors.centerIn: imageItem
-                running: imageItem.status != Image.Ready
+                width: parent.width
+                fillMode: Image.PreserveAspectCrop
+
+                BusyIndicator {
+                    size: BusyIndicatorSize.Medium
+                    anchors.centerIn: imageItem
+                    running: imageItem.status === Image.Loading
+                }
+
+                onStatusChanged: if (status === Image.Error) source = "qrc:///images/dummy_image"
             }
         }
     }

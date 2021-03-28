@@ -1,3 +1,9 @@
+* Sun Mar 28 2021 Black Sheep <blacksheep@nubecula.org> 0.2.1-1
+- New cover implementation
+- Fixed social media widget
+- Ui improvements
+- Cleanup
+
 * Wed Feb 03 2021 Black Sheep <blacksheep@nubecula.org> 0.2.0-1
 - Show comments for content if available (PushUpMenu at bottom of reader page)
 - Code improvments

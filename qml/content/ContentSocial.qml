@@ -40,7 +40,7 @@ BackgroundItem {
         }
 
         Image {
-            visible: item.image.length > 0
+            visible: item.image.length > 0 && headerImage.status != Image.Error
 
             id: headerImage
             source: item.image
@@ -54,7 +54,7 @@ BackgroundItem {
             BusyIndicator {
                 size: BusyIndicatorSize.Medium
                 anchors.centerIn: headerImage
-                running: headerImage.status != Image.Ready
+                running: headerImage.status === Image.Loading
             }
         }
 
@@ -89,8 +89,10 @@ BackgroundItem {
                 BusyIndicator {
                     size: BusyIndicatorSize.Medium
                     anchors.centerIn: avatarImage
-                    running: avatarImage.status != Image.Ready
+                    running: headerImage.status === Image.Loading
                 }
+
+                onStatusChanged: if (avatarImage.status === Image.Error) source = "qrc:///icons/twitter"
             }
 
             Label {

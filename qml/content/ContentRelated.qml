@@ -65,7 +65,7 @@ BackgroundItem {
                     BusyIndicator {
                         size: BusyIndicatorSize.Medium
                         anchors.centerIn: thumbnailImage
-                        running: thumbnailImage.status != Image.Ready
+                        running: thumbnailImage.status === Image.Loading
                     }
 
                     Image {

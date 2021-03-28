@@ -726,7 +726,9 @@ ContentItemSocial *ApiInterface::parseContentItemSocial(const QJsonObject &obj)
     auto social = new ContentItemSocial;
 
     social->setAccount(obj.value(ApiKey::account).toString());
-    social->setAvatar(obj.value(ApiKey::avatar).toString());
+    social->setAvatar(obj.value(ApiKey::avatar).toString()
+                      .remove(QStringLiteral("https://www.tagesschau.de/p/"))
+                      .prepend("https://"));
     social->setDate(QDateTime::fromString(obj.value(ApiKey::date).toString(), Qt::ISODate));
     social->setShorttext(obj.value(ApiKey::shortText).toString());
     social->setTitle(obj.value(ApiKey::title).toString());
@@ -735,7 +737,9 @@ ContentItemSocial *ApiInterface::parseContentItemSocial(const QJsonObject &obj)
 
     social->setImage(obj.value(ApiKey::images).toObject()
                      .value(ApiKey::mittel16x9).toObject()
-                     .value(ApiKey::imageUrl).toString());
+                     .value(ApiKey::imageUrl).toString()
+                     .remove(QStringLiteral("https://www.tagesschau.de/p/"))
+                     .prepend("https://"));
 
     const QString type = obj.value(ApiKey::type).toString();
 

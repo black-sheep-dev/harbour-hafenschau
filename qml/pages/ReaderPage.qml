@@ -14,13 +14,19 @@ Page {
 
     SilicaFlickable {
         PullDownMenu {
-            visible: (HafenschauProvider.developerOptions & HafenschauProvider.DevOptSaveNews) === HafenschauProvider.DevOptSaveNews
+            visible: (HafenschauProvider.developerOptions & HafenschauProvider.DevOptSaveNews) === HafenschauProvider.DevOptSaveNews || news.comments.length > 0
 
             MenuItem {
                 visible: (HafenschauProvider.developerOptions & HafenschauProvider.DevOptSaveNews) === HafenschauProvider.DevOptSaveNews
 
                 text: qsTr("Save news data")
                 onClicked: HafenschauProvider.saveNews(news)
+            }
+
+            MenuItem {
+                visible: news.comments.length > 0
+                text: qsTr("Show Comments")
+                onClicked: pageStack.push(Qt.resolvedUrl("CommentsListPage.qml"), {link: news.comments})
             }
         }
 
@@ -30,14 +36,6 @@ Page {
                 text: qsTr("Show Comments")
                 onClicked: pageStack.push(Qt.resolvedUrl("CommentsListPage.qml"), {link: news.comments})
             }
-        }
-
-        Timer {
-            id: refreshTimer
-            interval: 1000
-            repeat: false
-
-            onTriggered: refreshContentLayout()
         }
 
         anchors.fill: parent
@@ -193,10 +191,7 @@ Page {
                         console.log("NOT READY")
 
                     var obj = component.createObject(columnContent, {item: item})
-
-                    columnContent.height = columnContent.height + columnContent.spacing + obj.height
                 }
-                refreshTimer.start()
             }
         }
 
@@ -211,6 +206,4 @@ Page {
     function refreshContentLayout() {
         columnContent.height = columnContent.childrenRect.height + Theme.paddingLarge
     }
-
-    onOrientationChanged: refreshTimer.start()
 }
