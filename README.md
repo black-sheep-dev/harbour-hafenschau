@@ -11,6 +11,7 @@ This application is tested with Sailfish OS Versions:
 
 - 3.4.0.24 (Pallas Yllästunturi) (armv7hl)
 - 3.4.0.24 (Pallas Yllästunturi) (i486)
+- 4.0.1.48 (Koli) (armv7hl)
 
 #### Current state of development
 

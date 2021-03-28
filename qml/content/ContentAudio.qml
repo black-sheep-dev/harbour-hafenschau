@@ -32,7 +32,7 @@ BackgroundItem {
             BusyIndicator {
                 size: BusyIndicatorSize.Medium
                 anchors.centerIn: headerImage
-                running: headerImage.status != Image.Ready
+                running: headerImage.status === Image.Loading
             }
 
             Image {
