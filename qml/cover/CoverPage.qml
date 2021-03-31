@@ -15,6 +15,7 @@ CoverBackground {
 
         delegate: Rectangle {
             anchors.fill: parent
+            color: "#000000"
 
             Image {
                 id: imageDelegate
@@ -23,7 +24,7 @@ CoverBackground {
 
                 fillMode: Image.PreserveAspectCrop
 
-                //opacity: 0.0
+                opacity: 0.5
 
                 source: model.portrait.length > 0 ? model.portrait : "qrc:///images/dummy_image"
                 cache: true

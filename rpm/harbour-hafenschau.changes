@@ -1,3 +1,7 @@
+* Wed Mar 31 2021 Black Sheep <blacksheep@nubecula.org> 0.2.3-1
+- Cover background image changed for better readability
+- Include new content item for embedded HTML parts inside news item (disabled because of problems with current webview)
+
 * Sun Mar 28 2021 Black Sheep <blacksheep@nubecula.org> 0.2.2-1
 - Bugfix with text in twitter widget not showing
 

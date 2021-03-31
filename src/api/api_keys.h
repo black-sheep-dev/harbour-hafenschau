@@ -21,6 +21,7 @@ struct ApiKey {
     static const QString firstSentence;
     static const QString gallery;
     static const QString headline;
+    static const QString htmlEmbed;
     static const QString imageGallery;
     static const QString images;
     static const QString imageUrl;

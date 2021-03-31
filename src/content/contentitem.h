@@ -17,6 +17,7 @@ public:
         Box,                // box
         Gallery,            // image_gallery
         Headline,           // headline
+        HtmlEmbed,          // htmlEmbed
         List,               // list
         Quotation,          // quotation
         Related,            // related

@@ -17,6 +17,7 @@ const QString ApiKey::detailsWeb                = QStringLiteral("detailsweb");
 const QString ApiKey::firstSentence             = QStringLiteral("firstSentence");
 const QString ApiKey::gallery                   = QStringLiteral("gallery");
 const QString ApiKey::headline                  = QStringLiteral("headline");
+const QString ApiKey::htmlEmbed                 = QStringLiteral("htmlEmbed");
 const QString ApiKey::imageGallery              = QStringLiteral("image_gallery");
 const QString ApiKey::images                    = QStringLiteral("images");
 const QString ApiKey::imageUrl                  = QStringLiteral("imageurl");
