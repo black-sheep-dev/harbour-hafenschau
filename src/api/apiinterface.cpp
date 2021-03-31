@@ -576,6 +576,13 @@ News *ApiInterface::parseNews(const QJsonObject &obj)
             item->setContentType(ContentItem::Headline);
             const QString headline = objC.value(ApiKey::value).toString().remove(QRegExp("<[^>]*>"));
             item->setValue(headline);
+        } else if (contentType == ApiKey::htmlEmbed) {
+            item = new ContentItem;
+            item->setContentType(ContentItem::HtmlEmbed);
+            item->setValue(objC
+                           .value(ApiKey::htmlEmbed)
+                           .toObject().value(ApiKey::url)
+                           .toString());
         } else if (contentType == ApiKey::list) {
             item = parseContentItemList(objC.value(ApiKey::list).toObject());
         } else if (contentType == ApiKey::quotation) {
