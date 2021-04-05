@@ -7,6 +7,15 @@ CoverBackground {
     property int index: 0
     property NewsModel model: HafenschauProvider.newsModel(NewsModel.Homepage)
 
+    Timer {
+        id: timer
+        interval: 15000
+        repeat: true
+        running: true
+
+        onTriggered: slideShow.incrementCurrentIndex()
+    }
+
     SlideshowView {
         id: slideShow
         anchors.fill: parent

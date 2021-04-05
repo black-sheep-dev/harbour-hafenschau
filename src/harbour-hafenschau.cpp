@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
 #ifndef QT_DEBUG
     auto uri = "org.nubecula.harbour.hafenschau";
 #else
-#   define uri "org.nubecula.harbour.hafenschau"
+   #define uri "org.nubecula.harbour.hafenschau"
 #endif
 
     qmlRegisterType<CommentsModel>(uri, 1, 0, "CommentsModel");
