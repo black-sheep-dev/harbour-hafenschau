@@ -30,6 +30,7 @@ Page {
                 width: page.width - 2*x
 
                 color: Theme.highlightColor
+                wrapMode: Text.Wrap
 
                 text: qsTr("Manage automatic news refresh in a defined interval")
             }
@@ -60,7 +61,9 @@ Page {
             TextSwitch {
                 id: notificationSwitch
                 enabled: refreshModeComboBox.currentIndex !== 0
-                width: parent.width
+
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2*x
 
                 text: qsTr("Notification")
                 description: qsTr("Enable notification if breaking news is available")

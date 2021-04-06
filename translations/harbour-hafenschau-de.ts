@@ -70,11 +70,11 @@
     <name>HafenschauProvider</name>
     <message>
         <source>Hafenschau</source>
-        <translation type="unfinished">Hafenschau</translation>
+        <translation>Hafenschau</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard</translation>
     </message>
 </context>
 <context>
@@ -224,64 +224,64 @@
     <name>SettingsAutoRefreshPage</name>
     <message>
         <source>Auto Refresh Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisierungs Einstellungen</translation>
     </message>
     <message>
         <source>Refresh Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisierungsmodus</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Aus</translation>
     </message>
     <message>
         <source>Manage automatic news refresh in a defined interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwalte automatische Aktualisierungen von Nachrichten in einem bestimmten Intervall</translation>
     </message>
     <message numerus="yes">
         <source>%n Minute(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%n Seconds(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n Minute</numerusform>
+            <numerusform>%n Minuten</numerusform>
         </translation>
     </message>
     <message>
         <source>Notification</source>
-        <translation type="unfinished"></translation>
+        <translation>Benachrichtigung</translation>
     </message>
     <message>
         <source>Enable notification if breaking news is available</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiviere Benachrichtigunen über aktuellen Nachrichten</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n Second(s)</source>
+        <translation>
+            <numerusform>%n Sekunde</numerusform>
+            <numerusform>%n Sekunden</numerusform>
+        </translation>
     </message>
 </context>
 <context>
     <name>SettingsCoverPage</name>
     <message>
         <source>Cover Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Cover Einstellungen</translation>
     </message>
     <message>
         <source>Switch Cover</source>
-        <translation type="unfinished"></translation>
+        <translation>Cover wechseln</translation>
     </message>
     <message>
         <source>Turns on automatich switch of cover pages in a defined interval.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiviert automatisches Wechseln der Cover Seiten in einem festgelegten Intervall.</translation>
     </message>
     <message>
         <source>Update interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Update Intervall</translation>
     </message>
     <message>
         <source>Update interval for cover page switch</source>
-        <translation type="unfinished"></translation>
+        <translation>Update Intervall für Cover Seiten Wechsel</translation>
     </message>
 </context>
 <context>
@@ -339,19 +339,19 @@
     </message>
     <message>
         <source>Cover Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Cover Einstellungen</translation>
     </message>
     <message>
         <source>Manage cover options</source>
-        <translation type="unfinished"></translation>
+        <translation>Cover Optionen verwalten</translation>
     </message>
     <message>
         <source>Auto Refresh Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisierungs Einstellungen</translation>
     </message>
     <message>
         <source>Manage automatic refresh options</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatische Aktualisierungen verwalten</translation>
     </message>
 </context>
 <context>
@@ -382,10 +382,6 @@
     <message>
         <source>Top News</source>
         <translation>Aktuelle Nachrichten</translation>
-    </message>
-    <message>
-        <source>Test</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

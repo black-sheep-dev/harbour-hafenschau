@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="en">
 <context>
     <name>AboutPage</name>
     <message>
@@ -240,14 +240,9 @@
     </message>
     <message numerus="yes">
         <source>%n Minute(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%n Seconds(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n Minute</numerusform>
+            <numerusform>%n Minutes</numerusform>
         </translation>
     </message>
     <message>
@@ -257,6 +252,13 @@
     <message>
         <source>Enable notification if breaking news is available</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n Second(s)</source>
+        <translation>
+            <numerusform>%n Second</numerusform>
+            <numerusform>%n Seconds</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -379,10 +381,6 @@
     </message>
     <message>
         <source>Top News</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Test</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
