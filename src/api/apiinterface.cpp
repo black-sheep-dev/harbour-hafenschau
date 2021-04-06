@@ -180,7 +180,7 @@ void ApiInterface::onInternalLinkRequestFinished()
     if (doc.isEmpty())
         return;
 
-    auto *news = parseNews(doc.object());
+    auto news = parseNews(doc.object());
 
     if (news != nullptr)
         emit internalLinkAvailable(news);
@@ -198,7 +198,7 @@ void ApiInterface::onNewsRequestFinished()
         return;
 
     quint8 newsType = reply->property("news_type").toInt();
-    NewsModel *model = m_newsModels.value(newsType, nullptr);
+    auto model = m_newsModels.value(newsType, nullptr);
 
     if (model == nullptr)
         return;
@@ -240,6 +240,9 @@ void ApiInterface::onNewsRequestFinished()
 
             if (news == nullptr)
                 continue;
+
+            if (news->breakingNews())
+                emit breakingNewsAvailable(news);
 
             list.append(news);
         }

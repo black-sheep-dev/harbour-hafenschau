@@ -20,6 +20,10 @@ Page {
                 text: qsTr("All News")
                 onClicked: pageStack.push(Qt.resolvedUrl("RessortListPage.qml"))
             }
+//            MenuItem {
+//                text: qsTr("Test")
+//                onClicked: HafenschauProvider.test()
+//            }
             MenuItem {
                 text: qsTr("Refresh")
                 onClicked: HafenschauProvider.refresh(NewsModel.Homepage)
