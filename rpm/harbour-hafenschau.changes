@@ -1,3 +1,8 @@
+* Tue Apr 06 2021 Black Sheep <blacksheep@nubecula.org> 0.2.4-1
+- App cover function to change pages in a defined interval (see settings)
+- Auto refresh functionality (see settings)
+- Notification on breacking news (see settings)
+
 * Wed Mar 31 2021 Black Sheep <blacksheep@nubecula.org> 0.2.3-1
 - Cover background image changed for better readability
 - Include new content item for embedded HTML parts inside news item (disabled because of problems with current webview)

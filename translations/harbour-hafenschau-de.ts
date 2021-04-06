@@ -67,6 +67,17 @@
     </message>
 </context>
 <context>
+    <name>HafenschauProvider</name>
+    <message>
+        <source>Hafenschau</source>
+        <translation>Hafenschau</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation>Standard</translation>
+    </message>
+</context>
+<context>
     <name>NewsListPage</name>
     <message>
         <source>Refresh</source>
@@ -210,6 +221,70 @@
     </message>
 </context>
 <context>
+    <name>SettingsAutoRefreshPage</name>
+    <message>
+        <source>Auto Refresh Settings</source>
+        <translation>Aktualisierungs Einstellungen</translation>
+    </message>
+    <message>
+        <source>Refresh Mode</source>
+        <translation>Aktualisierungsmodus</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Aus</translation>
+    </message>
+    <message>
+        <source>Manage automatic news refresh in a defined interval</source>
+        <translation>Verwalte automatische Aktualisierungen von Nachrichten in einem bestimmten Intervall</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n Minute(s)</source>
+        <translation>
+            <numerusform>%n Minute</numerusform>
+            <numerusform>%n Minuten</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Notification</source>
+        <translation>Benachrichtigung</translation>
+    </message>
+    <message>
+        <source>Enable notification if breaking news is available</source>
+        <translation>Aktiviere Benachrichtigunen über aktuellen Nachrichten</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n Second(s)</source>
+        <translation>
+            <numerusform>%n Sekunde</numerusform>
+            <numerusform>%n Sekunden</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>SettingsCoverPage</name>
+    <message>
+        <source>Cover Settings</source>
+        <translation>Cover Einstellungen</translation>
+    </message>
+    <message>
+        <source>Switch Cover</source>
+        <translation>Cover wechseln</translation>
+    </message>
+    <message>
+        <source>Turns on automatich switch of cover pages in a defined interval.</source>
+        <translation>Aktiviert automatisches Wechseln der Cover Seiten in einem festgelegten Intervall.</translation>
+    </message>
+    <message>
+        <source>Update interval</source>
+        <translation>Update Intervall</translation>
+    </message>
+    <message>
+        <source>Update interval for cover page switch</source>
+        <translation>Update Intervall für Cover Seiten Wechsel</translation>
+    </message>
+</context>
+<context>
     <name>SettingsDeveloperPage</name>
     <message>
         <source>Developer Settings</source>
@@ -261,6 +336,22 @@
     <message>
         <source>Settings</source>
         <translation>Einstellungen</translation>
+    </message>
+    <message>
+        <source>Cover Settings</source>
+        <translation>Cover Einstellungen</translation>
+    </message>
+    <message>
+        <source>Manage cover options</source>
+        <translation>Cover Optionen verwalten</translation>
+    </message>
+    <message>
+        <source>Auto Refresh Settings</source>
+        <translation>Aktualisierungs Einstellungen</translation>
+    </message>
+    <message>
+        <source>Manage automatic refresh options</source>
+        <translation>Automatische Aktualisierungen verwalten</translation>
     </message>
 </context>
 <context>

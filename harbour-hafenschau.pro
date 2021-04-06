@@ -20,7 +20,7 @@ DEFINES += APP_TARGET=\\\"$$TARGET\\\"
 QT += multimedia dbus
 
 CONFIG += link_pkgconfig sailfishapp
-PKGCONFIG += qt5embedwidget
+PKGCONFIG += qt5embedwidget nemonotifications-qt5
 
 LIBS += -L../../lib -lkeepalive
 LIBS += -lz
@@ -72,6 +72,8 @@ DISTFILES += qml/harbour-hafenschau.qml \
     qml/pages/StartPage.qml \
     qml/pages/VideoPlayerPage.qml \
     qml/pages/WebViewPage.qml \
+    qml/pages/settings/SettingsAutoRefreshPage.qml \
+    qml/pages/settings/SettingsCoverPage.qml \
     qml/pages/settings/SettingsDeveloperPage.qml \
     qml/pages/settings/SettingsPage.qml \
     qml/pages/settings/SettingsRegionsPage.qml \
@@ -120,3 +122,8 @@ HEADERS += \
 
 RESOURCES += \
     ressources.qrc
+
+dbus.files = data/harbour.hafenschau.service
+dbus.path = $$INSTALL_ROOT/usr/share/dbus-1/services
+
+INSTALLS += dbus

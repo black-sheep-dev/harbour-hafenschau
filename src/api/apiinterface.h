@@ -31,6 +31,7 @@ public:
     NewsModel *newsModel(quint8 newsType = NewsModel::Homepage);
 
 signals:
+    void breakingNewsAvailable(News *news);
     void commentsModelAvailable(CommentsModel *model);
     void internalLinkAvailable(News *news);
 

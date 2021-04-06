@@ -22,6 +22,18 @@ Page {
 //                page: "../AboutPage.qml"
 //            }
             ListElement {
+                title: qsTr("Cover Settings");
+                description: qsTr("Manage cover options")
+                icon: "image://theme/icon-m-events"
+                page: "SettingsCoverPage.qml"
+            }
+            ListElement {
+                title: qsTr("Auto Refresh Settings");
+                description: qsTr("Manage automatic refresh options")
+                icon: "image://theme/icon-m-sync"
+                page: "SettingsAutoRefreshPage.qml"
+            }
+            ListElement {
                 title: qsTr("Developer Settings");
                 description: qsTr("Manage developer options")
                 icon: "image://theme/icon-m-developer-mode"

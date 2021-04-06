@@ -4,8 +4,15 @@ import Sailfish.Silica 1.0
 import org.nubecula.harbour.hafenschau 1.0
 
 CoverBackground {
-    property int index: 0
-    property NewsModel model: HafenschauProvider.newsModel(NewsModel.Homepage)
+
+    Timer {
+        id: timer
+        interval: HafenschauProvider.coverSwitchInterval
+        repeat: true
+        running: HafenschauProvider.coverSwitch
+
+        onTriggered: slideShow.incrementCurrentIndex()
+    }
 
     SlideshowView {
         id: slideShow
@@ -66,19 +73,14 @@ CoverBackground {
         }
     }
 
+
+
     CoverActionList {
         id: coverAction
 
         CoverAction {
             iconSource: "image://theme/icon-cover-previous"
-            onTriggered: {
-                if (index > 0)
-                    index -= 1
-                else
-                    index = model.newsCount() - 1
-
-                slideShow.decrementCurrentIndex()
-            }
+            onTriggered: slideShow.decrementCurrentIndex()
         }
 
         CoverAction {
@@ -88,18 +90,7 @@ CoverBackground {
 
         CoverAction {
             iconSource: "image://theme/icon-cover-next"
-            onTriggered: {
-//                if (index < (model.newsCount() - 1))
-//                    index += 1
-//                else
-//                    index = 0
-                slideShow.incrementCurrentIndex()
-            }
+            onTriggered: slideShow.incrementCurrentIndex()
         }
-    }
-
-    Connections {
-        target: model
-        onNewsChanged: index = 0
     }
 }

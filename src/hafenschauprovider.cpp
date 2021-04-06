@@ -1,20 +1,24 @@
 #include "hafenschauprovider.h"
 
+#ifdef QT_DEBUG
+    #include <QDebug>
+#endif
+
 #include <QSettings>
 #include <QFile>
 #include <QJsonDocument>
 #include <QStandardPaths>
 
+#include <notification.h>
 
 HafenschauProvider::HafenschauProvider(QObject *parent) :
-    QObject(parent),
-    m_api(new ApiInterface(this)),
-    m_newsModel(new NewsModel(this))
+    QObject(parent)
 {
     readSettings();
 
     connect(m_api, &ApiInterface::commentsModelAvailable, this, &HafenschauProvider::commentsModelAvailable);
     connect(m_api, &ApiInterface::internalLinkAvailable, this, &HafenschauProvider::internalLinkAvailable); 
+    connect(m_api, &ApiInterface::breakingNewsAvailable, this, &HafenschauProvider::onBreakingNewsAvailable);
 }
 
 HafenschauProvider::~HafenschauProvider()
@@ -45,6 +49,16 @@ void HafenschauProvider::initialize()
 bool HafenschauProvider::isInternalLink(const QString &link) const
 {
     return link.endsWith(QStringLiteral(".json")) && link.startsWith(QStringLiteral("https://www.tagesschau.de/api2"));
+}
+
+News *HafenschauProvider::newsById(const QString &sophoraId)
+{
+    auto model = m_api->newsModel(NewsModel::Homepage);
+
+    if (model == nullptr)
+        return nullptr;
+
+    return model->newsById(sophoraId);
 }
 
 NewsModel *HafenschauProvider::newsModel(quint8 newsType)
@@ -88,7 +102,6 @@ void HafenschauProvider::saveNews(News *news)
 
 void HafenschauProvider::searchContent(const QString &pattern, quint16 page)
 {
-    qDebug() << "SEARCH";
     m_api->searchContent(pattern, page);
 }
 
@@ -97,9 +110,34 @@ void HafenschauProvider::preventDisplayBlanking(bool enabled)
     m_displayBlanking->setPreventBlanking(enabled);
 }
 
+void HafenschauProvider::test()
+{
+    onBreakingNewsAvailable(m_api->newsModel(NewsModel::Homepage)->newsAt(0));
+}
+
+quint8 HafenschauProvider::autoRefresh() const
+{
+    return m_autoRefresh;
+}
+
+bool HafenschauProvider::coverSwitch() const
+{
+    return m_coverSwitch;
+}
+
+quint32 HafenschauProvider::coverSwitchInterval() const
+{
+    return m_coverSwitchInterval;
+}
+
 quint16 HafenschauProvider::developerOptions() const
 {
     return m_developerOptions;
+}
+
+bool HafenschauProvider::notification() const
+{
+    return m_notification;
 }
 
 void HafenschauProvider::refresh(bool complete)
@@ -110,6 +148,35 @@ void HafenschauProvider::refresh(bool complete)
 void HafenschauProvider::refresh(quint8 newsType, bool complete)
 {
     m_api->refresh(newsType, complete);
+}
+
+void HafenschauProvider::setAutoRefresh(quint8 interval)
+{
+    if (m_autoRefresh == interval)
+        return;
+
+    m_autoRefresh = interval;
+    emit autoRefreshChanged(m_autoRefresh);
+
+    updateBackgroundActivity();
+}
+
+void HafenschauProvider::setCoverSwitch(bool enabled)
+{
+    if (m_coverSwitch == enabled)
+        return;
+
+    m_coverSwitch = enabled;
+    emit coverSwitchChanged(m_coverSwitch);
+}
+
+void HafenschauProvider::setCoverSwitchInterval(quint32 interval)
+{
+    if (m_coverSwitchInterval == interval)
+        return;
+
+    m_coverSwitchInterval = interval;
+    emit coverSwitchIntervalChanged(m_coverSwitchInterval);
 }
 
 void HafenschauProvider::setDeveloperOptions(quint16 options)
@@ -124,9 +191,116 @@ void HafenschauProvider::setDeveloperOptions(quint16 options)
     m_api->enableDeveloperMode((m_developerOptions & DevOptSaveNews) == DevOptSaveNews);
 }
 
+void HafenschauProvider::setNotification(bool notification)
+{
+    if (m_notification == notification)
+        return;
+
+    m_notification = notification;
+    emit notificationChanged(m_notification);
+}
+
+void HafenschauProvider::onBackgroundActivityRunning()
+{
+#ifdef QT_DEBUG
+    qDebug() << "BACKGROUND ACTIVITY RUNNING";
+#endif
+
+    m_api->refresh(NewsModel::Homepage);
+
+    updateBackgroundActivity();
+}
+
+void HafenschauProvider::onBreakingNewsAvailable(News *news)
+{
+#ifdef QT_DEBUG
+    qDebug() << "BREACKING NEWS AVAILABLE";
+#endif
+
+    if (!m_notification || news == nullptr)
+        return;
+
+    if (m_notifications.contains(news->sophoraId()))
+        return;
+
+    Notification notification;
+    notification.setAppName(tr("Hafenschau"));
+    notification.setIcon(QStringLiteral("image://theme/icon-lock-information"));
+    notification.setCategory(QStringLiteral("x-hafenschau.information"));
+    notification.setSummary(news->title());
+    notification.setBody(news->firstSentence());
+    notification.setRemoteAction(Notification::remoteAction(
+                                    QStringLiteral("default"),
+                                    tr("Default"),
+                                    QStringLiteral("harbour.hafenschau.service"),
+                                    QStringLiteral("/harbour/hafenschau/service"),
+                                    QStringLiteral("herbour.hafenschau.service"),
+                                    QStringLiteral("open"),
+                                    QVariantList() << news->sophoraId()
+                                 ));
+    notification.publish();
+    connect(&notification, &Notification::clicked, &notification, &Notification::close);
+
+    m_notifications.append(news->sophoraId());
+}
+
+
+void HafenschauProvider::updateBackgroundActivity()
+{
+    // update background service
+    if (m_autoRefresh == AutoRefreshOff) {
+        if (m_backgroundActivity != nullptr) {
+            m_backgroundActivity->deleteLater();
+            m_backgroundActivity = nullptr;
+        }
+        return;
+    }
+
+    if (m_autoRefresh != AutoRefreshOff && m_backgroundActivity == nullptr) {
+        m_backgroundActivity = new BackgroundActivity(this);
+        connect(m_backgroundActivity, &BackgroundActivity::running, this, &HafenschauProvider::onBackgroundActivityRunning);
+    }
+
+    switch (m_autoRefresh) {
+    case AutoRefresh30Sec:
+        m_backgroundActivity->wait(BackgroundActivity::ThirtySeconds);
+        break;
+
+    case AutoRefresh150Sec:
+        m_backgroundActivity->wait(BackgroundActivity::TwoAndHalfMinutes);
+        break;
+
+    case AutoRefresh5Min:
+        m_backgroundActivity->wait(BackgroundActivity::FiveMinutes);
+        break;
+
+    case AutoRefresh15Min:
+        m_backgroundActivity->wait(BackgroundActivity::FifteenMinutes);
+        break;
+
+    case AutoRefresh30Min:
+        m_backgroundActivity->wait(BackgroundActivity::ThirtyMinutes);
+        break;
+
+    case AutoRefresh60Min:
+        m_backgroundActivity->wait(BackgroundActivity::OneHour);
+        break;
+
+    default:
+        break;
+    }
+}
+
 void HafenschauProvider::readSettings()
 {
     QSettings settings;
+
+    settings.beginGroup(QStringLiteral("APP"));
+    setAutoRefresh(settings.value(QStringLiteral("auto_refresh"), m_autoRefresh).toUInt());
+    setCoverSwitch(settings.value(QStringLiteral("cover_switch"), m_coverSwitch).toBool());
+    setCoverSwitchInterval(settings.value(QStringLiteral("cover_switch_interval"), m_coverSwitchInterval).toUInt());
+    setNotification(settings.value(QStringLiteral("notification"), m_notification).toBool());
+    settings.endGroup();
 
     settings.beginGroup(QStringLiteral("REGIONS"));
     QList<int> regions;
@@ -148,6 +322,13 @@ void HafenschauProvider::readSettings()
 void HafenschauProvider::writeSettings()
 {
     QSettings settings;
+
+    settings.beginGroup(QStringLiteral("APP"));
+    settings.setValue(QStringLiteral("auto_refresh"), m_autoRefresh);
+    settings.setValue(QStringLiteral("cover_switch"), m_coverSwitch);
+    settings.setValue(QStringLiteral("cover_switch_interval"), m_coverSwitchInterval);
+    settings.setValue(QStringLiteral("notification"), m_notification);
+    settings.endGroup();
 
     settings.beginGroup(QStringLiteral("REGIONS"));
     settings.beginWriteArray(QStringLiteral("active"));

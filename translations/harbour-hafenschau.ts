@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="en">
 <context>
     <name>AboutPage</name>
     <message>
@@ -63,6 +63,17 @@
     <name>ContentRelated</name>
     <message>
         <source>More on the subject</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>HafenschauProvider</name>
+    <message>
+        <source>Hafenschau</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -210,6 +221,70 @@
     </message>
 </context>
 <context>
+    <name>SettingsAutoRefreshPage</name>
+    <message>
+        <source>Auto Refresh Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage automatic news refresh in a defined interval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n Minute(s)</source>
+        <translation>
+            <numerusform>%n Minute</numerusform>
+            <numerusform>%n Minutes</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Notification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable notification if breaking news is available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n Second(s)</source>
+        <translation>
+            <numerusform>%n Second</numerusform>
+            <numerusform>%n Seconds</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>SettingsCoverPage</name>
+    <message>
+        <source>Cover Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch Cover</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turns on automatich switch of cover pages in a defined interval.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update interval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update interval for cover page switch</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SettingsDeveloperPage</name>
     <message>
         <source>Developer Settings</source>
@@ -260,6 +335,22 @@
     </message>
     <message>
         <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cover Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage cover options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Refresh Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage automatic refresh options</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
