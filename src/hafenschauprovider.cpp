@@ -234,7 +234,7 @@ void HafenschauProvider::onBreakingNewsAvailable(News *news)
                                     tr("Default"),
                                     QStringLiteral("harbour.hafenschau.service"),
                                     QStringLiteral("/harbour/hafenschau/service"),
-                                    QStringLiteral("herbour.hafenschau.service"),
+                                    QStringLiteral("harbour.hafenschau.service"),
                                     QStringLiteral("open"),
                                     QVariantList() << news->sophoraId()
                                  ));
