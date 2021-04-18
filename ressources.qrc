@@ -6,5 +6,6 @@
     <qresource prefix="/images">
         <file alias="audiograph">images/audiograph.png</file>
         <file alias="dummy_image">images/dummy_image.png</file>
+        <file alias="video_dummy">images/video_dummy.png</file>
     </qresource>
 </RCC>
