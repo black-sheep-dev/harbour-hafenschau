@@ -4,7 +4,7 @@ import Sailfish.Silica 1.0
 import org.nubecula.harbour.hafenschau 1.0
 
 BackgroundItem {
-    property ContentItemGallery item
+    property ContentItem item
 
     width: parent.width
     height: headerImage.height + labelTitle.height + separatorBottom.height + 2 * columnBox.spacing
@@ -17,21 +17,12 @@ BackgroundItem {
 
         Image {
             id: headerImage
-            source: item.model().itemAt(0).image
+            source: "/usr/share/harbour-hafenschau/images/unkown.png"
             cache: true
             smooth: true
 
-
             width: parent.width
             fillMode: Image.PreserveAspectCrop
-
-            BusyIndicator {
-                size: BusyIndicatorSize.Medium
-                anchors.centerIn: headerImage
-                running: headerImage.status === Image.Loading
-            }
-
-            onStatusChanged: if (status === Image.Error) source = "/usr/share/harbour-hafenschau/images/dummy_image.png"
         }
 
         Label {
@@ -42,7 +33,7 @@ BackgroundItem {
             wrapMode: Text.WordWrap
             color: Theme.highlightColor
 
-            text: item.model().itemAt(0).title
+            text: qsTr("Unkown Content")
         }
 
         Separator {
@@ -52,5 +43,5 @@ BackgroundItem {
         }
     }
 
-    onClicked: pageStack.push(Qt.resolvedUrl("../pages/GalleryPage.qml"), {model: item.model})
+    onClicked: pageStack.push(Qt.resolvedUrl("../pages/DataReaderPage.qml"), { text: item.value });
 }

@@ -562,7 +562,7 @@ News *ApiInterface::parseNews(const QJsonObject &obj)
     QList<ContentItem *> items;
 
     for (const QJsonValue &x : content) {
-        const QJsonObject &objC = x.toObject();
+        const QJsonObject objC = x.toObject();
 
         const QString contentType = objC.value(ApiKey::type).toString();
 
@@ -603,6 +603,9 @@ News *ApiInterface::parseNews(const QJsonObject &obj)
             item->setValue(objC.value(ApiKey::value).toString());
         } else if (contentType == ApiKey::video) {
             item = parseContentItemVideo(objC.value(ApiKey::video).toObject());
+        } else {
+            item = new ContentItem;
+            item->setValue(QJsonDocument(objC).toJson(QJsonDocument::Indented));
         }
 
         if (!item)

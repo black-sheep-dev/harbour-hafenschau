@@ -9,18 +9,18 @@ BackgroundItem {
     property bool playing: false
     property ContentItemAudio item
 
-    x: Theme.horizontalPageMargin
-    width: parent.width - 2*x
+    width: parent.width
     height: headerImage.height + labelTitle.height  + labelText.height + separatorBottom.height + 3 * columnVideo.spacing
 
     Column {
         id: columnVideo
-        width: parent.width
+        x: Theme.horizontalPageMargin
+        width: parent.width - 2*x
         spacing: Theme.paddingMedium
 
         Image {
             id: headerImage
-            source: item.image.length > 0 ? item.image : "qrc:///images/audiograph"
+            source: item.image.length > 0 ? item.image : "/usr/share/harbour-hafenschau/images/audiograph.png"
             cache: true
             smooth: true
 
@@ -50,6 +50,8 @@ BackgroundItem {
 
                 onExited: audioPlayer.seek(value)
             }
+
+            onStatusChanged: if (status === Image.Error) source = "/usr/share/harbour-hafenschau/images/audiograph.png"
         }
 
         Label {

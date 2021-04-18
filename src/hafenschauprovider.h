@@ -17,7 +17,7 @@ class HafenschauProvider : public QObject
     Q_PROPERTY(quint8 autoRefresh READ autoRefresh WRITE setAutoRefresh NOTIFY autoRefreshChanged)
     Q_PROPERTY(bool coverSwitch READ coverSwitch WRITE setCoverSwitch NOTIFY coverSwitchChanged)
     Q_PROPERTY(quint32 coverSwitchInterval READ coverSwitchInterval WRITE setCoverSwitchInterval NOTIFY coverSwitchIntervalChanged)
-    Q_PROPERTY(quint16 developerOptions READ developerOptions WRITE setDeveloperOptions NOTIFY developerOptionsChanged)
+    Q_PROPERTY(quint8 developerOptions READ developerOptions WRITE setDeveloperOptions NOTIFY developerOptionsChanged)
     Q_PROPERTY(bool notification READ notification WRITE setNotification NOTIFY notificationChanged)
 
 public:
@@ -33,8 +33,9 @@ public:
     Q_ENUM(AutoRefresh)
 
     enum DeveloperOption {
-        DevOptNone          = 0x00,
-        DevOptSaveNews      = 0x01
+        DevOptNone                  = 0x00,
+        DevOptSaveNews              = 0x01,
+        DevOptShowUnkownContent     = 0x02,
     };
     Q_ENUM(DeveloperOption)
     Q_DECLARE_FLAGS(DeveloperOptions, DeveloperOption)
@@ -62,7 +63,7 @@ public:
     quint8 autoRefresh() const;
     bool coverSwitch() const;
     quint32 coverSwitchInterval() const;
-    quint16 developerOptions() const; 
+    quint8 developerOptions() const;
     bool notification() const;
 
 signals:
@@ -85,7 +86,7 @@ public slots:
     void setAutoRefresh(quint8 interval);
     void setCoverSwitch(bool enabled);
     void setCoverSwitchInterval(quint32 interval);
-    void setDeveloperOptions(quint16 options);
+    void setDeveloperOptions(quint8 options);
     void setNotification(bool notification);
 
 private slots:
@@ -107,7 +108,7 @@ private:
     quint8 m_autoRefresh{AutoRefreshOff};
     bool m_coverSwitch{true};
     quint32 m_coverSwitchInterval{15000};
-    quint16 m_developerOptions{DevOptNone};
+    quint8 m_developerOptions{DevOptNone};
     bool m_notification{false};
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(HafenschauProvider::DeveloperOptions)

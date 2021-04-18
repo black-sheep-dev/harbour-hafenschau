@@ -130,7 +130,7 @@ quint32 HafenschauProvider::coverSwitchInterval() const
     return m_coverSwitchInterval;
 }
 
-quint16 HafenschauProvider::developerOptions() const
+quint8 HafenschauProvider::developerOptions() const
 {
     return m_developerOptions;
 }
@@ -179,7 +179,7 @@ void HafenschauProvider::setCoverSwitchInterval(quint32 interval)
     emit coverSwitchIntervalChanged(m_coverSwitchInterval);
 }
 
-void HafenschauProvider::setDeveloperOptions(quint16 options)
+void HafenschauProvider::setDeveloperOptions(quint8 options)
 {
     if (m_developerOptions == options)
         return;

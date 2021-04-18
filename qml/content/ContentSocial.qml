@@ -6,8 +6,7 @@ import org.nubecula.harbour.hafenschau 1.0
 BackgroundItem {
     property ContentItemSocial item
 
-    x: Theme.horizontalPageMargin
-    width: parent.width - 2*x
+    width: parent.width
     height: {
         var value = labelShorttext.height + labelTitle.height + separatorBottom.height + accountRow.height + 4 * columnBox.spacing
         if (item.image.length > 0)
@@ -18,7 +17,8 @@ BackgroundItem {
 
     Column {
         id: columnBox
-        width: parent.width
+        x: Theme.horizontalPageMargin
+        width: parent.width - 2*x
         spacing: Theme.paddingMedium
 
         Separator {

@@ -2,7 +2,7 @@ import QtQuick 2.2
 import Sailfish.Silica 1.0
 
 Dialog {
-    property string url
+    property alias url: urlLabel.text
 
     Column {
         width: parent.width
@@ -15,11 +15,10 @@ Dialog {
         }
 
         Label {
+            id: urlLabel
             x: Theme.horizontalPageMargin
             width: parent.width - 2*x
             wrapMode: Text.WrapAnywhere
-
-            text: url
         }
 
     }

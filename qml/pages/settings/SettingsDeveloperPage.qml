@@ -44,6 +44,22 @@ Page {
 
                 Component.onCompleted: checked = (HafenschauProvider.developerOptions & HafenschauProvider.DevOptSaveNews) === HafenschauProvider.DevOptSaveNews
             }
+
+            TextSwitch {
+                id: showUnkownContentSwitch
+                text: qsTr("Show unkown content")
+                description: qsTr("If enabled unkown content items are displayed in the reader page.")
+
+                onCheckedChanged: {
+                    if (checked)
+                        HafenschauProvider.developerOptions |= HafenschauProvider.DevOptShowUnkownContent
+                    else
+                        HafenschauProvider.developerOptions &= ~HafenschauProvider.DevOptShowUnkownContent
+                }
+
+
+                Component.onCompleted: checked = (HafenschauProvider.developerOptions & HafenschauProvider.DevOptShowUnkownContent) === HafenschauProvider.DevOptShowUnkownContent
+            }
         }
     }
 
