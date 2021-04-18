@@ -1,3 +1,7 @@
+* Sun Apr 18 2021 Black Sheep <blacksheep@nubecula.org> 0.3.1-1
+- Fixed bug with placeholder image on audio stream
+- Add placeholder image on video stream
+
 * Tue Apr 06 2021 Black Sheep <blacksheep@nubecula.org> 0.3.0-1
 - App cover function to change pages in a defined interval (see settings)
 - Auto refresh functionality (see settings)
