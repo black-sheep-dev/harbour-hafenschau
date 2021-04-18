@@ -6,8 +6,7 @@ import org.nubecula.harbour.hafenschau 1.0
 BackgroundItem {
     property ContentItemRelated item
 
-    x: Theme.horizontalPageMargin
-    width: parent.width - 2*x
+    width: parent.width
     height: separatorTop.height + labelHeader.height + listView.height + 2 * columnBox.spacing
 
     Column {
@@ -17,13 +16,15 @@ BackgroundItem {
 
         Separator {
             id: separatorTop
-            width: parent.width
+            x: Theme.horizontalPageMargin
+            width: parent.width - 2*x
             color: Theme.highlightBackgroundColor
         }
 
         Label {
             id: labelHeader
-            width: parent.width
+            x: Theme.horizontalPageMargin
+            width: parent.width - 2*x
 
             font.pixelSize: Theme.fontSizeMedium
             wrapMode: Text.WordWrap
@@ -55,6 +56,7 @@ BackgroundItem {
 
                     fillMode: Image.PreserveAspectCrop
 
+                    x: Theme.horizontalPageMargin
                     width: Theme.itemSizeHuge * 0.8
                     height: width
 
@@ -111,7 +113,8 @@ BackgroundItem {
                     visible: index < (listView.count - 1)
                     id: separatorBottom
                     anchors.bottom: parent.bottom
-                    width: parent.width
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2*x
                     color: Theme.primaryColor
                 }
 

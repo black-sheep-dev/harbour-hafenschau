@@ -6,13 +6,13 @@ import org.nubecula.harbour.hafenschau 1.0
 BackgroundItem {
     property ContentItemList item
 
-    x: Theme.horizontalPageMargin
-    width: parent.width - 2*x
+    width: parent.width
     height: separatorTop.height + labelHeader.height + listView.height + 2 * columnBox.spacing
 
     Column {
         id: columnBox
-        width: parent.width
+        x: Theme.horizontalPageMargin
+        width: parent.width - 2*x
         spacing: Theme.paddingMedium
 
         Separator {

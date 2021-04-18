@@ -67,6 +67,20 @@
     </message>
 </context>
 <context>
+    <name>ContentUnkown</name>
+    <message>
+        <source>Unkown Content</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DataReaderPage</name>
+    <message>
+        <source>Raw data viewer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HafenschauProvider</name>
     <message>
         <source>Hafenschau</source>
@@ -304,6 +318,14 @@
     </message>
     <message>
         <source>When there is a problem with displaying a special news, provide this data on GitHub as an issue to help fixing it. An additional screenshot helps too!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show unkown content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If enabled unkown content items are displayed in the reader page.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

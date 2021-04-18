@@ -6,18 +6,18 @@ import org.nubecula.harbour.hafenschau 1.0
 BackgroundItem {
     property ContentItemVideo item
 
-    x: Theme.horizontalPageMargin
-    width: parent.width - 2*x
+    width: parent.width
     height: headerImage.height + labelTitle.height + separatorBottom.height + 2 * columnVideo.spacing
 
     Column {
         id: columnVideo
-        width: parent.width
+        x: Theme.horizontalPageMargin
+        width: parent.width - 2*x
         spacing: Theme.paddingMedium
 
         Image {
             id: headerImage
-            source: item.image.length > 0 ? item.image : "qrc:///images/video_dummy"
+            source: item.image.length > 0 ? item.image : "/usr/share/harbour-hafenschau/images/video_dummy.png"
             cache: true
             smooth: true
 
@@ -36,7 +36,7 @@ BackgroundItem {
                 source: "image://theme/icon-l-play"
             }
 
-            onStatusChanged: if (status === Image.Error) source = "qrc:///images/dummy_image"
+            onStatusChanged: if (status === Image.Error) source = "/usr/share/harbour-hafenschau/images/video_dummy.png"
         }
 
         Label {

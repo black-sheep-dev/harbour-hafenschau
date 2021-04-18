@@ -67,6 +67,20 @@
     </message>
 </context>
 <context>
+    <name>ContentUnkown</name>
+    <message>
+        <source>Unkown Content</source>
+        <translation>Unbekannter Inhalt</translation>
+    </message>
+</context>
+<context>
+    <name>DataReaderPage</name>
+    <message>
+        <source>Raw data viewer</source>
+        <translation>Rohdaten Ansicht</translation>
+    </message>
+</context>
+<context>
     <name>HafenschauProvider</name>
     <message>
         <source>Hafenschau</source>
@@ -305,6 +319,14 @@
     <message>
         <source>When there is a problem with displaying a special news, provide this data on GitHub as an issue to help fixing it. An additional screenshot helps too!</source>
         <translation>Wenn es zu Darstellungsprobleme bei speziellen Artikeln kommt, stelle diese Daten mit einer Fehlermeldung auf GitHub zur Verfügung! Ein zusätzlicher Screenshot kann auch helfen!</translation>
+    </message>
+    <message>
+        <source>Show unkown content</source>
+        <translation>Zeige unbekannte Inhalte</translation>
+    </message>
+    <message>
+        <source>If enabled unkown content items are displayed in the reader page.</source>
+        <translation>Aktivieren um unbekannte Inhalte auf der Leseseite anzuzeigen.</translation>
     </message>
 </context>
 <context>

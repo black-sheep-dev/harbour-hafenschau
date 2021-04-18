@@ -186,7 +186,10 @@ Page {
                     /*} else if (item.contentType === ContentItem.HtmlEmbed) {
                         component = Qt.createComponent("../content/ContentHtmlEmbed.qml") */
                     } else {
-                        continue
+                        if ((HafenschauProvider.developerOptions & HafenschauProvider.DevOptShowUnkownContent) !== HafenschauProvider.DevOptShowUnkownContent)
+                            continue
+
+                        component = Qt.createComponent("../content/ContentUnkown.qml")
                     }
 
                     if (component.status !== Component.Ready)

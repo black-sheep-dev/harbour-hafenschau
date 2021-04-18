@@ -10,7 +10,7 @@
 #   - translation filenames have to be changed
 
 # VERSION
-VERSION = 0.3.1-1
+VERSION = 0.3.2-1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # The name of your application
@@ -59,11 +59,13 @@ DISTFILES += qml/harbour-hafenschau.qml \
     qml/content/ContentRelated.qml \
     qml/content/ContentSocial.qml \
     qml/content/ContentText.qml \
+    qml/content/ContentUnkown.qml \
     qml/content/ContentVideo.qml \
     qml/cover/CoverPage.qml \
     qml/delegates/NewsListItem.qml \
     qml/dialogs/OpenExternalUrlDialog.qml \
     qml/pages/CommentsListPage.qml \
+    qml/pages/DataReaderPage.qml \
     qml/pages/GalleryPage.qml \
     qml/pages/NewsListPage.qml \
     qml/pages/ReaderPage.qml \
@@ -126,4 +128,7 @@ RESOURCES += \
 dbus.files = data/harbour.hafenschau.service
 dbus.path = $$INSTALL_ROOT/usr/share/dbus-1/services
 
-INSTALLS += dbus
+images.files = images/*.png
+images.path = $$INSTALL_ROOT/usr/share/harbour-hafenschau/images
+
+INSTALLS += dbus images
