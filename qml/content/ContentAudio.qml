@@ -20,7 +20,7 @@ BackgroundItem {
 
         Image {
             id: headerImage
-            source: item.image > 0 ? item.image : "qrc:/images/audiograph"
+            source: item.image.length > 0 ? item.image : "qrc:///images/audiograph"
             cache: true
             smooth: true
 

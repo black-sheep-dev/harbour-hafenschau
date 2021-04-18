@@ -17,7 +17,7 @@ BackgroundItem {
 
         Image {
             id: headerImage
-            source: item.image
+            source: item.image.length > 0 ? item.image : "qrc:///images/video_dummy"
             cache: true
             smooth: true
 
