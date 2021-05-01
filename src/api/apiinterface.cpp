@@ -514,6 +514,7 @@ News *ApiInterface::parseNews(const QJsonObject &obj)
     if (m_developerMode)
         news->setDebugData(obj);
 
+    news->setSophoraId(obj.value(ApiKey::sophoraId).toString());
     news->setBreakingNews(obj.value(ApiKey::breakingNews).toBool());
     news->setDate(QDateTime::fromString(obj.value(ApiKey::date).toString(), Qt::ISODate));
     news->setFirstSentence(obj.value(ApiKey::firstSentence).toString());

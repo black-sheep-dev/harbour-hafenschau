@@ -183,9 +183,9 @@ Page {
                         component = Qt.createComponent("../content/ContentAudio.qml")
                     } else if (item.contentType === ContentItem.Social) {
                         component = Qt.createComponent("../content/ContentSocial.qml")
-                    /*} else if (item.contentType === ContentItem.HtmlEmbed) {
-                        component = Qt.createComponent("../content/ContentHtmlEmbed.qml") */
-                    } else {
+                    }/* else if (item.contentType === ContentItem.HtmlEmbed) {
+                        component = Qt.createComponent("../content/ContentHtmlEmbed.qml")
+                    }*/ else {
                         if ((HafenschauProvider.developerOptions & HafenschauProvider.DevOptShowUnkownContent) !== HafenschauProvider.DevOptShowUnkownContent)
                             continue
 
