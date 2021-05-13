@@ -91,6 +91,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<ContentItemRelated>(uri, 1, 0, "ContentItemRelated");
     qmlRegisterType<ContentItemSocial>(uri, 1, 0, "ContentItemSocial");
     qmlRegisterType<ContentItemVideo>(uri, 1, 0, "ContentItemVideo");
+    qmlRegisterType<ContentItemHtmlEmbed>(uri, 1, 0, "ContentItemHtmlEmbed");
     qmlRegisterType<GalleryItem>(uri, 1, 0, "GalleryItem");
     qmlRegisterType<GalleryModel>(uri, 1, 0, "GalleryModel");
     qmlRegisterType<News>(uri, 1, 0, "News");

@@ -8,6 +8,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonParseError>
+#include <QRegularExpression>
+#include <QRegularExpressionMatch>
 #include <QUrlQuery>
 
 #include <zlib.h>
@@ -63,14 +65,25 @@ NewsModel *ApiInterface::newsModel(quint8 newsType)
 
 void ApiInterface::getComments(const QString &link)
 {
-    QNetworkReply *reply = m_manager->get(getRequest(link));
+    auto reply = m_manager->get(getRequest(link));
     connect(reply, &QNetworkReply::finished, this, &ApiInterface::onCommentsMetaLinkAvailable);
 }
 
 void ApiInterface::getInteralLink(const QString &link)
 {
-    QNetworkReply *reply = m_manager->get(getRequest(link));
+    auto reply = m_manager->get(getRequest(link));
     connect(reply, &QNetworkReply::finished, this, &ApiInterface::onInternalLinkRequestFinished);
+}
+
+void ApiInterface::getHtmlEmbed(ContentItemHtmlEmbed *item)
+{
+    if (item == nullptr)
+        return;
+
+    m_htmlEmbedItems.insert(item->value(), item);
+
+    auto reply = m_manager->get(getRequest(item->value()));
+    connect(reply, &QNetworkReply::finished, this, &ApiInterface::onHtmlEmbedRequestFinished);
 }
 
 void ApiInterface::refresh(quint8 newsType, bool complete)
@@ -167,6 +180,38 @@ void ApiInterface::onCommentsMetaLinkAvailable()
     QNetworkReply *reply = m_manager->get(getRequest(obj.value(ApiKey::details).toString()));
     reply->setProperty("closed", !obj.value(ApiKey::commentsAllowed).toBool());
     connect(reply, &QNetworkReply::finished, this, &ApiInterface::onCommentsAvailable);
+}
+
+void ApiInterface::onHtmlEmbedRequestFinished()
+{
+    auto reply = qobject_cast<QNetworkReply *>(sender());
+
+    if (reply == nullptr)
+        return;
+
+    // parse data
+    const QString data = getReplyData(reply);
+    reply->deleteLater();
+
+    // get image link and title
+    auto item = m_htmlEmbedItems.take(reply->url().toString());
+
+    if (item == nullptr)
+        return;
+
+    // image
+    QRegularExpression re(QStringLiteral("<img.*?src=\"(.*?)\""));
+    QRegularExpressionMatch match = re.match(data);
+
+    if (match.hasMatch())
+        item->setImage(match.captured(1));
+
+    // title
+    re.setPattern(QStringLiteral("<img.*?alt=\"(.*?)\""));
+    match = re.match(data);
+
+    if (match.hasMatch())
+        item->setTitle(match.captured(1));
 }
 
 void ApiInterface::onInternalLinkRequestFinished()
@@ -581,12 +626,13 @@ News *ApiInterface::parseNews(const QJsonObject &obj)
             const QString headline = objC.value(ApiKey::value).toString().remove(QRegExp("<[^>]*>"));
             item->setValue(headline);
         } else if (contentType == ApiKey::htmlEmbed) {
-            item = new ContentItem;
+            item = new ContentItemHtmlEmbed;
             item->setContentType(ContentItem::HtmlEmbed);
             item->setValue(objC
                            .value(ApiKey::htmlEmbed)
                            .toObject().value(ApiKey::url)
                            .toString());
+            getHtmlEmbed(reinterpret_cast<ContentItemHtmlEmbed *>(item));
         } else if (contentType == ApiKey::list) {
             item = parseContentItemList(objC.value(ApiKey::list).toObject());
         } else if (contentType == ApiKey::quotation) {

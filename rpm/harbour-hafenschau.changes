@@ -1,3 +1,6 @@
+* Thu May 13 2021 Black Sheep <blacksheep@nubecula.org> 0.3.4-1
+- New content item HtmlEmbed
+
 * Sat May 01 2021 Black Sheep <blacksheep@nubecula.org> 0.3.3-1
 - Fixed a bug with notifications not opening the correct news when clicked
 
