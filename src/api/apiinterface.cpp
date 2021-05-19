@@ -189,6 +189,8 @@ void ApiInterface::onHtmlEmbedRequestFinished()
     if (reply == nullptr)
         return;
 
+    const int status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+
     // parse data
     const QString data = getReplyData(reply);
     reply->deleteLater();
@@ -198,6 +200,12 @@ void ApiInterface::onHtmlEmbedRequestFinished()
 
     if (item == nullptr)
         return;
+
+    // check status code
+    if (status != 200) {
+        item->setAvailable(false);
+        return;
+    }
 
     // image
     QRegularExpression re(QStringLiteral("<img.*?src=\"(.*?)\""));

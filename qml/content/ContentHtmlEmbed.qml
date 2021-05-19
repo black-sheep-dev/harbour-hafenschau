@@ -6,6 +6,7 @@ import org.nubecula.harbour.hafenschau 1.0
 BackgroundItem {
     property ContentItemHtmlEmbed item
 
+    visible: item.available
     width: parent.width
     height: columnBox.height
 
@@ -23,10 +24,10 @@ BackgroundItem {
         }
 
         Image {
-            visible: item.image.length > 0
+            //visible: item.image.length > 0
 
             id: headerImage
-            source: item.image
+            source: item.image.length > 0 ? item.image : "/usr/share/harbour-hafenschau/images/webcontent.png"
             cache: true
             smooth: true
 
@@ -39,10 +40,11 @@ BackgroundItem {
                 running: headerImage.status === Image.Loading
             }
 
-            onStatusChanged: if (status === Image.Error) source = "/usr/share/harbour-hafenschau/images/dummy_image.png"
+            onStatusChanged: if (status === Image.Error) source = "/usr/share/harbour-hafenschau/images/webcontent.png"
         }
 
         Label {
+            visible: item.title.length > 0
             id: labelTitle
             width: parent.width
 
