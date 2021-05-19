@@ -6,6 +6,11 @@ ContentItemHtmlEmbed::ContentItemHtmlEmbed(QObject *parent) :
 
 }
 
+bool ContentItemHtmlEmbed::available() const
+{
+    return m_available;
+}
+
 QString ContentItemHtmlEmbed::image() const
 {
     return m_image;
@@ -14,6 +19,15 @@ QString ContentItemHtmlEmbed::image() const
 QString ContentItemHtmlEmbed::title() const
 {
     return m_title;
+}
+
+void ContentItemHtmlEmbed::setAvailable(bool available)
+{
+    if (m_available == available)
+        return;
+
+    m_available = available;
+    emit availableChanged(m_available);
 }
 
 void ContentItemHtmlEmbed::setImage(const QString &image)
