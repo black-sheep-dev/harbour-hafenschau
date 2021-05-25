@@ -27,6 +27,10 @@
         <source>Sources</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Add star</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CommentsListPage</name>

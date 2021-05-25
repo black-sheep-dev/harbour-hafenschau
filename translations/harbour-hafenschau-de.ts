@@ -27,6 +27,10 @@
         <source>Sources</source>
         <translation>Quellen</translation>
     </message>
+    <message>
+        <source>Add star</source>
+        <translation>Stern hinzufügen</translation>
+    </message>
 </context>
 <context>
     <name>CommentsListPage</name>
