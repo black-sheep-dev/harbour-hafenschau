@@ -22,7 +22,7 @@ BackgroundItem {
             smooth: true
 
             width: parent.width
-            fillMode: Image.PreserveAspectCrop
+            height: sourceSize.height * parent.width / sourceSize.width
         }
 
         Label {

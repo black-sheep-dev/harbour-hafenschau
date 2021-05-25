@@ -47,9 +47,8 @@ BackgroundItem {
             cache: true
             smooth: true
 
-
             width: parent.width
-            fillMode: Image.PreserveAspectCrop
+            height: sourceSize.height * parent.width / sourceSize.width
 
             BusyIndicator {
                 size: BusyIndicatorSize.Medium
