@@ -4,9 +4,9 @@ import Sailfish.Silica 1.0
 import org.nubecula.harbour.hafenschau 1.0
 
 BackgroundItem {
-    property ContentItemHtmlEmbed item
+    property ContentItem item
 
-    visible: item.available
+    visible: titleLabel.text.length > 0
     width: parent.width
     height: columnBox.height
 
@@ -17,22 +17,19 @@ BackgroundItem {
         spacing: Theme.paddingMedium
 
         Separator {
-            visible: item.image.length === 0
-            id: separatorTop
             width: parent.width
             color: Theme.highlightBackgroundColor
         }
 
         Image {
-            //visible: item.image.length > 0
-
             id: headerImage
-            source: item.image.length > 0 ? item.image : "/usr/share/harbour-hafenschau/images/webcontent.png"
             cache: true
             smooth: true
 
             width: parent.width
             height: sourceSize.height * parent.width / sourceSize.width
+
+            source: "/usr/share/harbour-hafenschau/images/webcontent.png"
 
             BusyIndicator {
                 size: BusyIndicatorSize.Medium
@@ -44,23 +41,30 @@ BackgroundItem {
         }
 
         Label {
-            visible: item.title.length > 0
-            id: labelTitle
+            id: titleLabel
             width: parent.width
 
             font.pixelSize: Theme.fontSizeMedium
             wrapMode: Text.WordWrap
             color: Theme.highlightColor
-
-            text: item.title
         }
 
         Separator {
-            id: separatorBottom
             width: parent.width
             color: Theme.highlightBackgroundColor
         }
     }
 
     onClicked: pageStack.push(Qt.resolvedUrl("../pages/WebViewPage.qml"), { url: item.value })
+
+    Connections {
+        target: HafenschauProvider
+        onHtmlEmbedAvailable: {
+            if (url !== item.value) return
+            titleLabel.text = title
+            headerImage.source = image
+        }
+    }
+
+    Component.onCompleted: HafenschauProvider.getHtmlEmbed(item.value)
 }

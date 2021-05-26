@@ -14,10 +14,8 @@ static const QString HAFENSCHAU_API_ENDPOINT_INDEX_FEED_COUNT   = QStringLiteral
 #include <QQueue>
 
 #include "src/comments/commentsmodel.h"
-#include "src/content/contentitemhtmlembed.h"
 #include "src/news/news.h"
 #include "src/news/newsmodel.h"
-
 
 class ApiInterface : public QObject
 {
@@ -35,12 +33,13 @@ public:
 signals:
     void breakingNewsAvailable(News *news);
     void commentsModelAvailable(CommentsModel *model);
+    void htmlEmbedAvailable(const QString &url, const QString &image, const QString &title);
     void internalLinkAvailable(News *news);
 
 public slots:
     void getComments(const QString &link);
     void getInteralLink(const QString &link);
-    void getHtmlEmbed(ContentItemHtmlEmbed *item);
+    void getHtmlEmbed(const QString &link);
     void refresh(quint8 newsType, bool complete = false);
     void setActiveRegions(const QList<int> &regions);
     void searchContent(const QString &pattern, quint16 page = 1);
@@ -78,7 +77,6 @@ private:
 
     QList<int> m_activeRegions;
     bool m_developerMode{false};
-    QHash<QString, ContentItemHtmlEmbed *> m_htmlEmbedItems;
     QNetworkAccessManager *m_manager;
     QHash<quint8, NewsModel *> m_newsModels;    
 };

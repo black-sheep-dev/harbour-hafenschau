@@ -10,7 +10,7 @@
 #   - translation filenames have to be changed
 
 # VERSION
-VERSION = 0.3.6-1
+VERSION = 0.3.7-1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # The name of your application
@@ -34,7 +34,6 @@ SOURCES += src/harbour-hafenschau.cpp \
     src/content/contentitemaudio.cpp \
     src/content/contentitembox.cpp \
     src/content/contentitemgallery.cpp \
-    src/content/contentitemhtmlembed.cpp \
     src/content/contentitemlist.cpp \
     src/content/contentitemrelated.cpp \
     src/content/contentitemsocial.cpp \
@@ -109,7 +108,6 @@ HEADERS += \
     src/content/contentitemaudio.h \
     src/content/contentitembox.h \
     src/content/contentitemgallery.h \
-    src/content/contentitemhtmlembed.h \
     src/content/contentitemlist.h \
     src/content/contentitemrelated.h \
     src/content/contentitemsocial.h \
