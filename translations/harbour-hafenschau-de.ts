@@ -28,8 +28,8 @@
         <translation>Quellen</translation>
     </message>
     <message>
-        <source>Add star</source>
-        <translation>Stern hinzufügen</translation>
+        <source>Give star</source>
+        <translation>Stern geben</translation>
     </message>
 </context>
 <context>

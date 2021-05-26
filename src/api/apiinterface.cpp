@@ -12,6 +12,8 @@
 #include <QRegularExpressionMatch>
 #include <QUrlQuery>
 
+#include <QUuid>
+
 #include <zlib.h>
 
 #include "api_keys.h"
@@ -75,14 +77,12 @@ void ApiInterface::getInteralLink(const QString &link)
     connect(reply, &QNetworkReply::finished, this, &ApiInterface::onInternalLinkRequestFinished);
 }
 
-void ApiInterface::getHtmlEmbed(ContentItemHtmlEmbed *item)
+void ApiInterface::getHtmlEmbed(const QString &link)
 {
-    if (item == nullptr)
+    if (link == nullptr)
         return;
 
-    m_htmlEmbedItems.insert(item->value(), item);
-
-    auto reply = m_manager->get(getRequest(item->value()));
+    auto reply = m_manager->get(getRequest(link));
     connect(reply, &QNetworkReply::finished, this, &ApiInterface::onHtmlEmbedRequestFinished);
 }
 
@@ -112,8 +112,6 @@ void ApiInterface::setActiveRegions(const QList<int> &regions)
 
 void ApiInterface::searchContent(const QString &pattern, quint16 page)
 {
-    qDebug() << "SEARCH";
-
     auto model = m_newsModels.value(NewsModel::Search, nullptr);
 
     if (!model)
@@ -192,18 +190,11 @@ void ApiInterface::onHtmlEmbedRequestFinished()
     const int status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 
     // parse data
+    const QString url = reply->url().toString();
     const QString data = getReplyData(reply);
-    reply->deleteLater();
-
-    // get image link and title
-    auto item = m_htmlEmbedItems.take(reply->url().toString());
-
-    if (item == nullptr)
-        return;
 
     // check status code
     if (status != 200) {
-        item->setAvailable(false);
         return;
     }
 
@@ -211,15 +202,23 @@ void ApiInterface::onHtmlEmbedRequestFinished()
     QRegularExpression re(QStringLiteral("<img.*?src=\"(.*?)\""));
     QRegularExpressionMatch match = re.match(data);
 
-    if (match.hasMatch())
-        item->setImage(match.captured(1));
+    QString image;
+
+    if (match.hasMatch()) {
+        image = match.captured(1);
+    }
 
     // title
+    QString title;
+
     re.setPattern(QStringLiteral("<img.*?alt=\"(.*?)\""));
     match = re.match(data);
 
-    if (match.hasMatch())
-        item->setTitle(match.captured(1));
+    if (match.hasMatch()) {
+        title = match.captured(1);
+    }
+
+    emit htmlEmbedAvailable(url, image, title);
 }
 
 void ApiInterface::onInternalLinkRequestFinished()
@@ -634,13 +633,12 @@ News *ApiInterface::parseNews(const QJsonObject &obj)
             const QString headline = objC.value(ApiKey::value).toString().remove(QRegExp("<[^>]*>"));
             item->setValue(headline);
         } else if (contentType == ApiKey::htmlEmbed) {
-            item = new ContentItemHtmlEmbed;
+            item = new ContentItem;
             item->setContentType(ContentItem::HtmlEmbed);
             item->setValue(objC
                            .value(ApiKey::htmlEmbed)
                            .toObject().value(ApiKey::url)
                            .toString());
-            getHtmlEmbed(reinterpret_cast<ContentItemHtmlEmbed *>(item));
         } else if (contentType == ApiKey::list) {
             item = parseContentItemList(objC.value(ApiKey::list).toObject());
         } else if (contentType == ApiKey::quotation) {

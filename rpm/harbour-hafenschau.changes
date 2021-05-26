@@ -1,5 +1,9 @@
-* Thu May 25 2021 Black Sheep <blacksheep@nubecula.org> 0.3.6-1
+* Wed May 26 2021 Black Sheep <blacksheep@nubecula.org> 0.3.7-1
+- Rework of HtmlEmbed code
+
+* Tue May 25 2021 Black Sheep <blacksheep@nubecula.org> 0.3.6-1
 - UI fixes
+- Add button to star repository on GitHub using SailHub
 
 * Wed May 19 2021 Black Sheep <blacksheep@nubecula.org> 0.3.5-1
 - Display dummy image when HtmlEmbed doesn't provide preview image

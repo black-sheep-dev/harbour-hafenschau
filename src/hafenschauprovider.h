@@ -44,6 +44,7 @@ public:
     ~HafenschauProvider() override;
 
     Q_INVOKABLE void getComments(const QString &link);
+    Q_INVOKABLE void getHtmlEmbed(const QString &url);
     Q_INVOKABLE void getInternalLink(const QString &link);
     Q_INVOKABLE void getNextPage(quint8 newsType);
     Q_INVOKABLE void initialize();
@@ -68,6 +69,7 @@ public:
 
 signals:
     void commentsModelAvailable(CommentsModel *model);
+    void htmlEmbedAvailable(const QString &url, const QString &image, const QString &title);
     void internalLinkAvailable(News *news);
 
     // properties  
@@ -79,8 +81,8 @@ signals:
     void notificationChanged(bool notification);
 
 public slots:
-    Q_INVOKABLE void refresh(bool complete = false);
-    Q_INVOKABLE void refresh(quint8 newsType, bool complete = false);
+    void refresh(bool complete = false);
+    void refresh(quint8 newsType, bool complete = false);
 
     // properties
     void setAutoRefresh(quint8 interval);

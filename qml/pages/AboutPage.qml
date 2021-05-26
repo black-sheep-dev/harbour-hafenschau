@@ -107,10 +107,11 @@ Page {
             }
 
             ButtonLayout {
+                visible: sailHubInterface.Available
                 width: parent.width
 
                 Button {
-                    text: qsTr("Add star")
+                    text: qsTr("Give star")
                     onClicked: sailHubInterface.call("addStar", ["black-sheep-dev", Qt.application.name])
                 }
             }

@@ -19,6 +19,7 @@ HafenschauProvider::HafenschauProvider(QObject *parent) :
     connect(m_api, &ApiInterface::commentsModelAvailable, this, &HafenschauProvider::commentsModelAvailable);
     connect(m_api, &ApiInterface::internalLinkAvailable, this, &HafenschauProvider::internalLinkAvailable); 
     connect(m_api, &ApiInterface::breakingNewsAvailable, this, &HafenschauProvider::onBreakingNewsAvailable);
+    connect(m_api, &ApiInterface::htmlEmbedAvailable, this, &HafenschauProvider::htmlEmbedAvailable);
 }
 
 HafenschauProvider::~HafenschauProvider()
@@ -29,6 +30,11 @@ HafenschauProvider::~HafenschauProvider()
 void HafenschauProvider::getComments(const QString &link)
 {
     m_api->getComments(link);
+}
+
+void HafenschauProvider::getHtmlEmbed(const QString &link)
+{
+    m_api->getHtmlEmbed(link);
 }
 
 void HafenschauProvider::getInternalLink(const QString &link)
