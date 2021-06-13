@@ -6,6 +6,7 @@ import org.nubecula.harbour.hafenschau 1.0
 import "../content/"
 
 Page {
+    property string link
     property News news
 
     id: page
@@ -152,52 +153,6 @@ Page {
             width: parent.width
 
             spacing: Theme.paddingLarge
-
-            Component.onCompleted: {
-
-                for (var i=0; i < news.contentItemsCount(); i++) {
-                    var item = news.contentItemAt(i)
-
-                    if (item === undefined)
-                        continue
-
-                    var component
-
-                    if (item.contentType === ContentItem.Headline) {
-                        component = Qt.createComponent("../content/ContentHeadline.qml")
-                    } else if (item.contentType === ContentItem.Text) {
-                        component = Qt.createComponent("../content/ContentText.qml")
-                    } else if (item.contentType === ContentItem.Box) {
-                        component = Qt.createComponent("../content/ContentBox.qml")
-                    } else if (item.contentType === ContentItem.Video) {
-                        component = Qt.createComponent("../content/ContentVideo.qml")
-                    } else if (item.contentType === ContentItem.Gallery) {
-                        component = Qt.createComponent("../content/ContentGallery.qml")
-                    } else if (item.contentType === ContentItem.List) {
-                        component = Qt.createComponent("../content/ContentList.qml")
-                    } else if (item.contentType === ContentItem.Quotation) {
-                        component = Qt.createComponent("../content/ContentQuotation.qml")
-                    } else if (item.contentType === ContentItem.Related) {
-                        component = Qt.createComponent("../content/ContentRelated.qml")
-                    } else if (item.contentType === ContentItem.Audio) {
-                        component = Qt.createComponent("../content/ContentAudio.qml")
-                    } else if (item.contentType === ContentItem.Social) {
-                        component = Qt.createComponent("../content/ContentSocial.qml")
-                    } else if (item.contentType === ContentItem.HtmlEmbed) {
-                        component = Qt.createComponent("../content/ContentHtmlEmbed.qml")
-                    } else {
-                        if ((HafenschauProvider.developerOptions & HafenschauProvider.DevOptShowUnkownContent) !== HafenschauProvider.DevOptShowUnkownContent)
-                            continue
-
-                        component = Qt.createComponent("../content/ContentUnkown.qml")
-                    }
-
-                    if (component.status !== Component.Ready)
-                        console.log("NOT READY")
-
-                    var obj = component.createObject(columnContent, {item: item})
-                }
-            }
         }
 
         VerticalScrollDecorator {}
@@ -205,10 +160,69 @@ Page {
 
     Connections {
         target: HafenschauProvider
-        onInternalLinkAvailable: pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), { news: news })
+        onInternalLinkAvailable: {
+            if (link === news.details) {
+                page.news = news
+                refreshContent()
+            } else {
+                pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), { news: news })
+            }
+        }
     }
 
-    function refreshContentLayout() {
-        columnContent.height = columnContent.childrenRect.height + Theme.paddingLarge
+    function refreshContent() {
+        for(var i = columnContent.children.length; i > 0; i--) {
+            columnContent.children[i-1].destroy()
+        }
+
+        for (var i=0; i < news.contentItemsCount(); i++) {
+            var item = news.contentItemAt(i)
+
+            if (item === undefined)
+                continue
+
+            var component
+
+            if (item.contentType === ContentItem.Headline) {
+                component = Qt.createComponent("../content/ContentHeadline.qml")
+            } else if (item.contentType === ContentItem.Text) {
+                component = Qt.createComponent("../content/ContentText.qml")
+            } else if (item.contentType === ContentItem.Box) {
+                component = Qt.createComponent("../content/ContentBox.qml")
+            } else if (item.contentType === ContentItem.Video) {
+                component = Qt.createComponent("../content/ContentVideo.qml")
+            } else if (item.contentType === ContentItem.Gallery) {
+                component = Qt.createComponent("../content/ContentGallery.qml")
+            } else if (item.contentType === ContentItem.List) {
+                component = Qt.createComponent("../content/ContentList.qml")
+            } else if (item.contentType === ContentItem.Quotation) {
+                component = Qt.createComponent("../content/ContentQuotation.qml")
+            } else if (item.contentType === ContentItem.Related) {
+                component = Qt.createComponent("../content/ContentRelated.qml")
+            } else if (item.contentType === ContentItem.Audio) {
+                component = Qt.createComponent("../content/ContentAudio.qml")
+            } else if (item.contentType === ContentItem.Social) {
+                component = Qt.createComponent("../content/ContentSocial.qml")
+            } else if (item.contentType === ContentItem.HtmlEmbed) {
+                component = Qt.createComponent("../content/ContentHtmlEmbed.qml")
+            } else {
+                if ((HafenschauProvider.developerOptions & HafenschauProvider.DevOptShowUnkownContent) !== HafenschauProvider.DevOptShowUnkownContent)
+                    continue
+
+                component = Qt.createComponent("../content/ContentUnkown.qml")
+            }
+
+            if (component.status !== Component.Ready)
+                console.log("NOT READY")
+
+            var obj = component.createObject(columnContent, {item: item})
+        }
+    }
+
+    Component.onCompleted: {
+        if (link.length > 0)
+            HafenschauProvider.getInternalLink(link)
+        else
+            refreshContent()
     }
 }

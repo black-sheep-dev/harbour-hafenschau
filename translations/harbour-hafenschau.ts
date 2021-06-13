@@ -144,11 +144,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Time:</source>
+        <source>Show Comments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show Comments</source>
+        <source>Time:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -242,7 +242,7 @@ void HafenschauProvider::onBreakingNewsAvailable(News *news)
                                     QStringLiteral("/harbour/hafenschau/service"),
                                     QStringLiteral("harbour.hafenschau.service"),
                                     QStringLiteral("open"),
-                                    QVariantList() << news->sophoraId()
+                                    QVariantList() << news->details()
                                  ));
     notification.publish();
     connect(&notification, &Notification::clicked, &notification, &Notification::close);

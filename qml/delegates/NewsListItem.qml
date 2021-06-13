@@ -27,8 +27,10 @@ ListItem {
             BusyIndicator {
                 size: BusyIndicatorSize.Medium
                 anchors.centerIn: thumbnailImage
-                running: thumbnailImage.status != Image.Ready
+                running: thumbnailImage.status === Image.Loading
             }
+
+            onStatusChanged: if (status === Image.Error) source = "qrc:/images/dummy_image"
 
             Image {
                 visible: model.newsType === News.Video

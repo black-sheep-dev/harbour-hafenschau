@@ -29,7 +29,7 @@ ApplicationWindow
             function open(news) {
                 __silica_applicationwindow_instance.activate()
                 pageStack.push(Qt.resolvedUrl("pages/ReaderPage.qml"), {
-                                    news: HafenschauProvider.newsById(news)
+                                    link: news
                                })
             }
         }
