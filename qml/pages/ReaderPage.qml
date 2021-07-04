@@ -83,7 +83,7 @@ Page {
                 width: 1
             }
 
-            Label {
+            LinkedLabel {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2*x
                 wrapMode: Text.Wrap
@@ -91,9 +91,8 @@ Page {
                 font.italic: true
                 color: Theme.highlightColor
 
-                text: "© https://tagesschau.de"
-
-                onLinkActivated: pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: link })
+                plainText: "© https://tagesschau.de"
+                linkColor: Theme.highlightColor
             }
 
             Label {
