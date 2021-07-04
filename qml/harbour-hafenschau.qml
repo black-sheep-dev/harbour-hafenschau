@@ -21,7 +21,7 @@ ApplicationWindow
             xml: '\
       <interface name="harbour.hafenschau.service">
         <method name="open">
-            <arg name="news" type="s" direction="in"
+            <arg name="news" type="s" direction="in">
             </arg>
         </method>
       </interface>'

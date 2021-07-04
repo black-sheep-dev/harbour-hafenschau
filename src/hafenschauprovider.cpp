@@ -229,6 +229,10 @@ void HafenschauProvider::onBreakingNewsAvailable(News *news)
     if (m_notifications.contains(news->sophoraId()))
         return;
 
+    if (m_developerOptions & DevOptSaveNews) {
+        saveNews(news);
+    }
+
     Notification notification;
     notification.setAppName(tr("Hafenschau"));
     notification.setIcon(QStringLiteral("image://theme/icon-lock-information"));
