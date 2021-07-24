@@ -4,9 +4,9 @@
     #include <QDebug>
 #endif
 
-#include <QSettings>
 #include <QFile>
 #include <QJsonDocument>
+#include <QSettings>
 #include <QStandardPaths>
 
 #include <notification.h>
@@ -25,6 +25,11 @@ HafenschauProvider::HafenschauProvider(QObject *parent) :
 HafenschauProvider::~HafenschauProvider()
 {
     writeSettings();
+}
+
+quint64 HafenschauProvider::cacheSize() const
+{
+    return m_api->cacheSize();
 }
 
 void HafenschauProvider::getComments(const QString &link)
@@ -70,6 +75,11 @@ News *HafenschauProvider::newsById(const QString &sophoraId)
 NewsModel *HafenschauProvider::newsModel(quint8 newsType)
 {
     return m_api->newsModel(newsType);
+}
+
+void HafenschauProvider::refreshNews(News *news)
+{
+    m_api->checkForUpdate(news);
 }
 
 RegionsModel *HafenschauProvider::regionsModel()
@@ -144,6 +154,11 @@ quint8 HafenschauProvider::developerOptions() const
 bool HafenschauProvider::notification() const
 {
     return m_notification;
+}
+
+void HafenschauProvider::clearCache()
+{
+    m_api->clearCache();
 }
 
 void HafenschauProvider::refresh(bool complete)

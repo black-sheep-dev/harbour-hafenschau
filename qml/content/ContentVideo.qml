@@ -3,6 +3,8 @@ import Sailfish.Silica 1.0
 
 import org.nubecula.harbour.hafenschau 1.0
 
+import "../components/"
+
 BackgroundItem {
     property ContentItemVideo item
 
@@ -15,27 +17,16 @@ BackgroundItem {
         width: parent.width - 2*x
         spacing: Theme.paddingMedium
 
-        Image {
+        RemoteImage {
             id: headerImage
-            source: item.image.length > 0 ? item.image : "/usr/share/harbour-hafenschau/images/video_dummy.png"
-            cache: true
-            smooth: true
 
-            width: parent.width
-            height: sourceSize.height * parent.width / sourceSize.width
-
-            BusyIndicator {
-                size: BusyIndicatorSize.Medium
-                anchors.centerIn: headerImage
-                running: headerImage.status === Image.Loading
-            }
+            source: item.image
+            placeholderUrl: "/usr/share/harbour-hafenschau/images/video_dummy.png"
 
             Image {
                 anchors.centerIn: parent
                 source: "image://theme/icon-l-play"
             }
-
-            onStatusChanged: if (status === Image.Error) source = "/usr/share/harbour-hafenschau/images/video_dummy.png"
         }
 
         Label {

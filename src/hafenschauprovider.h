@@ -43,6 +43,7 @@ public:
     explicit HafenschauProvider(QObject *parent = nullptr);
     ~HafenschauProvider() override;
 
+    Q_INVOKABLE quint64 cacheSize() const;
     Q_INVOKABLE void getComments(const QString &link);
     Q_INVOKABLE void getHtmlEmbed(const QString &url);
     Q_INVOKABLE void getInternalLink(const QString &link);
@@ -51,6 +52,7 @@ public:
     Q_INVOKABLE bool isInternalLink(const QString &link) const;
     Q_INVOKABLE News *newsById(const QString &sophoraId);
     Q_INVOKABLE NewsModel *newsModel(quint8 newsType = NewsModel::Homepage);
+    Q_INVOKABLE void refreshNews(News *news);
     Q_INVOKABLE RegionsModel *regionsModel();
     Q_INVOKABLE void saveSettings();
     Q_INVOKABLE void saveNews(News *news);
@@ -77,10 +79,10 @@ signals:
     void coverSwitchChanged(bool enabled);
     void coverSwitchIntervalChanged(quint32 interval);
     void developerOptionsChanged(quint16 options);   
-
     void notificationChanged(bool notification);
 
 public slots:
+    void clearCache();
     void refresh(bool complete = false);
     void refresh(quint8 newsType, bool complete = false);
 

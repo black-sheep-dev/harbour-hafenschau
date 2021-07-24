@@ -3,6 +3,7 @@ import Sailfish.Silica 1.0
 
 import org.nubecula.harbour.hafenschau 1.0
 
+import "../components/"
 import "../content/"
 
 Page {
@@ -14,13 +15,16 @@ Page {
 
     SilicaFlickable {
         PullDownMenu {
-            visible: (HafenschauProvider.developerOptions & HafenschauProvider.DevOptSaveNews) === HafenschauProvider.DevOptSaveNews || news.comments.length > 0
-
             MenuItem {
                 visible: (HafenschauProvider.developerOptions & HafenschauProvider.DevOptSaveNews) === HafenschauProvider.DevOptSaveNews
 
                 text: qsTr("Save news data")
                 onClicked: HafenschauProvider.saveNews(news)
+            }
+
+            MenuItem {
+                text: qsTr("Refresh")
+                onClicked: HafenschauProvider.refreshNews(news)
             }
 
             MenuItem {
@@ -42,24 +46,13 @@ Page {
 
         contentHeight: headerImage.height + columnHeader.height + columnContent.height
 
-        Image {
-            visible: news.image.length > 0
-
+        RemoteImage {
             id: headerImage
-            source: news.image
-            cache: true
-            smooth: true
 
             anchors.left: parent.left
             anchors.right: parent.right
 
-            fillMode: Image.PreserveAspectCrop
-
-            BusyIndicator {
-                size: BusyIndicatorSize.Medium
-                anchors.centerIn: headerImage
-                running: headerImage.status != Image.Ready
-            }
+            source: news.image
 
             Image {
                 x: Theme.paddingLarge
@@ -68,7 +61,6 @@ Page {
                 source: news.brandingImage
             }
         }
-
 
         Column { 
             id: columnHeader
@@ -82,7 +74,7 @@ Page {
                 width: 1
             }
 
-            Label {
+            LinkedLabel {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2*x
                 wrapMode: Text.Wrap
@@ -153,51 +145,7 @@ Page {
 
             spacing: Theme.paddingLarge
 
-            Component.onCompleted: {
-
-                for (var i=0; i < news.contentItemsCount(); i++) {
-                    var item = news.contentItemAt(i)
-
-                    if (item === undefined)
-                        continue
-
-                    var component
-
-                    if (item.contentType === ContentItem.Headline) {
-                        component = Qt.createComponent("../content/ContentHeadline.qml")
-                    } else if (item.contentType === ContentItem.Text) {
-                        component = Qt.createComponent("../content/ContentText.qml")
-                    } else if (item.contentType === ContentItem.Box) {
-                        component = Qt.createComponent("../content/ContentBox.qml")
-                    } else if (item.contentType === ContentItem.Video) {
-                        component = Qt.createComponent("../content/ContentVideo.qml")
-                    } else if (item.contentType === ContentItem.Gallery) {
-                        component = Qt.createComponent("../content/ContentGallery.qml")
-                    } else if (item.contentType === ContentItem.List) {
-                        component = Qt.createComponent("../content/ContentList.qml")
-                    } else if (item.contentType === ContentItem.Quotation) {
-                        component = Qt.createComponent("../content/ContentQuotation.qml")
-                    } else if (item.contentType === ContentItem.Related) {
-                        component = Qt.createComponent("../content/ContentRelated.qml")
-                    } else if (item.contentType === ContentItem.Audio) {
-                        component = Qt.createComponent("../content/ContentAudio.qml")
-                    } else if (item.contentType === ContentItem.Social) {
-                        component = Qt.createComponent("../content/ContentSocial.qml")
-                    } else if (item.contentType === ContentItem.HtmlEmbed) {
-                        component = Qt.createComponent("../content/ContentHtmlEmbed.qml")
-                    } else {
-                        if ((HafenschauProvider.developerOptions & HafenschauProvider.DevOptShowUnkownContent) !== HafenschauProvider.DevOptShowUnkownContent)
-                            continue
-
-                        component = Qt.createComponent("../content/ContentUnkown.qml")
-                    }
-
-                    if (component.status !== Component.Ready)
-                        console.log("NOT READY")
-
-                    var obj = component.createObject(columnContent, {item: item})
-                }
-            }
+            Component.onCompleted: refreshContent()
         }
 
         VerticalScrollDecorator {}
@@ -208,7 +156,59 @@ Page {
         onInternalLinkAvailable: pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), { news: news })
     }
 
-    function refreshContentLayout() {
-        columnContent.height = columnContent.childrenRect.height + Theme.paddingLarge
+    Connections {
+        target: news
+        onChanged: refreshContent()
+    }
+
+    function refreshContent() {
+        console.log("refresh content")
+
+        for(var i = columnContent.children.length; i > 0; i--) {
+            columnContent.children[i-1].destroy()
+        }
+
+        for (var i=0; i < news.contentItemsCount(); i++) {
+            var item = news.contentItemAt(i)
+
+            if (item === undefined)
+                continue
+
+            var component
+
+            if (item.contentType === ContentItem.Headline) {
+                component = Qt.createComponent("../content/ContentHeadline.qml")
+            } else if (item.contentType === ContentItem.Text) {
+                component = Qt.createComponent("../content/ContentText.qml")
+            } else if (item.contentType === ContentItem.Box) {
+                component = Qt.createComponent("../content/ContentBox.qml")
+            } else if (item.contentType === ContentItem.Video) {
+                component = Qt.createComponent("../content/ContentVideo.qml")
+            } else if (item.contentType === ContentItem.Gallery) {
+                component = Qt.createComponent("../content/ContentGallery.qml")
+            } else if (item.contentType === ContentItem.List) {
+                component = Qt.createComponent("../content/ContentList.qml")
+            } else if (item.contentType === ContentItem.Quotation) {
+                component = Qt.createComponent("../content/ContentQuotation.qml")
+            } else if (item.contentType === ContentItem.Related) {
+                component = Qt.createComponent("../content/ContentRelated.qml")
+            } else if (item.contentType === ContentItem.Audio) {
+                component = Qt.createComponent("../content/ContentAudio.qml")
+            } else if (item.contentType === ContentItem.Social) {
+                component = Qt.createComponent("../content/ContentSocial.qml")
+            } else if (item.contentType === ContentItem.HtmlEmbed) {
+                component = Qt.createComponent("../content/ContentHtmlEmbed.qml")
+            } else {
+                if ((HafenschauProvider.developerOptions & HafenschauProvider.DevOptShowUnkownContent) !== HafenschauProvider.DevOptShowUnkownContent)
+                    continue
+
+                component = Qt.createComponent("../content/ContentUnkown.qml")
+            }
+
+            if (component.status !== Component.Ready)
+                console.log("NOT READY")
+
+            var obj = component.createObject(columnContent, {item: item})
+        }
     }
 }

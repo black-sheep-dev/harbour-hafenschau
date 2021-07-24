@@ -40,6 +40,12 @@ Page {
                 page: "SettingsDeveloperPage.qml"
             }
             ListElement {
+                title: qsTr("Cache Settings");
+                description: qsTr("Manage cache options")
+                icon: "image://theme/icon-m-storage"
+                page: "SettingsCachePage.qml"
+            }
+            ListElement {
                 title: qsTr("About");
                 description: qsTr("Show about page")
                 icon: "image://theme/icon-m-about"

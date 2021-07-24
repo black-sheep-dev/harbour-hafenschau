@@ -3,6 +3,8 @@ import Sailfish.Silica 1.0
 
 import org.nubecula.harbour.hafenschau 1.0
 
+import "../components/"
+
 BackgroundItem {
     property ContentItemBox item
 
@@ -30,26 +32,10 @@ BackgroundItem {
             color: Theme.highlightBackgroundColor
         }
 
-        Image {
-            visible: item.image.length > 0
-
+        RemoteImage {
             id: headerImage
             source: item.image
-            cache: true
-            smooth: true
-
-            width: parent.width
-            height: sourceSize.height * parent.width / sourceSize.width
-
-            BusyIndicator {
-                size: BusyIndicatorSize.Medium
-                anchors.centerIn: headerImage
-                running: headerImage.status === Image.Loading
-            }
-
-            onStatusChanged: if (status === Image.Error) source = "/usr/share/harbour-hafenschau/images/dummy_image.png"
         }
-
 
         Label {
             id: labelSubtitle

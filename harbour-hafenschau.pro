@@ -49,6 +49,7 @@ SOURCES += src/harbour-hafenschau.cpp \
     src/region/regionsmodel.cpp
 
 DISTFILES += qml/harbour-hafenschau.qml \
+    qml/components/RemoteImage.qml \
     qml/content/ContentAudio.qml \
     qml/content/ContentBox.qml \
     qml/content/ContentGallery.qml \
@@ -75,6 +76,7 @@ DISTFILES += qml/harbour-hafenschau.qml \
     qml/pages/VideoPlayerPage.qml \
     qml/pages/WebViewPage.qml \
     qml/pages/settings/SettingsAutoRefreshPage.qml \
+    qml/pages/settings/SettingsCachePage.qml \
     qml/pages/settings/SettingsCoverPage.qml \
     qml/pages/settings/SettingsDeveloperPage.qml \
     qml/pages/settings/SettingsPage.qml \

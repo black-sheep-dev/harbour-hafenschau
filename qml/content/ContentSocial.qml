@@ -3,6 +3,8 @@ import Sailfish.Silica 1.0
 
 import org.nubecula.harbour.hafenschau 1.0
 
+import "../components/"
+
 BackgroundItem {
     property ContentItemSocial item
 
@@ -39,24 +41,11 @@ BackgroundItem {
             text: item.title
         }
 
-        Image {
-            visible: item.image.length > 0 && headerImage.status != Image.Error
-
+        RemoteImage {
             id: headerImage
+
             source: item.image
-            cache: true
-            smooth: true
-
-            width: parent.width
-            height: sourceSize.height * parent.width / sourceSize.width
-
-            BusyIndicator {
-                size: BusyIndicatorSize.Medium
-                anchors.centerIn: headerImage
-                running: headerImage.status === Image.Loading
-            }
         }
-
 
         Label {
             id: labelShorttext

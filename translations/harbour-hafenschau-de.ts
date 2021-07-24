@@ -151,6 +151,10 @@
         <source>Show Comments</source>
         <translation>Zeige Kommentare</translation>
     </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished">Aktualisieren</translation>
+    </message>
 </context>
 <context>
     <name>RessortListPage</name>
@@ -280,6 +284,17 @@
     </message>
 </context>
 <context>
+    <name>SettingsCachePage</name>
+    <message>
+        <source>Cache Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished">Zurücksetzen</translation>
+    </message>
+</context>
+<context>
     <name>SettingsCoverPage</name>
     <message>
         <source>Cover Settings</source>
@@ -378,6 +393,14 @@
     <message>
         <source>Manage automatic refresh options</source>
         <translation>Automatische Aktualisierungen verwalten</translation>
+    </message>
+    <message>
+        <source>Cache Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage cache options</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -3,6 +3,8 @@ import Sailfish.Silica 1.0
 
 import org.nubecula.harbour.hafenschau 1.0
 
+import "../components/"
+
 BackgroundItem {
     property ContentItemRelated item
 
@@ -49,26 +51,16 @@ BackgroundItem {
 
                 contentHeight: Theme.itemSizeHuge
 
-
-                Image {
+                RemoteImage {
                     id: thumbnailImage
                     anchors.verticalCenter: parent.verticalCenter
-
-                    fillMode: Image.PreserveAspectCrop
 
                     x: Theme.horizontalPageMargin
                     width: Theme.itemSizeHuge * 0.8
                     height: width
 
-                    source: image
-                    cache: true
-                    smooth: true
-
-                    BusyIndicator {
-                        size: BusyIndicatorSize.Medium
-                        anchors.centerIn: thumbnailImage
-                        running: thumbnailImage.status === Image.Loading
-                    }
+                    source: model.image
+                    placeholderUrl: "/usr/share/harbour-hafenschau/images/dummy_thumbnail.png"
 
                     Image {
                         visible: related_type === RelatedItem.RelatedVideo
