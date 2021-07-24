@@ -150,8 +150,8 @@
     <message>
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
-  </message>
-  <message>
+    </message>
+    <message>
         <source>Time:</source>
         <translation>Zeit:</translation>
     </message>
@@ -400,7 +400,7 @@
     </message>
     <message>
         <source>Manage cache options</source>
-        <translation type="unfinished">Cache Optionen verwalten</translation>
+        <translation>Cache Optionen verwalten</translation>
     </message>
 </context>
 <context>
