@@ -153,7 +153,7 @@
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished">Aktualisieren</translation>
+        <translation>Aktualisieren</translation>
     </message>
 </context>
 <context>
@@ -287,11 +287,11 @@
     <name>SettingsCachePage</name>
     <message>
         <source>Cache Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Cache Einstellungen</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished">Zurücksetzen</translation>
+        <translation>Zurücksetzen</translation>
     </message>
 </context>
 <context>
@@ -396,11 +396,11 @@
     </message>
     <message>
         <source>Cache Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Cache Einstellungen</translation>
     </message>
     <message>
         <source>Manage cache options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cache Optionen verwalten</translation>
     </message>
 </context>
 <context>
