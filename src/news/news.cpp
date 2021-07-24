@@ -66,6 +66,11 @@ bool News::breakingNews() const
     return m_breakingNews;
 }
 
+bool News::cached() const
+{
+    return m_cached;
+}
+
 QString News::comments() const
 {
     return m_comments;
@@ -169,6 +174,15 @@ void News::setBreakingNews(bool breakingNews)
 
     m_breakingNews = breakingNews;
     emit breakingNewsChanged(m_breakingNews);
+}
+
+void News::setCached(bool cached)
+{
+    if (m_cached == cached)
+        return;
+
+    m_cached = cached;
+    emit cachedChanged(m_cached);
 }
 
 void News::setComments(const QString &comments)

@@ -9,6 +9,7 @@ static const QString HAFENSCHAU_API_ENDPOINT_HOMEPAGE           = QStringLiteral
 static const QString HAFENSCHAU_API_ENDPOINT_INDEX_FEED_COUNT   = QStringLiteral("https://www.tagesschau.de/api2/indexfeedcount");
 
 #include <QNetworkAccessManager>
+#include <QNetworkDiskCache>
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QQueue>
@@ -27,6 +28,8 @@ public:
     void enableDeveloperMode(bool enable = true);
 
     QList<int> activeRegions() const;
+    quint64 cacheSize() const;
+    void clearCache();
     void getNextPage(quint8 newsType);
     NewsModel *newsModel(quint8 newsType = NewsModel::Homepage);
 
@@ -38,24 +41,28 @@ signals:
 
 public slots:
     void getComments(const QString &link);
-    void getInteralLink(const QString &link);
+    void getInteralLink(const QString &link, bool cached = false);
     void getHtmlEmbed(const QString &link);
+    void checkForUpdate(News *news);
     void refresh(quint8 newsType, bool complete = false);
+    void refreshNews(News *news);
     void setActiveRegions(const QList<int> &regions);
     void searchContent(const QString &pattern, quint16 page = 1);
 
 private slots:
+    void onCheckForUpdateFinished();
     void onCommentsAvailable();
     void onCommentsMetaLinkAvailable();
     void onHtmlEmbedRequestFinished();
     void onInternalLinkRequestFinished();
+    void onNewsRefreshFinished();
     void onNewsRequestFinished();
     void onNewStoriesCountRequestFinished();
 
 private:
     QString activeRegionsAsString() const;
     QByteArray getReplyData(QNetworkReply *reply);
-    QNetworkRequest getRequest(const QString &endpoint = QString());
+    QNetworkRequest getRequest(const QString &endpoint = QString(), bool cached = true);
     QByteArray gunzip(const QByteArray &data);
 
     // API helper
@@ -64,7 +71,7 @@ private:
 
     // parsing
     QJsonDocument parseJson(const QByteArray &data);
-    News *parseNews(const QJsonObject &obj);
+    News *parseNews(const QJsonObject &obj, News *news = nullptr);
     ContentItemAudio *parseContentItemAudio(const QJsonObject &obj);
     ContentItemBox *parseContentItemBox(const QJsonObject &obj);
     ContentItemGallery *parseContentItemGallery(const QJsonArray &arr);
@@ -76,9 +83,11 @@ private:
 
 
     QList<int> m_activeRegions;
+    QNetworkDiskCache *m_cache{new QNetworkDiskCache(this)};
     bool m_developerMode{false};
-    QNetworkAccessManager *m_manager;
-    QHash<quint8, NewsModel *> m_newsModels;    
+    QNetworkAccessManager *m_manager{new QNetworkAccessManager(this)};
+    QHash<quint8, NewsModel *> m_newsModels;
+    QHash<QString, News *> m_pendingNews;
 };
 
 #endif // APIINTERFACE_H

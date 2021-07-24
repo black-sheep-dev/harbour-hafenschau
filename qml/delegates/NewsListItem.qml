@@ -3,6 +3,8 @@ import Sailfish.Silica 1.0
 
 import org.nubecula.harbour.hafenschau 1.0
 
+import "../components/"
+
 ListItem {
     contentHeight: contentRow.height + separatorBottom.height
 
@@ -12,25 +14,15 @@ ListItem {
         width: parent.width - 2*x
         spacing: Theme.paddingSmall
 
-        Image {
+        RemoteImage {
             id: thumbnailImage
 
             width: Theme.itemSizeExtraLarge
             height: Theme.itemSizeExtraLarge * 1.4
 
-            fillMode: Image.PreserveAspectCrop
+            source: model.thumbnail
+            placeholderUrl: "/usr/share/harbour-hafenschau/images/dummy_thumbnail.png"
 
-            source: model.thumbnail.length > 0 ? model.thumbnail : "qrc:/images/dummy_image"
-            cache: true
-            smooth: true
-
-            BusyIndicator {
-                size: BusyIndicatorSize.Medium
-                anchors.centerIn: thumbnailImage
-                running: thumbnailImage.status === Image.Loading
-            }
-
-            onStatusChanged: if (status === Image.Error) source = "qrc:/images/dummy_image"
 
             Image {
                 visible: model.newsType === News.Video

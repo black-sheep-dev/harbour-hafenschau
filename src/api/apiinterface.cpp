@@ -10,6 +10,7 @@
 #include <QJsonParseError>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
+#include <QStandardPaths>
 #include <QUrlQuery>
 
 #include <QUuid>
@@ -21,10 +22,10 @@
 static const quint8 pageSize = 20;
 
 ApiInterface::ApiInterface(QObject *parent) :
-    QObject(parent),
-    m_manager(new QNetworkAccessManager(this))
+    QObject(parent)
 {
-
+    m_cache->setCacheDirectory(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + QStringLiteral("/api"));
+    m_manager->setCache(m_cache);
 }
 
 void ApiInterface::enableDeveloperMode(bool enable)
@@ -35,6 +36,16 @@ void ApiInterface::enableDeveloperMode(bool enable)
 QList<int> ApiInterface::activeRegions() const
 {
     return m_activeRegions;
+}
+
+quint64 ApiInterface::cacheSize() const
+{
+    return m_cache->cacheSize();
+}
+
+void ApiInterface::clearCache()
+{
+    m_cache->clear();
 }
 
 void ApiInterface::getNextPage(quint8 newsType)
@@ -71,9 +82,9 @@ void ApiInterface::getComments(const QString &link)
     connect(reply, &QNetworkReply::finished, this, &ApiInterface::onCommentsMetaLinkAvailable);
 }
 
-void ApiInterface::getInteralLink(const QString &link)
+void ApiInterface::getInteralLink(const QString &link, bool cached)
 {
-    auto reply = m_manager->get(getRequest(link));
+    auto reply = m_manager->get(getRequest(link, cached));
     connect(reply, &QNetworkReply::finished, this, &ApiInterface::onInternalLinkRequestFinished);
 }
 
@@ -84,6 +95,20 @@ void ApiInterface::getHtmlEmbed(const QString &link)
 
     auto reply = m_manager->get(getRequest(link));
     connect(reply, &QNetworkReply::finished, this, &ApiInterface::onHtmlEmbedRequestFinished);
+}
+
+void ApiInterface::checkForUpdate(News *news)
+{
+    if (news == nullptr)
+        return;
+
+    const QString uuid = QUuid::createUuid().toString();
+
+    m_pendingNews.insert(uuid, news);
+
+    auto reply = m_manager->get(getRequest(news->updateCheckUrl(), false));
+    reply->setProperty("uuid", uuid);
+    connect(reply, &QNetworkReply::finished, this, &ApiInterface::onCheckForUpdateFinished);
 }
 
 void ApiInterface::refresh(quint8 newsType, bool complete)
@@ -103,6 +128,20 @@ void ApiInterface::refresh(quint8 newsType, bool complete)
     } else {
         getNewStoriesCount(model);
     }
+}
+
+void ApiInterface::refreshNews(News *news)
+{
+    if (news == nullptr)
+        return;
+
+    const QString uuid = QUuid::createUuid().toString();
+
+    m_pendingNews.insert(uuid, news);
+
+    auto reply = m_manager->get(getRequest(news->details()));
+    reply->setProperty("uuid", uuid);
+    connect(reply, &QNetworkReply::finished, this, &ApiInterface::onNewsRefreshFinished);
 }
 
 void ApiInterface::setActiveRegions(const QList<int> &regions)
@@ -125,6 +164,22 @@ void ApiInterface::searchContent(const QString &pattern, quint16 page)
     QNetworkReply *reply = m_manager->get(getRequest(url));
     reply->setProperty("news_type", NewsModel::Search);
     connect(reply, &QNetworkReply::finished, this, &ApiInterface::onNewsRequestFinished);
+}
+
+void ApiInterface::onCheckForUpdateFinished()
+{
+    auto reply = qobject_cast<QNetworkReply *>(sender());
+    const QString uuid = reply->property("uuid").toString();
+
+    auto news = m_pendingNews.take(uuid);
+
+    if (news == nullptr)
+        return;
+
+    const QString data = getReplyData(reply);
+
+    if (data == QLatin1String("true"))
+        refreshNews(news);
 }
 
 void ApiInterface::onCommentsAvailable()
@@ -227,15 +282,40 @@ void ApiInterface::onInternalLinkRequestFinished()
         qDebug() << QStringLiteral("INTERNAL LINK");
 #endif
 
-    const QJsonDocument doc = parseJson(getReplyData(qobject_cast<QNetworkReply *>(sender())));
+    auto reply = qobject_cast<QNetworkReply *>(sender());
+    bool isCached = reply->attribute(QNetworkRequest::SourceIsFromCacheAttribute).toBool();
+
+    const QJsonDocument doc = parseJson(getReplyData(reply));
 
     if (doc.isEmpty())
         return;
 
     auto news = parseNews(doc.object());
 
-    if (news != nullptr)
-        emit internalLinkAvailable(news);
+    if (news == nullptr)
+        return;
+
+    news->setCached(isCached);
+    emit internalLinkAvailable(news);
+}
+
+void ApiInterface::onNewsRefreshFinished()
+{
+    auto reply = qobject_cast<QNetworkReply *>(sender());
+    const QString uuid = reply->property("uuid").toString();
+
+    auto news = m_pendingNews.take(uuid);
+
+    if (news == nullptr)
+        return;
+
+    const QJsonDocument doc = parseJson(getReplyData(reply));
+
+    if (doc.isEmpty())
+        return;
+
+    parseNews(doc.object(), news);
+    emit news->changed();
 }
 
 void ApiInterface::onNewsRequestFinished()
@@ -389,7 +469,7 @@ QByteArray ApiInterface::getReplyData(QNetworkReply *reply)
     return data;
 }
 
-QNetworkRequest ApiInterface::getRequest(const QString &endpoint)
+QNetworkRequest ApiInterface::getRequest(const QString &endpoint, bool cached)
 {
     QNetworkRequest request;
 
@@ -398,8 +478,10 @@ QNetworkRequest ApiInterface::getRequest(const QString &endpoint)
     else
         request.setUrl(HAFENSCHAU_API_URL + endpoint);
 
+    if (cached)
+        request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferNetwork);
 
-    request.setRawHeader("Cache-Control", "no-cache");
+    //request.setRawHeader("Cache-Control", "no-cache");
     request.setRawHeader("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:80.0) Gecko/20100101 Firefox/80.0");
     request.setRawHeader("Accept", "application/json");
     request.setRawHeader("Connection", "keep-alive");
@@ -418,7 +500,7 @@ QByteArray ApiInterface::gunzip(const QByteArray &data)
 
     QByteArray result;
 
-    int ret;
+    int ret{0};
     z_stream strm;
     static const int CHUNK_SIZE = 1024;
     char out[CHUNK_SIZE];
@@ -516,7 +598,7 @@ void ApiInterface::getNews(quint8 newsType)
 
 void ApiInterface::getNewStoriesCount(NewsModel *model)
 {
-    QNetworkReply *reply = m_manager->get(getRequest(model->newStoriesCountLink()));
+    QNetworkReply *reply = m_manager->get(getRequest(model->newStoriesCountLink(), false));
     reply->setProperty("news_type", model->newsType());
     connect(reply, &QNetworkReply::finished, this, &ApiInterface::onNewStoriesCountRequestFinished);
 }
@@ -538,7 +620,7 @@ QJsonDocument ApiInterface::parseJson(const QByteArray &data)
     return doc;
 }
 
-News *ApiInterface::parseNews(const QJsonObject &obj)
+News *ApiInterface::parseNews(const QJsonObject &obj, News *news)
 {
     // region filter
     const auto regIds = obj.value(ApiKey::regionIds).toArray();
@@ -561,7 +643,8 @@ News *ApiInterface::parseNews(const QJsonObject &obj)
     }
 
     // create news
-    auto news = new News;
+    if (news == nullptr)
+        news = new News;
 
     if (m_developerMode)
         news->setDebugData(obj);

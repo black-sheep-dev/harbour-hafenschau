@@ -5,6 +5,8 @@ import QtMultimedia 5.6
 
 import org.nubecula.harbour.hafenschau 1.0
 
+import "../components/"
+
 BackgroundItem {
     property bool playing: false
     property ContentItemAudio item
@@ -18,21 +20,11 @@ BackgroundItem {
         width: parent.width - 2*x
         spacing: Theme.paddingMedium
 
-        Image {
+        RemoteImage {
             id: headerImage
-            source: item.image.length > 0 ? item.image : "/usr/share/harbour-hafenschau/images/audiograph.png"
-            cache: true
-            smooth: true
 
-
-            width: parent.width
-            height: sourceSize.height * parent.width / sourceSize.width
-
-            BusyIndicator {
-                size: BusyIndicatorSize.Medium
-                anchors.centerIn: headerImage
-                running: headerImage.status === Image.Loading
-            }
+            source: item.image
+            placeholderUrl: "/usr/share/harbour-hafenschau/images/audiograph.png"
 
             Image {
                 anchors.centerIn: parent
@@ -49,8 +41,6 @@ BackgroundItem {
 
                 onExited: audioPlayer.seek(value)
             }
-
-            onStatusChanged: if (status === Image.Error) source = "/usr/share/harbour-hafenschau/images/audiograph.png"
         }
 
         Label {

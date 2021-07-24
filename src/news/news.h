@@ -24,6 +24,7 @@ class News : public QObject
 
     Q_PROPERTY(QString brandingImage READ brandingImage WRITE setBrandingImage NOTIFY brandingImageChanged)
     Q_PROPERTY(bool breakingNews READ breakingNews WRITE setBreakingNews NOTIFY breakingNewsChanged)
+    Q_PROPERTY(bool cached READ cached WRITE setCached NOTIFY cachedChanged)
     Q_PROPERTY(QString comments READ comments WRITE setComments NOTIFY commentsChanged)
     Q_PROPERTY(QDateTime date READ date WRITE setDate NOTIFY dateChanged)
     Q_PROPERTY(QString details READ details WRITE setDetails NOTIFY detailsChanged)
@@ -86,6 +87,7 @@ public:
     // properties
     QString brandingImage() const;
     bool breakingNews() const;
+    bool cached() const;
     QString comments() const;
     QDateTime date() const;
     QString details() const;
@@ -103,11 +105,13 @@ public:
     QString updateCheckUrl() const;
 
 signals:
+    void changed();
     void contentItemsChanged(const QList<ContentItem *> &contentItems);
 
     // properties
     void brandingImageChanged(const QString &brandingImage);
     void breakingNewsChanged(bool breakingNews);
+    void cachedChanged(bool cached);
     void commentsChanged(const QString &comments);
     void dateChanged(const QDateTime &date); 
     void detailsChanged(const QString &details);
@@ -124,13 +128,13 @@ signals:
     void toplineChanged(const QString &topline);
     void updateCheckUrlChanged(const QString &url);
 
-
 public slots:
     void setContentItems(const QList<ContentItem *> &items);
 
     // properties
     void setBrandingImage(const QString &brandingImage);
     void setBreakingNews(bool breakingNews);
+    void setCached(bool cached);
     void setComments(const QString &comments);
     void setDate(const QDateTime &date);
     void setDetails(const QString &details);
@@ -155,6 +159,7 @@ private:
     // properties
     QString m_brandingImage;
     bool m_breakingNews{false};
+    bool m_cached{false};
     QString m_comments;
     QDateTime m_date;
     QString m_details;
