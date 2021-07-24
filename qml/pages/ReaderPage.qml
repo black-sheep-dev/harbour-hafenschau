@@ -151,6 +151,8 @@ Page {
         VerticalScrollDecorator {}
     }
 
+    Component.onCompleted: link.length > 0 ? HafenschauProvider.getInternalLink(link) : pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), { news: news })
+
     Connections {
         target: HafenschauProvider
         onInternalLinkAvailable: {

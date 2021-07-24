@@ -82,9 +82,9 @@ void ApiInterface::getComments(const QString &link)
     connect(reply, &QNetworkReply::finished, this, &ApiInterface::onCommentsMetaLinkAvailable);
 }
 
-void ApiInterface::getInteralLink(const QString &link, bool cached)
+void ApiInterface::getInteralLink(const QString &link)
 {
-    auto reply = m_manager->get(getRequest(link, cached));
+    auto reply = m_manager->get(getRequest(link));
     connect(reply, &QNetworkReply::finished, this, &ApiInterface::onInternalLinkRequestFinished);
 }
 

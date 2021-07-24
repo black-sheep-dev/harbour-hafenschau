@@ -41,7 +41,7 @@ signals:
 
 public slots:
     void getComments(const QString &link);
-    void getInteralLink(const QString &link, bool cached = false);
+    void getInteralLink(const QString &link);
     void getHtmlEmbed(const QString &link);
     void checkForUpdate(News *news);
     void refresh(quint8 newsType, bool complete = false);
