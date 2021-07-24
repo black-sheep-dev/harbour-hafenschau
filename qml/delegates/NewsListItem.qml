@@ -23,6 +23,7 @@ ListItem {
             source: model.thumbnail
             placeholderUrl: "/usr/share/harbour-hafenschau/images/dummy_thumbnail.png"
 
+
             Image {
                 visible: model.newsType === News.Video
                 anchors.centerIn: parent

@@ -106,6 +106,8 @@ void NewsModel::addNews(const QList<News *> &news)
     m_news.append(news);
     endInsertRows();
 
+    emit newsChanged();
+
     setLoading(false);
 }
 

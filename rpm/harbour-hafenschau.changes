@@ -1,3 +1,13 @@
+* Sun Jul 04 2021 Black Sheep <blacksheep@nubecula.org> 0.3.9-1
+- Fixed bug notification not open the corresponding news
+- UI fixes
+
+* Sun Jun 13 2021 Black Sheep <blacksheep@nubecula.org> 0.3.8-1
+- Open news from notification with internal link instead of id (can't open old news)
+- Refactoring of cover
+- Open current news on application cover
+- Fixed bug with image not loading in news list
+
 * Wed May 26 2021 Black Sheep <blacksheep@nubecula.org> 0.3.7-1
 - Rework of HtmlEmbed code
 

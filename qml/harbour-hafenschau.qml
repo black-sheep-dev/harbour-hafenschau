@@ -21,7 +21,7 @@ ApplicationWindow
             xml: '\
       <interface name="harbour.hafenschau.service">
         <method name="open">
-            <arg name="news" type="s" direction="in"
+            <arg name="news" type="s" direction="in">
             </arg>
         </method>
       </interface>'
@@ -29,7 +29,7 @@ ApplicationWindow
             function open(news) {
                 __silica_applicationwindow_instance.activate()
                 pageStack.push(Qt.resolvedUrl("pages/ReaderPage.qml"), {
-                                    news: HafenschauProvider.newsById(news)
+                                    link: news
                                })
             }
         }

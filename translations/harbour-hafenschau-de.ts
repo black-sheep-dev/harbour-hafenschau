@@ -144,16 +144,16 @@
         <translation>Daten speichern</translation>
     </message>
     <message>
-        <source>Time:</source>
-        <translation>Zeit:</translation>
-    </message>
-    <message>
         <source>Show Comments</source>
         <translation>Zeige Kommentare</translation>
     </message>
     <message>
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
+  </message>
+  <message>
+        <source>Time:</source>
+        <translation>Zeit:</translation>
     </message>
 </context>
 <context>

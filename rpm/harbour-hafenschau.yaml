@@ -1,6 +1,6 @@
 Name: harbour-hafenschau
 Summary: Hafenschau
-Version: 0.3.7
+Version: 0.3.9
 Release: 1
 # The contents of the Group field should be one of the groups listed here:
 # https://github.com/mer-tools/spectacle/blob/master/data/GROUPS
@@ -26,6 +26,7 @@ PkgConfigBR:
   - Qt5Quick
   - qt5embedwidget >= 1.14.9
   - sailfishsilica
+  - nemonotifications-qt5
 
 # Build dependencies without a pkgconfig setup can be listed here
 # PkgBR:

@@ -244,6 +244,10 @@ void HafenschauProvider::onBreakingNewsAvailable(News *news)
     if (m_notifications.contains(news->sophoraId()))
         return;
 
+    if (m_developerOptions & DevOptSaveNews) {
+        saveNews(news);
+    }
+
     Notification notification;
     notification.setAppName(tr("Hafenschau"));
     notification.setIcon(QStringLiteral("image://theme/icon-lock-information"));
@@ -257,7 +261,7 @@ void HafenschauProvider::onBreakingNewsAvailable(News *news)
                                     QStringLiteral("/harbour/hafenschau/service"),
                                     QStringLiteral("harbour.hafenschau.service"),
                                     QStringLiteral("open"),
-                                    QVariantList() << news->sophoraId()
+                                    QVariantList() << news->details()
                                  ));
     notification.publish();
     connect(&notification, &Notification::clicked, &notification, &Notification::close);

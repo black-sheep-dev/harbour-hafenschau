@@ -110,7 +110,7 @@ Page {
                         if (model.hasContent)
                             pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {news: ressortModel.newsAt(row)})
                         else
-                            HafenschauProvider.getInternalLink(model.details)
+                            pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {link: model.details})
                     }
                 }
             }
@@ -128,11 +128,6 @@ Page {
 
             VerticalScrollDecorator {}
         }
-    }
-
-    Connections {
-        target: HafenschauProvider
-        onInternalLinkAvailable: pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), { news: news })
     }
 
     onStatusChanged: {
