@@ -1,5 +1,8 @@
+* Sun Jul 25 2021 Black Sheep <blacksheep@nubecula.org> 0.4.2-1
+- Remove duplicate regional news in main list
+
 * Sat Jul 24 2021 Black Sheep <blacksheep@nubecula.org> 0.4.1-1
-- Bugfixing
+- Bug fixing
 
 * Sat Jul 24 2021 Black Sheep <blacksheep@nubecula.org> 0.4.0-1
 - Add caching

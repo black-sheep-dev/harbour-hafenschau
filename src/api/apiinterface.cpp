@@ -380,12 +380,19 @@ void ApiInterface::onNewsRequestFinished()
         }
 
         // regional news
+        QStringList regionalNews;
+
         const QJsonArray regionalNewsArray = obj.value(ApiKey::regional).toArray();
         for (const auto &r : regionalNewsArray) {
             auto news = parseNews(r.toObject());
 
             if (news == nullptr)
                 continue;
+
+            if (regionalNews.contains(news->sophoraId()))
+                continue;
+
+            regionalNews.append(news->sophoraId());
 
             list.append(news);
         }
