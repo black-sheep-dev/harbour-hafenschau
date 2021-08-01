@@ -125,10 +125,6 @@
         <source>Load more</source>
         <translation>Mehr laden</translation>
     </message>
-    <message>
-        <source>Check your internet connection</source>
-        <translation>Überprüfen deine Internetverbindung</translation>
-    </message>
 </context>
 <context>
     <name>OpenExternalUrlDialog</name>

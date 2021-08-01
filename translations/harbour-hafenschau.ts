@@ -125,10 +125,6 @@
         <source>Load more</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Check your internet connection</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>OpenExternalUrlDialog</name>

@@ -925,8 +925,12 @@ ContentItemVideo *ApiInterface::parseContentItemVideo(const QJsonObject &obj)
     video->setImage(obj.value(ApiKey::teaserImage).toObject()
                   .value(ApiKey::videoWebL).toObject()
                   .value(ApiKey::imageUrl).toString());
-    video->setStream(obj.value(ApiKey::streams).toObject()
-                     .value(ApiKey::adaptiveStreaming).toString());
+
+    const auto streams = obj.value(ApiKey::streams).toObject();
+    video->setStream(streams.value(ApiKey::adaptiveStreaming).toString());
+
+    if (video->stream().isEmpty())
+        video->setStream(streams.value(streams.keys().first()).toString());
 
     return video;
 }

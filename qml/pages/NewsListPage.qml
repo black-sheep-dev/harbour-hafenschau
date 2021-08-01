@@ -130,12 +130,6 @@ Page {
                 }
             }
 
-            ViewPlaceholder {
-                enabled: listView.count === 0 && !ressortModel.loading
-                text: qsTr("No news available")
-                hintText: qsTr("Check your internet connection")
-            }
-
             VerticalScrollDecorator {}
         }
     }
