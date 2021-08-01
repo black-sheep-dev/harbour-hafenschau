@@ -90,6 +90,7 @@ signals:
 
 public slots:
     void addNews(const QList<News *> &news);
+    void forceRefresh();
     void setNews(const QList<News *> &news);
 
     Q_INVOKABLE void reset();

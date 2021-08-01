@@ -5,13 +5,14 @@ import org.nubecula.harbour.hafenschau 1.0
 
 import "../delegates"
 
-Page {    
+Page {
     id: page
 
     allowedOrientations: Orientation.All
 
     SilicaListView {
         PullDownMenu {
+            busy: HafenschauProvider.newsModel().loading
             MenuItem {
                 text: qsTr("Settings")
                 onClicked: pageStack.push(Qt.resolvedUrl("settings/SettingsPage.qml"))
@@ -26,7 +27,11 @@ Page {
 //            }
             MenuItem {
                 text: qsTr("Refresh")
-                onClicked: HafenschauProvider.refresh(NewsModel.Homepage)
+                onClicked: {
+                    HafenschauProvider.newsModel().forceRefresh()
+                    HafenschauProvider.refresh(NewsModel.Homepage)
+
+                }
             }
         }
 
@@ -48,13 +53,24 @@ Page {
 
             onClicked: {
                 if (newsType === News.WebView) {
-                    //pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: HafenschauProvider.newsModel().newsAt(row).detailsWeb })
-                    pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), {url: model.detailsWeb })
+                    if (HafenschauProvider.internalWebView) {
+                        pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), {url: model.detailsWeb })
+                    } else {
+                        pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: model.detailsWeb })
+                    }
+
                 } else {
                     pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {news: HafenschauProvider.newsModel().newsAt(row)})
                 }
             }
         }
+
+        ViewPlaceholder {
+            enabled: listView.count === 0 && !HafenschauProvider.newsModel().loading
+            text: qsTr("No news available")
+            hintText: qsTr("Check your internet connection")
+        }
+
         VerticalScrollDecorator {}
     }
 }

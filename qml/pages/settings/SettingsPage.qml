@@ -34,6 +34,12 @@ Page {
                 page: "SettingsAutoRefreshPage.qml"
             }
             ListElement {
+                title: qsTr("Webview Settings");
+                description: qsTr("Manage webview options")
+                icon: "image://theme/icon-m-website"
+                page: "SettingsWebviewPage.qml"
+            }
+            ListElement {
                 title: qsTr("Developer Settings");
                 description: qsTr("Manage developer options")
                 icon: "image://theme/icon-m-developer-mode"

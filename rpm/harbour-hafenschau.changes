@@ -1,3 +1,9 @@
+* Sun Aug 01 2021 Black Sheep <blacksheep@nubecula.org> 0.4.3-1
+- Option to open web content in external browser (see settings)
+- Fixed Bug videos doesn't work
+- Network error handling
+- UI fixes
+
 * Sun Jul 25 2021 Black Sheep <blacksheep@nubecula.org> 0.4.2-1
 - Remove duplicate regional news in main list
 

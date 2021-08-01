@@ -125,6 +125,10 @@
         <source>Load more</source>
         <translation>Mehr laden</translation>
     </message>
+    <message>
+        <source>Check your internet connection</source>
+        <translation>Überprüfen deine Internetverbindung</translation>
+    </message>
 </context>
 <context>
     <name>OpenExternalUrlDialog</name>
@@ -402,6 +406,14 @@
         <source>Manage cache options</source>
         <translation>Cache Optionen verwalten</translation>
     </message>
+    <message>
+        <source>Webview Settings</source>
+        <translation>Webansichts Einstellungen</translation>
+    </message>
+    <message>
+        <source>Manage webview options</source>
+        <translation>Webansichts Optionen verwalten</translation>
+    </message>
 </context>
 <context>
     <name>SettingsRegionsPage</name>
@@ -412,6 +424,21 @@
     <message>
         <source>Regional News</source>
         <translation>Regional Nachrichten</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsWebviewPage</name>
+    <message>
+        <source>Webview Settings</source>
+        <translation>Webansichts Einstellungen</translation>
+    </message>
+    <message>
+        <source>Internal Webview</source>
+        <translation>Interne Webansicht</translation>
+    </message>
+    <message>
+        <source>When deactivated the web content will be opened in the extarnal browser instead of the internal webview.</source>
+        <translation>Wenn deaktiviert werden Webinhalte im externen Browser geöffnet anstatt in der interen Webansicht.</translation>
     </message>
 </context>
 <context>
@@ -431,6 +458,49 @@
     <message>
         <source>Top News</source>
         <translation>Aktuelle Nachrichten</translation>
+    </message>
+    <message>
+        <source>No news available</source>
+        <translation>Keine Nachrichten verfügbar</translation>
+    </message>
+    <message>
+        <source>Check your internet connection</source>
+        <translation>Überprüfen deine Internetverbindung</translation>
+    </message>
+</context>
+<context>
+    <name>harbour-hafenschau</name>
+    <message>
+        <source>Connection refused</source>
+        <translation>Verbindung verweigert</translation>
+    </message>
+    <message>
+        <source>Host not found</source>
+        <translation>Host nicht gefunden</translation>
+    </message>
+    <message>
+        <source>Connection timed out</source>
+        <translation>Zeitüberschreitung der Verbindung</translation>
+    </message>
+    <message>
+        <source>Ssl handshake failed</source>
+        <translation>SSL-Handshake fehlgeschlagen</translation>
+    </message>
+    <message>
+        <source>Access denied</source>
+        <translation>Zugriff verweigert</translation>
+    </message>
+    <message>
+        <source>Not found</source>
+        <translation>Nicht gefunden</translation>
+    </message>
+    <message>
+        <source>Internal server error</source>
+        <translation>Interner Server Fehler</translation>
+    </message>
+    <message>
+        <source>Unkown connection error</source>
+        <translation>Unbekannter Verbindungsfehler</translation>
     </message>
 </context>
 </TS>

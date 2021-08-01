@@ -4,6 +4,8 @@ import Nemo.DBus 2.0
 
 import org.nubecula.harbour.hafenschau 1.0
 
+import "../components/"
+
 CoverBackground {
     property int currentIndex: 0
     property News currentNews: model.newsAt(0)
@@ -23,6 +25,7 @@ CoverBackground {
         onNewsChanged: {
             currentIndex = 0
             currentNews = model.newsAt(currentIndex)
+            imageDelegate.reload()
         }
     }
 
@@ -47,24 +50,15 @@ CoverBackground {
         anchors.fill: parent
         color: "#000000"
 
-        Image {
+        RemoteImage {
             id: imageDelegate
             anchors.fill: parent
             anchors.centerIn: parent
-
             fillMode: Image.PreserveAspectCrop
 
             opacity: 0.5
 
-            source: currentNews.portrait.length > 0 ? currentNews.portrait : "qrc:///images/dummy_image"
-            cache: true
-            smooth: true
-
-            BusyIndicator {
-                size: BusyIndicatorSize.Small
-                anchors.centerIn: imageDelegate
-                running: imageDelegate.status === Image.Loading
-            }
+            source: currentNews.portrait
         }
 
         Column {

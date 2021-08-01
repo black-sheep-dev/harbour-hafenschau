@@ -20,6 +20,7 @@ HafenschauProvider::HafenschauProvider(QObject *parent) :
     connect(m_api, &ApiInterface::internalLinkAvailable, this, &HafenschauProvider::internalLinkAvailable); 
     connect(m_api, &ApiInterface::breakingNewsAvailable, this, &HafenschauProvider::onBreakingNewsAvailable);
     connect(m_api, &ApiInterface::htmlEmbedAvailable, this, &HafenschauProvider::htmlEmbedAvailable);
+    connect(m_api, &ApiInterface::error, this, &HafenschauProvider::error);
 }
 
 HafenschauProvider::~HafenschauProvider()
@@ -151,6 +152,11 @@ quint8 HafenschauProvider::developerOptions() const
     return m_developerOptions;
 }
 
+bool HafenschauProvider::internalWebView() const
+{
+    return m_internalWebView;
+}
+
 bool HafenschauProvider::notification() const
 {
     return m_notification;
@@ -210,6 +216,15 @@ void HafenschauProvider::setDeveloperOptions(quint8 options)
 
     // internal settings
     m_api->enableDeveloperMode((m_developerOptions & DevOptSaveNews) == DevOptSaveNews);
+}
+
+void HafenschauProvider::setInternalWebView(bool internal)
+{
+    if (m_internalWebView == internal)
+        return;
+
+    m_internalWebView = internal;
+    emit internalWebViewChanged(m_internalWebView);
 }
 
 void HafenschauProvider::setNotification(bool notification)
@@ -325,6 +340,7 @@ void HafenschauProvider::readSettings()
     setCoverSwitch(settings.value(QStringLiteral("cover_switch"), m_coverSwitch).toBool());
     setCoverSwitchInterval(settings.value(QStringLiteral("cover_switch_interval"), m_coverSwitchInterval).toUInt());
     setNotification(settings.value(QStringLiteral("notification"), m_notification).toBool());
+    setInternalWebView(settings.value(QStringLiteral("internal_webview"), m_internalWebView).toBool());
     settings.endGroup();
 
     settings.beginGroup(QStringLiteral("REGIONS"));
@@ -352,6 +368,7 @@ void HafenschauProvider::writeSettings()
     settings.setValue(QStringLiteral("auto_refresh"), m_autoRefresh);
     settings.setValue(QStringLiteral("cover_switch"), m_coverSwitch);
     settings.setValue(QStringLiteral("cover_switch_interval"), m_coverSwitchInterval);
+    settings.setValue(QStringLiteral("internal_webview"), m_internalWebView);
     settings.setValue(QStringLiteral("notification"), m_notification);
     settings.endGroup();
 

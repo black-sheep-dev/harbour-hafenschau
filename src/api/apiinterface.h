@@ -34,6 +34,8 @@ public:
     NewsModel *newsModel(quint8 newsType = NewsModel::Homepage);
 
 signals:
+    void error(quint16 error);
+
     void breakingNewsAvailable(News *news);
     void commentsModelAvailable(CommentsModel *model);
     void htmlEmbedAvailable(const QString &url, const QString &image, const QString &title);

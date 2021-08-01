@@ -26,7 +26,7 @@ Dialog {
 
     onDone: {
         if (result == DialogResult.Accepted) {
-            pageStack.push(Qt.resolvedUrl("../pages/WebViewPage.qml"), { url: url })
+            Qt.openUrlExternally(url)
         }
     }
 }

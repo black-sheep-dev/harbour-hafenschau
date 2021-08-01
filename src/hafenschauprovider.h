@@ -18,6 +18,7 @@ class HafenschauProvider : public QObject
     Q_PROPERTY(bool coverSwitch READ coverSwitch WRITE setCoverSwitch NOTIFY coverSwitchChanged)
     Q_PROPERTY(quint32 coverSwitchInterval READ coverSwitchInterval WRITE setCoverSwitchInterval NOTIFY coverSwitchIntervalChanged)
     Q_PROPERTY(quint8 developerOptions READ developerOptions WRITE setDeveloperOptions NOTIFY developerOptionsChanged)
+    Q_PROPERTY(bool internalWebView READ internalWebView WRITE setInternalWebView NOTIFY internalWebViewChanged)
     Q_PROPERTY(bool notification READ notification WRITE setNotification NOTIFY notificationChanged)
 
 public:
@@ -67,10 +68,12 @@ public:
     bool coverSwitch() const;
     quint32 coverSwitchInterval() const;
     quint8 developerOptions() const;
+    bool internalWebView() const;
     bool notification() const;
 
 signals:
     void commentsModelAvailable(CommentsModel *model);
+    void error(quint16 error);
     void htmlEmbedAvailable(const QString &url, const QString &image, const QString &title);
     void internalLinkAvailable(News *news);
 
@@ -78,8 +81,11 @@ signals:
     void autoRefreshChanged(quint8 interval);
     void coverSwitchChanged(bool enabled);
     void coverSwitchIntervalChanged(quint32 interval);
-    void developerOptionsChanged(quint16 options);   
+    void developerOptionsChanged(quint16 options);
+    void internalWebViewChanged(bool internal);
     void notificationChanged(bool notification);
+
+
 
 public slots:
     void clearCache();
@@ -91,7 +97,8 @@ public slots:
     void setCoverSwitch(bool enabled);
     void setCoverSwitchInterval(quint32 interval);
     void setDeveloperOptions(quint8 options);
-    void setNotification(bool notification);
+    void setInternalWebView(bool internal);
+    void setNotification(bool notification);   
 
 private slots:
     void onBackgroundActivityRunning();
@@ -113,7 +120,9 @@ private:
     bool m_coverSwitch{true};
     quint32 m_coverSwitchInterval{15000};
     quint8 m_developerOptions{DevOptNone};
+    bool m_internalWebView{true};
     bool m_notification{false};
+
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(HafenschauProvider::DeveloperOptions)
 

@@ -461,6 +461,7 @@ QByteArray ApiInterface::getReplyData(QNetworkReply *reply)
         qDebug() << reply->errorString();
         qDebug() << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 #endif
+        emit error(reply->error());
         reply->deleteLater();
         return QByteArray();
     }

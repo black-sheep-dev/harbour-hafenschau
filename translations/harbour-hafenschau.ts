@@ -125,6 +125,10 @@
         <source>Load more</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Check your internet connection</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OpenExternalUrlDialog</name>
@@ -402,6 +406,14 @@
         <source>Manage cache options</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Webview Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage webview options</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsRegionsPage</name>
@@ -411,6 +423,21 @@
     </message>
     <message>
         <source>Regional News</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsWebviewPage</name>
+    <message>
+        <source>Webview Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal Webview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When deactivated the web content will be opened in the extarnal browser instead of the internal webview.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -430,6 +457,49 @@
     </message>
     <message>
         <source>Top News</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No news available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check your internet connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>harbour-hafenschau</name>
+    <message>
+        <source>Connection refused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Host not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection timed out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ssl handshake failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Access denied</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal server error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unkown connection error</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

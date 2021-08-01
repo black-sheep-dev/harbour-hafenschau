@@ -112,8 +112,8 @@ BackgroundItem {
 
                 onClicked: {
                     if (related_type === RelatedItem.RelatedVideo) {
-                        pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), { url: stream })
-                        return;
+                        pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {url: stream})
+                        return
                     }
 
                     if (!HafenschauProvider.isInternalLink(link))

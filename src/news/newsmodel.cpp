@@ -111,6 +111,12 @@ void NewsModel::addNews(const QList<News *> &news)
     setLoading(false);
 }
 
+void NewsModel::forceRefresh()
+{
+    beginResetModel();
+    endResetModel();
+}
+
 void NewsModel::setNews(const QList<News *> &news)
 {
     beginResetModel();

@@ -19,8 +19,8 @@ Page {
             MenuItem {
                 text: qsTr("Refresh")
                 onClicked: {
-                    console.log(ressortModel.newsType)
-                    HafenschauProvider.refresh(ressortModel.newsType)
+                    ressortModel.forceRefresh()
+                    HafenschauProvider.refresh(ressortModel.newsType)    
                 }
             }
             MenuItem {
@@ -103,9 +103,13 @@ Page {
 
                 onClicked: {
                     if (model.newsType === News.WebView) {
-                        pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: model.detailsWeb })
+                        if (HafenschauProvider.internalWebView) {
+                            pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), {url: model.detailsWeb })
+                        } else {
+                            pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: model.detailsWeb })
+                        }
                     } else if (model.newsType === News.Video) {
-                        pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {url: model.stream})
+                        pageStack.push(Qt.resolvedUrl("VideoPlayerPage.qml"), {url: model.stream})
                     } else {
                         if (model.hasContent)
                             pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {news: ressortModel.newsAt(row)})
@@ -124,6 +128,12 @@ Page {
                     else
                         return qsTr("Please refresh or check internet connection!")
                 }
+            }
+
+            ViewPlaceholder {
+                enabled: listView.count === 0 && !ressortModel.loading
+                text: qsTr("No news available")
+                hintText: qsTr("Check your internet connection")
             }
 
             VerticalScrollDecorator {}

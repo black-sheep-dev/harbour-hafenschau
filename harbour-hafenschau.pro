@@ -81,6 +81,7 @@ DISTFILES += qml/harbour-hafenschau.qml \
     qml/pages/settings/SettingsDeveloperPage.qml \
     qml/pages/settings/SettingsPage.qml \
     qml/pages/settings/SettingsRegionsPage.qml \
+    qml/pages/settings/SettingsWebviewPage.qml \
     rpm/harbour-hafenschau.changes \
     rpm/harbour-hafenschau.changes.run.in \
     rpm/harbour-hafenschau.spec \
