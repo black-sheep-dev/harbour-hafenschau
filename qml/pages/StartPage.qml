@@ -23,7 +23,7 @@ Page {
             }
 //            MenuItem {
 //                text: qsTr("Test")
-//                onClicked: HafenschauProvider.test()
+//                //onClicked: HafenschauProvider.test()
 //            }
             MenuItem {
                 text: qsTr("Refresh")

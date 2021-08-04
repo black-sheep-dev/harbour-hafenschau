@@ -4,7 +4,6 @@
 #include <QObject>
 
 #include <keepalive/backgroundactivity.h>
-#include <keepalive/displayblanking.h>
 
 #include "api/apiinterface.h"
 #include "news/newsmodel.h"
@@ -59,8 +58,6 @@ public:
     Q_INVOKABLE void saveNews(News *news);
     Q_INVOKABLE void searchContent(const QString &pattern, quint16 page = 1);
 
-    Q_INVOKABLE void preventDisplayBlanking(bool enabled = true);
-
     Q_INVOKABLE void test();
 
     // properties
@@ -84,8 +81,6 @@ signals:
     void developerOptionsChanged(quint16 options);
     void internalWebViewChanged(bool internal);
     void notificationChanged(bool notification);
-
-
 
 public slots:
     void clearCache();
@@ -112,7 +107,6 @@ private:
 
     ApiInterface *m_api{new ApiInterface(this)};
     BackgroundActivity *m_backgroundActivity{nullptr};
-    DisplayBlanking *m_displayBlanking{new DisplayBlanking(this)};
     QStringList m_notifications;
 
     // properties

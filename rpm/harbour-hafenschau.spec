@@ -20,10 +20,10 @@ Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   sailfish-components-media-qt5
 Requires:   sailfish-components-pickers-qt5
 Requires:   embedlite-components-qt5 >= 1.21.2
-Requires:   qtmozembed-qt5
 Requires:   sailfish-components-webview-qt5
 Requires:   sailfish-components-webview-qt5-popups
 Requires:   sailfish-components-webview-qt5-pickers
+Requires:   libkeepalive >= 1.7.0
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5DBus)

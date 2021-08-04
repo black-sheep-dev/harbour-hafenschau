@@ -1,5 +1,5 @@
 * Sun Aug 01 2021 Black Sheep <blacksheep@nubecula.org> 0.4.4-1
-- Fixed API to choose an other video stream quality if adaptive streaming is not available
+- Fixed API to choose an other video stream if adaptive streaming is not available
 
 * Sun Aug 01 2021 Black Sheep <blacksheep@nubecula.org> 0.4.3-1
 - Option to open web content in external browser (see settings)

@@ -20,12 +20,13 @@ CoverBackground {
         currentNews = HafenschauProvider.newsModel(NewsModel.Homepage).newsAt(currentIndex)
     }
 
+    onCurrentNewsChanged: imageDelegate.source = currentNews.portrait
+
     Connections {
         target: model
         onNewsChanged: {
             currentIndex = 0
             currentNews = model.newsAt(currentIndex)
-            imageDelegate.reload()
         }
     }
 

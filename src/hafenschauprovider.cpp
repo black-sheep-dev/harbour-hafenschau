@@ -122,11 +122,6 @@ void HafenschauProvider::searchContent(const QString &pattern, quint16 page)
     m_api->searchContent(pattern, page);
 }
 
-void HafenschauProvider::preventDisplayBlanking(bool enabled)
-{
-    m_displayBlanking->setPreventBlanking(enabled);
-}
-
 void HafenschauProvider::test()
 {
     onBreakingNewsAvailable(m_api->newsModel(NewsModel::Homepage)->newsAt(0));

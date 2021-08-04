@@ -4,6 +4,7 @@ import Sailfish.Silica 1.0
 Image {
     property string placeholderUrl: "/usr/share/harbour-hafenschau/images/dummy_image.png"
 
+    id: remoteImage
     width: parent.width
     height: {
         if (status === Image.Ready) {
@@ -30,7 +31,7 @@ Image {
         BusyIndicator {
             size: BusyIndicatorSize.Medium
             anchors.centerIn: parent
-            running: parent.status === Image.Loading
+            running: remoteImage.status === Image.Loading
         }
     }
 

@@ -28,6 +28,14 @@ Page {
                 onClicked: HafenschauProvider.refreshNews(news)
             }
 
+//            MenuItem {
+//                text: qsTr("Share")
+//                onClicked: pageStack.animatorPush("Sailfish.WebView.Popups.ShareLinkPage", {
+//                                                      "link": news.detailsWeb,
+//                                                      "linkTitle": news.title
+//                                                  })
+//            }
+
             MenuItem {
                 visible: news.comments.length > 0
                 text: qsTr("Show Comments")

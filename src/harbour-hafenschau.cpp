@@ -66,14 +66,22 @@ void redirectDebugMessages(QtMsgType type, const QMessageLogContext & context, c
 
 int main(int argc, char *argv[])
 {
+    // Disable crash guard and prefer egl for webgl.
+    setenv("MOZ_DISABLE_CRASH_GUARD", "1", 1);
+    setenv("MOZ_WEBGL_PREFER_EGL", "1", 1);
+
 #ifdef QT_DEBUG
     //qInstallMessageHandler(redirectDebugMessages);
 #endif
 
-    QCoreApplication::setApplicationName(QStringLiteral("Hafenschau"));
-    QCoreApplication::setApplicationVersion(APP_VERSION);
-    QCoreApplication::setOrganizationName(QStringLiteral("nubecula.org"));
-    QCoreApplication::setOrganizationDomain(QStringLiteral("nubecula.org"));
+    // Set up QML engine.
+    QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
+    QScopedPointer<QQuickView> v(SailfishApp::createView());
+
+    app->setApplicationVersion(APP_VERSION);
+    app->setApplicationName(QStringLiteral("hafenschau"));
+    app->setOrganizationName(QStringLiteral("org.nubecula"));
+    app->setOrganizationDomain(QStringLiteral("nubecula.org"));
 
 #ifndef QT_DEBUG
     auto uri = "org.nubecula.harbour.hafenschau";
@@ -115,7 +123,10 @@ int main(int argc, char *argv[])
             });
 
 
+    v->setSource(SailfishApp::pathTo("qml/harbour-hafenschau.qml"));
+    v->show();
 
+    return app->exec();
 
-    return SailfishApp::main(argc, argv);
+    //return SailfishApp::main(argc, argv);
 }

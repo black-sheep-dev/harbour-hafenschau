@@ -29,8 +29,8 @@ PkgConfigBR:
   - nemonotifications-qt5
 
 # Build dependencies without a pkgconfig setup can be listed here
-# PkgBR:
-#   - package-needed-to-build
+#PkgBR:
+#  - libkeepalive
 
 # Runtime dependencies which are not automatically detected
 Requires:
@@ -38,10 +38,10 @@ Requires:
   - sailfish-components-media-qt5
   - sailfish-components-pickers-qt5
   - embedlite-components-qt5 >= 1.21.2
-  - qtmozembed-qt5
   - sailfish-components-webview-qt5
   - sailfish-components-webview-qt5-popups
   - sailfish-components-webview-qt5-pickers
+  - libkeepalive >= 1.7.0
 
 # All installed files
 Files:
