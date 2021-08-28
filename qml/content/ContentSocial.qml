@@ -9,13 +9,7 @@ BackgroundItem {
     property ContentItemSocial item
 
     width: parent.width
-    height: {
-        var value = labelShorttext.height + labelTitle.height + separatorBottom.height + accountRow.height + 4 * columnBox.spacing
-        if (item.image.length > 0)
-            value += headerImage.height
-
-        return value
-    }
+    height: columnBox.height
 
     Column {
         id: columnBox
@@ -43,6 +37,7 @@ BackgroundItem {
 
         RemoteImage {
             id: headerImage
+            visible: item.image.length > 0
 
             source: item.image
         }
@@ -64,23 +59,15 @@ BackgroundItem {
             height: Theme.itemSizeMedium
             spacing: Theme.paddingMedium
 
-            Image {
-                id: avatarImage
-                source: item.avatar
-                cache: true
-                smooth: true
+            RemoteImage {
+               id: avatarImage
+               source: item.avatar
 
-                width: Theme.itemSizeMedium
-                height: Theme.itemSizeMedium
-                fillMode: Image.PreserveAspectCrop
+               width: Theme.itemSizeMedium
+               height: Theme.itemSizeMedium
+               fillMode: Image.PreserveAspectCrop
 
-                BusyIndicator {
-                    size: BusyIndicatorSize.Medium
-                    anchors.centerIn: avatarImage
-                    running: headerImage.status === Image.Loading
-                }
-
-                onStatusChanged: if (avatarImage.status === Image.Error) source = "qrc:///icons/twitter"
+               placeholderUrl: "qrc:/icons/twitter"
             }
 
             Label {

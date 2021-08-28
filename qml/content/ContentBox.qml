@@ -9,15 +9,7 @@ BackgroundItem {
     property ContentItemBox item
 
     width: parent.width
-    height: {
-        var value = labelSubtitle.height + labelTitle.height + labelText.height + separatorBottom.height + 4 * columnBox.spacing
-        if (item.image.length > 0)
-            value += headerImage.height
-        else
-            value += separatorTop.height
-
-        return value
-    }
+    height: columnBox.height
 
     Column {
         id: columnBox
@@ -34,6 +26,7 @@ BackgroundItem {
 
         RemoteImage {
             id: headerImage
+            visible: item.image.length > 0
             source: item.image
         }
 

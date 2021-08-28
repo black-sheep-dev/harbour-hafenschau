@@ -9,7 +9,7 @@ BackgroundItem {
     property ContentItemGallery item
 
     width: parent.width
-    height: headerImage.height + labelTitle.height + separatorBottom.height + 2 * columnBox.spacing
+    height: columnBox.height
 
     Column {
         id: columnBox

@@ -8,9 +8,10 @@ Item {
 
     x: Theme.horizontalPageMargin
     width: parent.width - 2*x
-    height: separatorTop.height + labelValue.height + separatorBottom.height + 2 * Theme.paddingMedium
+    height: columnBox.height
 
     Column {
+        id: columnBox
         width: parent.width
         spacing: Theme.paddingMedium
 

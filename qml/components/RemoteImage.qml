@@ -6,13 +6,15 @@ Image {
 
     id: remoteImage
     width: parent.width
-    height: {
-        if (status === Image.Ready) {
-            sourceSize.height * width / sourceSize.width
-        } else {
-            placeholderImage.sourceSize.height * placeholderImage.width / placeholderImage.sourceSize.width
-        }
-    }
+//    height: {
+//        if (status === Image.Ready) {
+//            sourceSize.height * width / sourceSize.width
+//        } else {
+//            placeholderImage.sourceSize.height * placeholderImage.width / placeholderImage.sourceSize.width
+//        }
+//    }
+    sourceSize.width: width
+    sourceSize.height: height
 
     fillMode: Image.PreserveAspectCrop
 

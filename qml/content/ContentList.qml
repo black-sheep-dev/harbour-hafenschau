@@ -7,7 +7,7 @@ BackgroundItem {
     property ContentItemList item
 
     width: parent.width
-    height: separatorTop.height + labelHeader.height + listView.height + 2 * columnBox.spacing
+    height: columnBox.height
 
     Column {
         id: columnBox

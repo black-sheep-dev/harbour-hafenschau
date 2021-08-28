@@ -12,10 +12,10 @@ BackgroundItem {
     property ContentItemAudio item
 
     width: parent.width
-    height: headerImage.height + labelTitle.height  + labelText.height + separatorBottom.height + 3 * columnVideo.spacing
+    height: columnAudio.height
 
     Column {
-        id: columnVideo
+        id: columnAudio
         x: Theme.horizontalPageMargin
         width: parent.width - 2*x
         spacing: Theme.paddingMedium

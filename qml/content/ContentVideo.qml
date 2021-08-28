@@ -9,7 +9,7 @@ BackgroundItem {
     property ContentItemVideo item
 
     width: parent.width
-    height: headerImage.height + labelTitle.height + separatorBottom.height + 2 * columnVideo.spacing
+    height: columnVideo.height
 
     Column {
         id: columnVideo
