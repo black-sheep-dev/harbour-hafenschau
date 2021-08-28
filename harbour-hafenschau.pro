@@ -44,7 +44,6 @@ SOURCES += src/harbour-hafenschau.cpp \
     src/content/relatedmodel.cpp \
     src/hafenschauprovider.cpp \
     src/news/news.cpp \
-    src/news/newsitemsmodel.cpp \
     src/news/newsmodel.cpp \
     src/news/newssortfiltermodel.cpp \
     src/region/regionsmodel.cpp
@@ -122,8 +121,6 @@ HEADERS += \
     src/content/relatedmodel.h \
     src/hafenschauprovider.h \
     src/news/news.h \
-    src/news/newsitem.h \
-    src/news/newsitemsmodel.h \
     src/news/newsmodel.h \
     src/news/newssortfiltermodel.h \
     src/region/regionsmodel.h
