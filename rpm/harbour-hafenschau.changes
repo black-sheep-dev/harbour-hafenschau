@@ -1,3 +1,7 @@
+* Sat Aug 28 2021 Black Sheep <blacksheep@nubecula.org> 0.4.6-1
+- Fixed display error on social media content
+- UI fixes / improvements
+
 * Wed Aug 04 2021 Black Sheep <blacksheep@nubecula.org> 0.4.5-1
 - Fixed bug with internal webview not showing whole page
 - UI fixes
