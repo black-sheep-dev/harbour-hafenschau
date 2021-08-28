@@ -12,7 +12,7 @@
    viewBox="0 0 134.93749 89.958335"
    version="1.1"
    id="svg8"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
    sodipodi:docname="dummy_image.svg"
    inkscape:export-filename="/home/sam/Develop/SailfishOS/harbour-hafenschau/images/dummy_image.png"
    inkscape:export-xdpi="192"
@@ -35,7 +35,7 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
+     inkscape:zoom="0.98994949"
      inkscape:cx="297.49768"
      inkscape:cy="154.06261"
      inkscape:document-units="px"
@@ -45,7 +45,7 @@
      units="px"
      width="512px"
      inkscape:window-width="1920"
-     inkscape:window-height="1015"
+     inkscape:window-height="1005"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1">
@@ -78,7 +78,7 @@
        y="0" />
     <g
        id="g863"
-       transform="matrix(0.59069766,0,0,0.59069766,48.566423,26.372189)"
+       transform="matrix(0.59069766,0,0,0.59069766,48.566423,26.076914)"
        style="opacity:0.4;stroke-width:0.447917;filter:url(#filter861)">
       <rect
          style="opacity:0.2;stroke-width:0.447917"
