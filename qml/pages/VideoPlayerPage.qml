@@ -19,6 +19,10 @@ Page {
     SilicaFlickable {
         anchors.fill: parent
 
+        Rectangle {
+            anchors.fill: parent
+            color: "black"
+        }
 
         MediaPlayer {
             id: videoPlayer
