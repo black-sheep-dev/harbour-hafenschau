@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
     QScopedPointer<QQuickView> v(SailfishApp::createView());
 
     app->setApplicationVersion(APP_VERSION);
-    app->setApplicationName(QStringLiteral("hafenschau"));
+    //app->setApplicationName(QStringLiteral("harbour-hafenschau"));
     app->setOrganizationName(QStringLiteral("org.nubecula"));
     app->setOrganizationDomain(QStringLiteral("nubecula.org"));
 
