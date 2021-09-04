@@ -39,6 +39,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Sort descending</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort ascending</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Hide search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -47,11 +55,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Comments</source>
+        <source>Comments (closed)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No comments available</source>
+        <source>Comments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -59,7 +67,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Comments (closed)</source>
+        <source>No comments available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show in browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -81,17 +93,6 @@
     <name>DataReaderPage</name>
     <message>
         <source>Raw data viewer</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HafenschauProvider</name>
-    <message>
-        <source>Hafenschau</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -122,29 +123,26 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
         <source>Load more</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>OpenExternalUrlDialog</name>
     <message>
-        <source>Open external url?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open</source>
+        <source>Failed to get news</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ReaderPage</name>
     <message>
-        <source>Save news data</source>
+        <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show Comments</source>
+        <source>Comments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -152,7 +150,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Refresh</source>
+        <source>Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save news data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to load news</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check your internet connection</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -230,15 +240,19 @@
 <context>
     <name>SearchPage</name>
     <message>
+        <source>Failed to get news</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load more</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>No content found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Type in a search pattern to find content</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load more</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -309,11 +323,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Update interval</source>
+        <source>Update interval for cover page switch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Update interval for cover page switch</source>
+        <source>Update interval (msec)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -410,6 +424,14 @@
         <source>Manage webview options</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Video Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage video settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsRegionsPage</name>
@@ -419,6 +441,45 @@
     </message>
     <message>
         <source>Regional News</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset region settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsVideoPage</name>
+    <message>
+        <source>Video Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose video quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Adaptive Streaming</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use adaptive streaming when possible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Low</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medium</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -467,35 +528,7 @@
 <context>
     <name>harbour-hafenschau</name>
     <message>
-        <source>Connection refused</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Host not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Connection timed out</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ssl handshake failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Access denied</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal server error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unkown connection error</source>
+        <source>Failed to get news</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

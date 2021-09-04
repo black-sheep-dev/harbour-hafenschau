@@ -16,9 +16,7 @@ Page {
         Column {
             id: column
 
-            x: Theme.horizontalPageMargin
-
-            width: page.width - 2 * x
+            width: page.width
             spacing: Theme.paddingMedium
 
             PageHeader {
@@ -27,6 +25,8 @@ Page {
 
             TextSwitch {
                 id: saveNewsDataSwitch
+                x: Theme.horizontalPageMargin
+                width: page.width - 2*x
                 text: qsTr("Save news api data")
                 description: qsTr("When activated an option to save the raw api data is available in pulldown menu on every reader page.")
                              + "\n"
@@ -36,37 +36,32 @@ Page {
 
                 onCheckedChanged: {
                     if (checked)
-                        HafenschauProvider.developerOptions |= HafenschauProvider.DevOptSaveNews
+                        settings.developerOptions |= DeveloperOption.SaveNews
                     else
-                        HafenschauProvider.developerOptions &= ~HafenschauProvider.DevOptSaveNews
+                        settings.developerOptions &= ~DeveloperOption.SaveNews
                 }
 
 
-                Component.onCompleted: checked = (HafenschauProvider.developerOptions & HafenschauProvider.DevOptSaveNews) === HafenschauProvider.DevOptSaveNews
+                Component.onCompleted: checked = (settings.developerOptions & DeveloperOption.SaveNews) === DeveloperOption.SaveNews
             }
 
             TextSwitch {
                 id: showUnkownContentSwitch
+                x: Theme.horizontalPageMargin
+                width: page.width - 2*x
                 text: qsTr("Show unkown content")
                 description: qsTr("If enabled unkown content items are displayed in the reader page.")
 
                 onCheckedChanged: {
                     if (checked)
-                        HafenschauProvider.developerOptions |= HafenschauProvider.DevOptShowUnkownContent
+                        settings.developerOptions |= DeveloperOption.ShowUnkownContent
                     else
-                        HafenschauProvider.developerOptions &= ~HafenschauProvider.DevOptShowUnkownContent
+                        settings.developerOptions &= ~DeveloperOption.ShowUnkownContent
                 }
 
 
-                Component.onCompleted: checked = (HafenschauProvider.developerOptions & HafenschauProvider.DevOptShowUnkownContent) === HafenschauProvider.DevOptShowUnkownContent
+                Component.onCompleted: checked = (settings.developerOptions & DeveloperOption.ShowUnkownContent) === DeveloperOption.ShowUnkownContent
             }
-        }
-    }
-
-    onStatusChanged: {
-        if (status === PageStatus.Deactivating) {
-            HafenschauProvider.saveSettings()
-            HafenschauProvider.refresh(true)
         }
     }
 }

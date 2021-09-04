@@ -1,0 +1,2 @@
+#qmldir
+singleton Global 1.0 global.qml

@@ -1,8 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 Page {
     id: page
 
@@ -16,9 +14,7 @@ Page {
         Column {
             id: column
 
-            x: Theme.horizontalPageMargin
-
-            width: page.width - 2 * x
+            width: page.width
             spacing: Theme.paddingLarge
 
             PageHeader {
@@ -27,16 +23,16 @@ Page {
 
             TextSwitch {
                 id: internalWebviewSwitch
+                x: Theme.horizontalPageMargin
+                width: page.width - 2*x
                 text: qsTr("Internal Webview")
                 description: qsTr("When deactivated the web content will be opened in the extarnal browser instead of the internal webview.")
 
-                onCheckedChanged:  HafenschauProvider.internalWebView = checked
+                onCheckedChanged:  settings.internalWebView = checked
 
-                Component.onCompleted: checked = HafenschauProvider.internalWebView
+                Component.onCompleted: checked = settings.internalWebView
             }
 
         }
     }
-
-    onStatusChanged: if (status === PageStatus.Deactivating) HafenschauProvider.saveSettings()
 }

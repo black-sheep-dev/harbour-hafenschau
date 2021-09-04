@@ -3,11 +3,12 @@
 
 #include <QAbstractListModel>
 
-#include "src/news/news.h"
-
 class RegionsModel : public QAbstractListModel
 {
     Q_OBJECT
+
+    Q_PROPERTY(QList<int> activeRegions READ activeRegions WRITE setActiveRegions NOTIFY activeRegionsChanged)
+
 public:
     enum RegionRoles {
         NameRole            = Qt::UserRole + 1,

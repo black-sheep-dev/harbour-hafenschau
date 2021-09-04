@@ -17,21 +17,21 @@ Page {
                 description: qsTr("Browse domestic news")
                 icon: "image://theme/icon-m-home"
                 page: "NewsListPage.qml"
-                ressort: NewsModel.Inland
+                ressort: Ressort.Inland
             }
             ListElement {
                 title: qsTr("Foreign News");
                 description: qsTr("Browse news from foreign countries")
                 icon: "image://theme/icon-m-airplane-mode"
                 page: "NewsListPage.qml"
-                ressort: NewsModel.Ausland
+                ressort: Ressort.Ausland
             }
             ListElement {
                 title: qsTr("Economic News");
                 description: qsTr("Browse economic news")
                 icon: "image://theme/icon-m-storage"
                 page: "NewsListPage.qml"
-                ressort: NewsModel.Wirtschaft
+                ressort: Ressort.Wirtschaft
             }
 
             ListElement {
@@ -39,35 +39,35 @@ Page {
                 description: qsTr("Browse investigative news")
                 icon: "image://theme/icon-m-camera"
                 page: "NewsListPage.qml"
-                ressort: NewsModel.Investigativ
+                ressort: Ressort.Investigativ
             }
             ListElement {
                 title: qsTr("Regional News");
                 description: qsTr("Browse regional news")
                 icon: "image://theme/icon-m-location"
                 page: "NewsListPage.qml"
-                ressort: NewsModel.Regional
+                ressort: Ressort.Regional
             }
             ListElement {
                 title: qsTr("Sport News");
                 description: qsTr("Browse sport news")
                 icon: "image://theme/icon-m-person"
                 page: "NewsListPage.qml"
-                ressort: NewsModel.Sport
+                ressort: Ressort.Sport
             }
             ListElement {
                 title: qsTr("Videos");
                 description: qsTr("Browse videos")
                 icon: "image://theme/icon-m-video"
                 page: "NewsListPage.qml"
-                ressort: NewsModel.Video
+                ressort: Ressort.Video
             }
             ListElement {
                 title: qsTr("Search");
                 description: qsTr("Search content")
                 icon: "image://theme/icon-m-search"
                 page: "SearchPage.qml"
-                ressort: NewsModel.Search
+                ressort: Ressort.Search
             }
         }
 
@@ -127,9 +127,10 @@ Page {
             }
 
             onClicked: {
+                if (model.ressort)
                 pageStack.push(Qt.resolvedUrl(page), {
-                                                 ressortModel: HafenschauProvider.newsModel(ressort),
-                                                 ressortTitle: title
+                                                 ressort: model.ressort,
+                                                 ressortTitle: model.title
                                             })
             }
         }

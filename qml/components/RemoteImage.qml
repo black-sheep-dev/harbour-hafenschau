@@ -6,18 +6,13 @@ Image {
 
     id: remoteImage
     width: parent.width
-//    height: {
-//        if (status === Image.Ready) {
-//            sourceSize.height * width / sourceSize.width
-//        } else {
-//            placeholderImage.sourceSize.height * placeholderImage.width / placeholderImage.sourceSize.width
-//        }
-//    }
+    height: 9 / 16 * parent.width
     sourceSize.width: width
     sourceSize.height: height
 
     fillMode: Image.PreserveAspectCrop
 
+    asynchronous: true
     cache: true
     smooth: true
 
@@ -25,8 +20,9 @@ Image {
         visible: parent.status !== Image.Ready
         id: placeholderImage
 
-        width: parent.width
-        fillMode: parent.fillMode
+        anchors.centerIn: parent
+        anchors.fill: parent
+        fillMode: Image.PreserveAspectCrop
 
         source: placeholderUrl
 
@@ -35,11 +31,5 @@ Image {
             anchors.centerIn: parent
             running: remoteImage.status === Image.Loading
         }
-    }
-
-    function reload() {
-        var orig = source
-        source = "/usr/share/harbour-hafenschau/images/dummy_image.png"
-        orig = source
     }
 }

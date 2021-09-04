@@ -10,7 +10,7 @@
 #   - translation filenames have to be changed
 
 # VERSION
-VERSION = 0.4.6-1
+VERSION = 0.5.0-1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # The name of your application
@@ -20,33 +20,22 @@ DEFINES += APP_TARGET=\\\"$$TARGET\\\"
 QT += multimedia dbus
 
 CONFIG += link_pkgconfig sailfishapp
-PKGCONFIG += qt5embedwidget nemonotifications-qt5
+PKGCONFIG += \
+    qt5embedwidget \
+    nemonotifications-qt5 \
+    connman-qt5
 
 LIBS += -L../../lib -lkeepalive
 LIBS += -lz
 
 SOURCES += src/harbour-hafenschau.cpp \
-    src/api/api_keys.cpp \
     src/api/apiinterface.cpp \
     src/comments/commentsmodel.cpp \
     src/comments/commentssortfiltermodel.cpp \
-    src/content/contentitem.cpp \
-    src/content/contentitemaudio.cpp \
-    src/content/contentitembox.cpp \
-    src/content/contentitemgallery.cpp \
-    src/content/contentitemlist.cpp \
-    src/content/contentitemrelated.cpp \
-    src/content/contentitemsocial.cpp \
-    src/content/contentitemvideo.cpp \
-    src/content/galleryitem.cpp \
-    src/content/gallerymodel.cpp \
-    src/content/relateditem.cpp \
-    src/content/relatedmodel.cpp \
-    src/hafenschauprovider.cpp \
-    src/news/news.cpp \
-    src/news/newsmodel.cpp \
+    src/news/newslistmodel.cpp \
     src/news/newssortfiltermodel.cpp \
-    src/region/regionsmodel.cpp
+    src/region/regionsmodel.cpp \
+    src/tools/datawriter.cpp
 
 DISTFILES += qml/harbour-hafenschau.qml \
     qml/components/RemoteImage.qml \
@@ -64,7 +53,7 @@ DISTFILES += qml/harbour-hafenschau.qml \
     qml/content/ContentVideo.qml \
     qml/cover/CoverPage.qml \
     qml/delegates/NewsListItem.qml \
-    qml/dialogs/OpenExternalUrlDialog.qml \
+    qml/global.qml \
     qml/pages/CommentsListPage.qml \
     qml/pages/DataReaderPage.qml \
     qml/pages/GalleryPage.qml \
@@ -81,7 +70,9 @@ DISTFILES += qml/harbour-hafenschau.qml \
     qml/pages/settings/SettingsDeveloperPage.qml \
     qml/pages/settings/SettingsPage.qml \
     qml/pages/settings/SettingsRegionsPage.qml \
+    qml/pages/settings/SettingsVideoPage.qml \
     qml/pages/settings/SettingsWebviewPage.qml \
+    qml/qmldir \
     rpm/harbour-hafenschau.changes \
     rpm/harbour-hafenschau.changes.run.in \
     rpm/harbour-hafenschau.spec \
@@ -102,28 +93,20 @@ CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/harbour-hafenschau-de.ts
 
 HEADERS += \
-    src/api/api_keys.h \
     src/api/apiinterface.h \
     src/comments/comment.h \
     src/comments/commentsmodel.h \
     src/comments/commentssortfiltermodel.h \
-    src/content/contentitem.h \
-    src/content/contentitemaudio.h \
-    src/content/contentitembox.h \
-    src/content/contentitemgallery.h \
-    src/content/contentitemlist.h \
-    src/content/contentitemrelated.h \
-    src/content/contentitemsocial.h \
-    src/content/contentitemvideo.h \
-    src/content/galleryitem.h \
-    src/content/gallerymodel.h \
-    src/content/relateditem.h \
-    src/content/relatedmodel.h \
-    src/hafenschauprovider.h \
-    src/news/news.h \
-    src/news/newsmodel.h \
+    src/enums/developeroption.h \
+    src/enums/enums.h \
+    src/enums/newstype.h \
+    src/enums/ressort.h \
+    src/enums/videoquality.h \
+    src/news/newsitem.h \
+    src/news/newslistmodel.h \
     src/news/newssortfiltermodel.h \
-    src/region/regionsmodel.h
+    src/region/regionsmodel.h \
+    src/tools/datawriter.h
 
 RESOURCES += \
     ressources.qrc

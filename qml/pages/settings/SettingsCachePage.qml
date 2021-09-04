@@ -16,9 +16,7 @@ Page {
         Column {
             id: column
 
-            x: Theme.horizontalPageMargin
-
-            width: page.width - 2 * x
+            width: page.width
             spacing: Theme.paddingLarge
 
             PageHeader {
@@ -33,12 +31,12 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 borderWidth: 0.1 * width
 
-                progressValue: HafenschauProvider.cacheSize() / 50000000
+                progressValue: api.cacheSize() / 50000000
 
                 Label {
                     anchors.centerIn: parent
 
-                    text: Math.round(HafenschauProvider.cacheSize() / 1000000) + "/50 MB"
+                    text: Math.round(api.cacheSize() / 1000000) + "/50 MB"
                 }
             }
 
@@ -47,7 +45,7 @@ Page {
 
                 Button {
                     text: qsTr("Reset")
-                    onClicked: HafenschauProvider.clearCache()
+                    onClicked: api.clearCache()
                 }
             }
         }

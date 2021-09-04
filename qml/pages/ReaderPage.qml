@@ -4,111 +4,138 @@ import Sailfish.Silica 1.0
 import org.nubecula.harbour.hafenschau 1.0
 
 import "../components/"
-import "../content/"
 
 Page {
+    property bool error: false
     property string link
-    property News news
+    property bool loading: true
+    property var news
+    property string updateCheckUrl
+
+    function checkForUpdate() {
+        error = false
+        api.request(updateCheckUrl, updateCheckUrl, false)
+    }
+
+    function refresh(cached) {
+        error = false
+        api.request(link, link, cached)
+    }
 
     id: page
 
     allowedOrientations: Orientation.All
 
+    PageBusyIndicator {
+        anchors.centerIn: parent
+        size: BusyIndicatorSize.Large
+        running: loading && news === undefined
+    }
+
     SilicaFlickable {
         PullDownMenu {
             MenuItem {
-                visible: (HafenschauProvider.developerOptions & HafenschauProvider.DevOptSaveNews) === HafenschauProvider.DevOptSaveNews
+                visible: settings.developerOptions & DeveloperOption.SaveNews
 
                 text: qsTr("Save news data")
-                onClicked: HafenschauProvider.saveNews(news)
+                onClicked: dataWriter.saveNews(news)
             }
 
             MenuItem {
+                enabled: networkManager.connected
                 text: qsTr("Refresh")
-                onClicked: HafenschauProvider.refreshNews(news)
+                onClicked: checkForUpdate()
             }
 
-//            MenuItem {
-//                text: qsTr("Share")
-//                onClicked: pageStack.animatorPush("Sailfish.WebView.Popups.ShareLinkPage", {
-//                                                      "link": news.detailsWeb,
-//                                                      "linkTitle": news.title
-//                                                  })
-//            }
+            MenuItem {
+                visible: news.hasOwnProperty("shareURL")
+                text: qsTr("Share")
+                onClicked: Qt.openUrlExternally(news.shareURL)
+            }
 
             MenuItem {
-                visible: news.comments.length > 0
-                text: qsTr("Show Comments")
+                visible: news.hasOwnProperty("comments")
+                text: qsTr("Comments")
                 onClicked: pageStack.push(Qt.resolvedUrl("CommentsListPage.qml"), {link: news.comments})
             }
+
+            busy: loading
         }
 
         PushUpMenu {
-            visible: news.comments.length > 0
+            visible: news.hasOwnProperty("comments")
             MenuItem {
-                text: qsTr("Show Comments")
+                text: qsTr("Comments")
                 onClicked: pageStack.push(Qt.resolvedUrl("CommentsListPage.qml"), {link: news.comments})
             }
         }
 
-        anchors.fill: parent
+        visible: !loading
 
-        contentHeight: headerImage.height + columnHeader.height + columnContent.height
+        anchors.fill: parent
+        contentHeight: headerImage.height + columnHeader.height + columnContent.height + bottomSpacer.height
+
+        ViewPlaceholder {
+            enabled: error && !loading
+            text: qsTr("Failed to load news")
+            hintText: qsTr("Check your internet connection")
+        }
 
         RemoteImage {
             id: headerImage
 
+            visible: !error
+            opacity: news === undefined ? 0:1
+
+            Behavior on opacity {
+                FadeAnimation {}
+            }
+
             anchors.left: parent.left
             anchors.right: parent.right
 
-            source: news.image
-
-            Image {
-                x: Theme.paddingLarge
-                y: Theme.paddingMedium
-
-                source: news.brandingImage
-            }
+            source: news.teaserImage.videowebl.imageurl
         }
 
-        Column { 
+        Column {
             id: columnHeader
 
+            visible: !error
+            opacity: news === undefined ? 0:1
+
+            Behavior on opacity {
+                FadeAnimation {}
+            }
+
             anchors.top: headerImage.bottom
-            width: parent.width
-            spacing: Theme.paddingMedium
+            x: Theme.horizontalPageMargin
+            width: parent.width - 2*x
+            spacing: Theme.paddingSmall
 
             Item {
-                height: Theme.paddingMedium
+                height: Theme.paddingSmall
                 width: 1
             }
 
             LinkedLabel {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2*x
-                wrapMode: Text.Wrap
+                width: parent.width
+
                 font.pixelSize: Theme.fontSizeTiny
                 font.italic: true
-                color: Theme.highlightColor
-
                 plainText: "© https://tagesschau.de"
                 linkColor: Theme.highlightColor
             }
 
             Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2*x
+                width: parent.width
 
                 wrapMode: Text.WordWrap
-
-                font.pixelSize: Theme.fontSizeMedium
-
+                font.pixelSize: Theme.fontSizeSmall
                 text: news.topline
             }
 
             Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2*x
+                width: parent.width
 
                 font.pixelSize: Theme.fontSizeLarge
                 font.bold: true
@@ -120,8 +147,7 @@ Page {
             }
 
             Row {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2*x
+                width: parent.width
 
                 spacing: Theme.paddingMedium
 
@@ -133,7 +159,7 @@ Page {
                 }
 
                 Label {
-                    text: news.date.toLocaleString()
+                    text: new Date(news.date).toLocaleString()
 
                     font.pixelSize: Theme.fontSizeExtraSmall
                 }
@@ -148,74 +174,94 @@ Page {
         Column {
             id: columnContent
 
+            visible: !error
+            opacity: news === undefined ? 0:1
+
+            Behavior on opacity {
+                FadeAnimation {}
+            }
+
             anchors.top: columnHeader.bottom
             width: parent.width
 
-            spacing: Theme.paddingLarge
-
-            Component.onCompleted: refreshContent()
+            spacing: Theme.paddingMedium
         }
 
-        VerticalScrollDecorator {}
-    }
+        Item {
+            id: bottomSpacer
 
-    Component.onCompleted: link.length > 0 ? HafenschauProvider.getInternalLink(link) : pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), { news: news })
-
-    Connections {
-        target: HafenschauProvider
-        onInternalLinkAvailable: {
-            if (link === news.details) {
-                page.news = news
-                refreshContent()
-            } else {
-                pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), { news: news })
-            }
+            anchors.top: columnContent.bottom
+            height: Theme.paddingMedium
+            width: 1
         }
     }
 
+    Component.onCompleted: refresh(true)
+
     Connections {
-        target: news
-        onChanged: refreshContent()
+        target: api
+        onRequestFailed: {
+            if (page.link !== id) return
+
+            notification.show(qsTr("Failed to load news"))
+            loading = false
+            page.error = true
+        }
+        onRequestFinished: {
+            if (page.link !== id) return
+
+            page.news = data
+            page.updateCheckUrl = data.updateCheckUrl
+            loading = false
+            refreshContent()
+        }
+        onRequestFinishedWithRawData: {
+            if (page.updateCheckUrl !== id) return
+            if (data === "true") refresh(false)
+        }
     }
 
     function refreshContent() {
-
         for(var i = columnContent.children.length; i > 0; i--) {
             columnContent.children[i-1].destroy()
         }
 
-        for (var i=0; i < news.contentItemsCount(); i++) {
-            var item = news.contentItemAt(i)
-
-            if (item === undefined)
-                continue
+        var count = news.content.length
+        for(var j = 0; j < count; j++) {
+            var item = news.content[j]
 
             var component
 
-            if (item.contentType === ContentItem.Headline) {
+            if (item.type === "headline") {
                 component = Qt.createComponent("../content/ContentHeadline.qml")
-            } else if (item.contentType === ContentItem.Text) {
+            } else if (item.type === "text") {
                 component = Qt.createComponent("../content/ContentText.qml")
-            } else if (item.contentType === ContentItem.Box) {
+            } else if (item.type === "box") {
                 component = Qt.createComponent("../content/ContentBox.qml")
-            } else if (item.contentType === ContentItem.Video) {
-                component = Qt.createComponent("../content/ContentVideo.qml")
-            } else if (item.contentType === ContentItem.Gallery) {
-                component = Qt.createComponent("../content/ContentGallery.qml")
-            } else if (item.contentType === ContentItem.List) {
-                component = Qt.createComponent("../content/ContentList.qml")
-            } else if (item.contentType === ContentItem.Quotation) {
-                component = Qt.createComponent("../content/ContentQuotation.qml")
-            } else if (item.contentType === ContentItem.Related) {
+                item = item.box
+            } else if (item.type === "related") {
                 component = Qt.createComponent("../content/ContentRelated.qml")
-            } else if (item.contentType === ContentItem.Audio) {
+                item = item.related
+            } else if (item.type === "video") {
+                component = Qt.createComponent("../content/ContentVideo.qml")
+                item = item.video
+            } else if (item.type === "audio") {
                 component = Qt.createComponent("../content/ContentAudio.qml")
-            } else if (item.contentType === ContentItem.Social) {
+                item = item.audio
+            } else if (item.type === "list") {
+                component = Qt.createComponent("../content/ContentList.qml")
+                item = item.list
+            } else if (item.type === "quotation") {
+                component = Qt.createComponent("../content/ContentQuotation.qml")
+                item = item.quotation
+            } else if (item.type === "image_gallery") {
+                component = Qt.createComponent("../content/ContentGallery.qml")
+                item = item.gallery
+            } else if (item.type === "socialmedia") {
                 component = Qt.createComponent("../content/ContentSocial.qml")
-            } else if (item.contentType === ContentItem.HtmlEmbed) {
-                component = Qt.createComponent("../content/ContentHtmlEmbed.qml")
+                item = item.social
             } else {
-                if ((HafenschauProvider.developerOptions & HafenschauProvider.DevOptShowUnkownContent) !== HafenschauProvider.DevOptShowUnkownContent)
+                if (settings.developerOptions & DeveloperOption.ShowUnkownContent)
                     continue
 
                 component = Qt.createComponent("../content/ContentUnkown.qml")

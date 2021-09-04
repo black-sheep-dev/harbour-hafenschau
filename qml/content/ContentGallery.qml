@@ -1,12 +1,10 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 import "../components/"
 
 BackgroundItem {
-    property ContentItemGallery item
+    property var item
 
     width: parent.width
     height: columnBox.height
@@ -19,7 +17,7 @@ BackgroundItem {
 
         RemoteImage {
             id: headerImage
-            source: item.model().itemAt(0).image
+            source: item[0].videowebl.imageurl
         }
 
         Label {
@@ -30,7 +28,7 @@ BackgroundItem {
             wrapMode: Text.WordWrap
             color: Theme.highlightColor
 
-            text: item.model().itemAt(0).title
+            text: item[0].title
         }
 
         Separator {

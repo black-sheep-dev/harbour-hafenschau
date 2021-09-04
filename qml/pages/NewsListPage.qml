@@ -4,24 +4,84 @@ import Sailfish.Silica 1.0
 import org.nubecula.harbour.hafenschau 1.0
 
 import "../delegates"
+import "../."
 
 Page {
     property string ressortTitle
-    property NewsModel ressortModel
+    property int ressort: Ressort.Undefined
+    property string ressortQuery
+
+    property string previousPage
+    property string nextPage
 
     id: page
 
     allowedOrientations: Orientation.All
 
+    function checkRequest(request) {
+        const parts = request.split('.')
+        if (parts.length <= 3) return false
+
+        if (parts[0] !== "ressortModel") return false
+        if (parts[1] !== String(ressort)) return false
+
+        return true
+    }
+
+    function refresh() {
+        newsModel.loading = true
+        newsModel.error = false
+
+        const query = "https://www.tagesschau.de/api2/news/"
+        query += ressortQuery
+
+        api.request(query, "ressortModel." + ressort + ".refresh", false)
+    }
+
+    function loadMore() {
+        newsModel.loading = true
+        newsModel.error = false
+        api.request(nextPage, "ressortModel." + ressort + ".loadMore", false)
+    }
+
+    Connections {
+        target: api
+        onRequestFailed: {
+            if (checkRequest(id)) return
+            newsModel.loading = false
+            newsModel.error = true
+            notification.show(qsTr("Failed to get news"))
+        }
+
+        onRequestFinished: {
+            if (checkRequest(id)) return
+
+            const mode = id.split('.')[2]
+
+            newsModel.loading = false
+
+            if (mode === "refresh") {
+                newsModel.setItems(data.news)
+            } else if (mode === "loadMore") {
+                newsModel.addItems(data.news)
+            }
+
+            nextPage = data.nextPage
+        }
+    }
+
+    PageBusyIndicator {
+        running: newsModel.loading && listView.count === 0
+    }
+
     SilicaFlickable {
         PullDownMenu {
-            busy: ressortModel.loading
+            busy: newsModel.loading
+
             MenuItem {
+                enabled: networkManager.connected
                 text: qsTr("Refresh")
-                onClicked: {
-                    ressortModel.forceRefresh()
-                    HafenschauProvider.refresh(ressortModel.newsType)    
-                }
+                onClicked: refresh()
             }
             MenuItem {
                 text: listView.showSearch ? qsTr("Hide search") : qsTr("Search")
@@ -37,11 +97,12 @@ Page {
         }
 
         PushUpMenu {
-            busy: ressortModel.loading
-            visible: ressortModel.nextPage.length > 0
-            MenuItem {
+            busy: newsModel.loading
+            visible: nextPage.length > 0
+
+            MenuItem  {
                 text: qsTr("Load more")
-                onClicked: HafenschauProvider.getNextPage(ressortModel.newsType)
+                onClicked: loadMore()
             }
         }
 
@@ -95,35 +156,37 @@ Page {
 
             model: NewsSortFilterModel {
                 id: filterModel
-                sourceModel: ressortModel
+                sourceModel: NewsListModel {
+                    property bool error: false
+                    property bool loading: false
+
+                    id: newsModel
+                }
             }
 
             delegate: NewsListItem {
                 id: delegate
 
                 onClicked: {
-                    if (model.newsType === News.WebView) {
-                        if (HafenschauProvider.internalWebView) {
-                            pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), {url: model.detailsWeb })
+                    if (model.type === NewsType.WebView) {
+                        if (settings.internalWebView) {
+                            pageStack.animatorPush(Qt.resolvedUrl("WebViewPage.qml"), {url: model.detailsWeb })
                         } else {
-                            pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: model.detailsWeb })
+                            Qt.openUrlExternally(model.detailsWeb)
                         }
-                    } else if (model.newsType === News.Video) {
-                        pageStack.push(Qt.resolvedUrl("VideoPlayerPage.qml"), {url: model.stream})
+                    } else if (model.type === NewsType.Video) {
+                        pageStack.animatorPush(Qt.resolvedUrl("VideoPlayerPage.qml"), {streams: model.streams})
                     } else {
-                        if (model.hasContent)
-                            pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {news: ressortModel.newsAt(row)})
-                        else
-                            pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {link: model.details})
+                        pageStack.animatorPush(Qt.resolvedUrl("ReaderPage.qml"), {link: model.details})
                     }
                 }
             }
 
             ViewPlaceholder {
-                enabled: listView.count === 0
+                enabled: listView.count === 0 && !newsModel.loading
                 text: qsTr("No news available")
                 hintText: {
-                    if (ressortModel.newsType === NewsModel.Regional)
+                    if (ressort === Ressort.Regional)
                         return qsTr("Please select some regions in settings first!")
                     else
                         return qsTr("Please refresh or check internet connection!")
@@ -140,6 +203,50 @@ Page {
             searchField.text = ""
             listView.showSearch = false
         }
+    }
+
+    Component.onCompleted: {
+        const query = "?ressort="
+
+        switch (ressort) {
+        case Ressort.Ausland:
+            query += "ausland"
+            break;
+
+        case Ressort.Inland:
+            query += "inland"
+            break;
+
+        case Ressort.Investigativ:
+            query += "investigativ"
+            break;
+
+        case Ressort.Regional:
+            query = "?regions=" + Global.activeRegions.join(',')
+            break;
+
+        case Ressort.Search:
+            break;
+
+        case Ressort.Sport:
+            query += "sport"
+            break;
+
+        case Ressort.Video:
+            query += "video"
+            break;
+
+        case Ressort.Wirtschaft:
+            query += "wirtschaft"
+            break;
+
+        default:
+            break;
+        }
+
+        ressortQuery = query
+
+        refresh()
     }
 }
 

@@ -1,10 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 BackgroundItem {
-    property ContentItemList item
+    property var item
 
     width: parent.width
     height: columnBox.height
@@ -60,11 +58,12 @@ BackgroundItem {
                     text: modelData
 
                     onLinkActivated: {
-                        if (HafenschauProvider.isInternalLink(link))
-                            HafenschauProvider.getInternalLink(link)
-                        else
-                            pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), { url: link })
+                        var link = modelData.url.match(/(?:ht|f)tps?:\/\/[-a-zA-Z0-9.]+\.[a-zA-Z]{2,3}(\/[^"<]*)?/g)[0]
 
+                        if (link.substr(0, 31) === "https://www.tagesschau.de/api2/")
+                            pageStack.push(Qt.resolvedUrl("../pages/ReaderPage.qml"), {link: link})
+                        else
+                            Qt.openUrlExternally(link)
                     }
                 }
             }

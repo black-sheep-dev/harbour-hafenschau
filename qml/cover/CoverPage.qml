@@ -7,105 +7,96 @@ import org.nubecula.harbour.hafenschau 1.0
 import "../components/"
 
 CoverBackground {
-    property int currentIndex: 0
-    property News currentNews: model.newsAt(0)
-    property NewsModel model: HafenschauProvider.newsModel(NewsModel.Homepage)
-
-    function increment() {
-        if (currentIndex < (model.rowCount() - 1))
-            currentIndex++
-        else
-            currentIndex = 0
-
-        currentNews = HafenschauProvider.newsModel(NewsModel.Homepage).newsAt(currentIndex)
-    }
-
-    onCurrentNewsChanged: imageDelegate.source = currentNews.portrait
-
-    Connections {
-        target: model
-        onNewsChanged: {
-            currentIndex = 0
-            currentNews = model.newsAt(currentIndex)
-        }
-    }
-
     Timer {
         id: timer
-        interval: HafenschauProvider.coverSwitchInterval
+        interval: settings.coverSwitchInterval
         repeat: true
-        running: HafenschauProvider.coverSwitch
+        running: settings.coverSwitch
 
-        onTriggered: increment()
+        onTriggered: view.incrementCurrentIndex()
     }
 
-    DBusInterface {
-        id: dbusInterface
+//    DBusInterface {
+//        id: dbusInterface
 
-        service: "harbour.hafenschau.service"
-        iface: "harbour.hafenschau.service"
-        path: "/harbour/hafenschau/service"
-    }
+//        service: "harbour.hafenschau.service"
+//        iface: "harbour.hafenschau.service"
+//        path: "/harbour/hafenschau/service"
+//    }
 
-    Rectangle {
+    SlideshowView {
+        id: view
         anchors.fill: parent
-        color: "#000000"
 
-        RemoteImage {
-            id: imageDelegate
+        model: mainModel
+
+        delegate: Rectangle {
+            property variant delegateData: model
+
             anchors.fill: parent
-            anchors.centerIn: parent
-            fillMode: Image.PreserveAspectCrop
+            color: "#000000"
 
-            opacity: 0.5
+            RemoteImage {
+                id: imageDelegate
+                anchors.fill: parent
+                anchors.centerIn: parent
+                fillMode: Image.PreserveAspectCrop
 
-            source: currentNews.portrait
-        }
+                opacity: 0.5
 
-        Column {
-            anchors.fill: parent
-            spacing: Theme.paddingSmall
-
-            Item {
-                width: 1
-                height: Theme.paddingSmall
+                source: model.thumbnail
             }
 
-            Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2*x
-                text: currentNews.title
-                font.bold: true
-                wrapMode: Text.WordWrap
-                font.pixelSize: Theme.fontSizeSmall
-            }
+            Column {
+                anchors.fill: parent
+                spacing: Theme.paddingSmall
 
-            Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2*x
-                text: currentNews.firstSentence
-                wrapMode: Text.WordWrap
-                font.pixelSize: Theme.fontSizeExtraSmall
+                Item {
+                    width: 1
+                    height: Theme.paddingSmall
+                }
+
+                Label {
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2*x
+                    text: model.title
+                    font.bold: true
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: Theme.fontSizeSmall
+                }
+
+                Label {
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2*x
+                    text: model.firstSentence
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                }
             }
         }
     }
+
 
     CoverActionList {
         id: coverAction
 
-        CoverAction {
-            iconSource: "image://theme/icon-cover-search"
-            onTriggered: dbusInterface.call("open", currentNews.details)
-        }
+//        CoverAction {
+//            iconSource: "image://theme/icon-cover-search"
+////            onTriggered: dbusInterface.call("open", mainModel.data(view.currentIndex, NewsListModel.DetailsRole))
+//            onTriggered: {
+//                console.log(view.count)
+//                console.log(view.currentItem.delegateData.details)
+//            }
+//        }
 
         CoverAction {
             iconSource: "image://theme/icon-cover-refresh"
-            onTriggered: HafenschauProvider.refresh(NewsModel.Homepage)
+            onTriggered: mainModel.checkForUpdate()
         }
 
         CoverAction {
             iconSource: "image://theme/icon-cover-next"
-            onTriggered: increment()
+            onTriggered: view.incrementCurrentIndex()
         }
     }
 }

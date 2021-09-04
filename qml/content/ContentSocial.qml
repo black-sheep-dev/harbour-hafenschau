@@ -1,12 +1,10 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 import "../components/"
 
 BackgroundItem {
-    property ContentItemSocial item
+    property var item
 
     width: parent.width
     height: columnBox.height
@@ -37,9 +35,9 @@ BackgroundItem {
 
         RemoteImage {
             id: headerImage
-            visible: item.image.length > 0
+            visible: item.images.gross16x9.imageurl.length > 0
 
-            source: item.image
+            source: "https://" + item.images.gross16x9.imageurl.substr(28)
         }
 
         Label {
@@ -61,7 +59,7 @@ BackgroundItem {
 
             RemoteImage {
                id: avatarImage
-               source: item.avatar
+               source: "https://" + item.avatar.substr(28)
 
                width: Theme.itemSizeMedium
                height: Theme.itemSizeMedium
@@ -93,7 +91,5 @@ BackgroundItem {
         }
     }
 
-    onClicked: {
-        pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), { url: item.url })
-    }
+    onClicked: Qt.openUrlExternally(item.url)
 }

@@ -25,7 +25,7 @@ ListItem {
 
 
             Image {
-                visible: model.newsType === News.Video
+                visible: model.type === NewsType.Video
                 anchors.centerIn: parent
                 source: "image://theme/icon-m-play"
             }
@@ -37,12 +37,7 @@ ListItem {
             spacing: Theme.paddingSmall
 
             Label {
-                text: {
-                    if (model.newsType === News.Video)
-                        return model.date.toLocaleString()
-                    else
-                        return model.topline
-                }
+                text: model.type === NewsType.Video ? model.datetime.toLocaleString() : model.topline
 
                 width: parent.width
                 wrapMode: Text.WordWrap

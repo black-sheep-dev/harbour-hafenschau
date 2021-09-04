@@ -4,34 +4,36 @@ import Sailfish.Silica 1.0
 import org.nubecula.harbour.hafenschau 1.0
 
 import "../delegates"
+import "../."
 
 Page {
     id: page
 
     allowedOrientations: Orientation.All
 
+    PageBusyIndicator {
+        running: mainModel.loading && listView.count === 0
+    }
+
     SilicaListView {
         PullDownMenu {
-            busy: HafenschauProvider.newsModel().loading
+            busy: mainModel.loading
             MenuItem {
                 text: qsTr("Settings")
-                onClicked: pageStack.push(Qt.resolvedUrl("settings/SettingsPage.qml"))
+                onClicked: pageStack.animatorPush(Qt.resolvedUrl("settings/SettingsPage.qml"))
             }
             MenuItem {
                 text: qsTr("All News")
-                onClicked: pageStack.push(Qt.resolvedUrl("RessortListPage.qml"))
+                onClicked: pageStack.animatorPush(Qt.resolvedUrl("RessortListPage.qml"))
             }
 //            MenuItem {
 //                text: qsTr("Test")
 //                //onClicked: HafenschauProvider.test()
 //            }
             MenuItem {
+                enabled: networkManager.connected
                 text: qsTr("Refresh")
-                onClicked: {
-                    HafenschauProvider.newsModel().forceRefresh()
-                    HafenschauProvider.refresh(NewsModel.Homepage)
-
-                }
+                onClicked: mainModel.checkForUpdate()
             }
         }
 
@@ -43,34 +45,33 @@ Page {
             title: qsTr("Top News")
         }
 
-        model: NewsSortFilterModel {
-            id: filterModel
-            sourceModel: HafenschauProvider.newsModel()
-        }
+        model: mainModel
 
         delegate: NewsListItem {
             id: delegate
 
             onClicked: {
-                if (newsType === News.WebView) {
-                    if (HafenschauProvider.internalWebView) {
-                        pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), {url: model.detailsWeb })
+                if (model.type === NewsType.WebView) {
+                    if (settings.internalWebView) {
+                        pageStack.animatorPush(Qt.resolvedUrl("WebViewPage.qml"), {url: model.detailsWeb })
                     } else {
-                        pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: model.detailsWeb })
+                        Qt.openUrlExternally(model.detailsWeb)
                     }
 
                 } else {
-                    pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {news: HafenschauProvider.newsModel().newsAt(row)})
+                    pageStack.animatorPush(Qt.resolvedUrl("ReaderPage.qml"), {link: model.details})
                 }
             }
         }
 
         ViewPlaceholder {
-            enabled: listView.count === 0 && !HafenschauProvider.newsModel().loading
+            enabled: listView.count === 0 && !mainModel.loading
             text: qsTr("No news available")
             hintText: qsTr("Check your internet connection")
         }
 
         VerticalScrollDecorator {}
     }
+
+    Component.onCompleted: mainModel.refresh()
 }

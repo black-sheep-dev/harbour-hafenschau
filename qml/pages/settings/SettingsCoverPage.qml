@@ -1,8 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 Page {
     id: page
 
@@ -16,9 +14,7 @@ Page {
         Column {
             id: column
 
-            x: Theme.horizontalPageMargin
-
-            width: page.width - 2 * x
+            width: parent.width
             spacing: Theme.paddingMedium
 
             PageHeader {
@@ -27,34 +23,31 @@ Page {
 
             TextSwitch {
                 id: coverSwitch
+                x: Theme.horizontalPageMargin
+                width: page.width - 2*x
                 text: qsTr("Switch Cover")
                 description: qsTr("Turns on automatich switch of cover pages in a defined interval.")
 
-
-                onCheckedChanged: HafenschauProvider.coverSwitch = checked
-
-
-                Component.onCompleted: checked = HafenschauProvider.coverSwitch
+                onCheckedChanged: settings.coverSwitch = checked
+                Component.onCompleted: checked = settings.coverSwitch
             }
 
             TextField {
                 id: coverSwitchInterval
-                width: parent.width
+                x: Theme.horizontalPageMargin
+                width: page.width - 2*x
                 inputMethodHints: Qt.ImhDigitsOnly
 
                 validator: IntValidator {
                     bottom: 0
                 }
 
-                label: qsTr("Update interval")
+                label: qsTr("Update interval (msec)")
                 description: qsTr("Update interval for cover page switch")
 
-                onTextChanged: HafenschauProvider.coverSwitchInterval = text
-
-                Component.onCompleted: text = HafenschauProvider.coverSwitchInterval
+                onTextChanged: settings.coverSwitchInterval = text
+                Component.onCompleted: text = settings.coverSwitchInterval
             }
         }
     }
-
-    onStatusChanged: if (status === PageStatus.Deactivating) HafenschauProvider.saveSettings()
 }
