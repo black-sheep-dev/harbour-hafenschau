@@ -85,7 +85,7 @@ QList<NewsItem> NewsListModel::parseItems(const QJsonArray &items)
             item.streams = obj.value("streams").toObject();
         } else if (type == QLatin1String("webview")) {
             item.type = NewsType::WebView;
-            item.detailsWeb = obj.value("detailsWeb").toString();
+            item.detailsWeb = obj.value("detailsweb").toString();
         } else {
             item.type = NewsType::Undefined;
         }
