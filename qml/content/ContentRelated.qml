@@ -105,7 +105,10 @@ BackgroundItem {
 
                 onClicked: {
                     if (modelData.type === "video") {
-                        pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {streams: modelData.streams})
+                        pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {
+                                           title: modelData.title,
+                                           streams: modelData.streams
+                                       })
                     } else {
                         pageStack.push(Qt.resolvedUrl("../pages/ReaderPage.qml"), {link: modelData.details})
                     }

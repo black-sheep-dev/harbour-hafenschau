@@ -175,7 +175,10 @@ Page {
                             Qt.openUrlExternally(model.detailsWeb)
                         }
                     } else if (model.type === NewsType.Video) {
-                        pageStack.animatorPush(Qt.resolvedUrl("VideoPlayerPage.qml"), {streams: model.streams})
+                        pageStack.animatorPush(Qt.resolvedUrl("VideoPlayerPage.qml"), {
+                                                   title: model.title,
+                                                   streams: model.streams
+                                               })
                     } else {
                         pageStack.animatorPush(Qt.resolvedUrl("ReaderPage.qml"), {link: model.details})
                     }
