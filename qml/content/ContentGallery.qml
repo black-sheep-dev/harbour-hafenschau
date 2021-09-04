@@ -16,12 +16,10 @@ BackgroundItem {
         spacing: Theme.paddingMedium
 
         RemoteImage {
-            id: headerImage
             source: item[0].videowebl.imageurl
         }
 
         Label {
-            id: labelTitle
             width: parent.width
 
             font.pixelSize: Theme.fontSizeSmall
@@ -31,6 +29,11 @@ BackgroundItem {
             text: item[0].title
         }
 
+        Label {
+            width: parent.width
+            text: qsTr("Gallery with %n pictures", "", item.length)
+        }
+
         Separator {
             id: separatorBottom
             width: parent.width
@@ -38,5 +41,5 @@ BackgroundItem {
         }
     }
 
-    //onClicked: pageStack.push(Qt.resolvedUrl("../pages/GalleryPage.qml"), {model: item.model})
+    onClicked: pageStack.push(Qt.resolvedUrl("../pages/GalleryPage.qml"), {items: item})
 }
