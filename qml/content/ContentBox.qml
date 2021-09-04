@@ -15,14 +15,14 @@ BackgroundItem {
         width: parent.width - 2*x
         spacing: Theme.paddingMedium
 
-        Separator {
-            visible: item.images.videowebl.imageurl.length === 0
+        Separator {       
+            visible: !item.hasOwnProperty("images")
             width: parent.width
             color: Theme.highlightBackgroundColor
         }
 
         RemoteImage {
-            visible: item.images.videowebl.imageurl.length > 0
+            visible: item.hasOwnProperty("images")
             source: item.images.videowebl.imageurl
         }
 
@@ -68,6 +68,7 @@ BackgroundItem {
     }
 
     onClicked: {
+        if (item.link === undefined) return
         var link = item.link.match(/(?:ht|f)tps?:\/\/[-a-zA-Z0-9.]+\.[a-zA-Z]{2,3}(\/[^"<]*)?/g)[0]
 
         if (link.substr(0, 31) === "https://www.tagesschau.de/api2/")
