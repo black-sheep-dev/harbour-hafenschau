@@ -15,12 +15,6 @@ Page {
                 icon: "image://theme/icon-m-levels"
                 page: "SettingsRegionsPage.qml"
             }
-//            ListElement {
-//                title: qsTr("Look & Feel");
-//                description: qsTr("Change look & feel settings")
-//                icon: "image://theme/icon-m-ambience"
-//                page: "../AboutPage.qml"
-//            }
             ListElement {
                 title: qsTr("Cover Settings");
                 description: qsTr("Manage cover options")
@@ -32,6 +26,12 @@ Page {
                 description: qsTr("Manage automatic refresh options")
                 icon: "image://theme/icon-m-sync"
                 page: "SettingsAutoRefreshPage.qml"
+            }
+            ListElement {
+                title: qsTr("Video Settings");
+                description: qsTr("Manage video settings")
+                icon: "image://theme/icon-m-media-playlists"
+                page: "SettingsVideoPage.qml"
             }
             ListElement {
                 title: qsTr("Webview Settings");
@@ -107,7 +107,7 @@ Page {
                 }
             }
 
-            onClicked: pageStack.push(Qt.resolvedUrl(page))
+            onClicked: pageStack.animatorPush(Qt.resolvedUrl(page))
         }
 
         VerticalScrollDecorator {}

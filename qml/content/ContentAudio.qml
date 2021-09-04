@@ -3,13 +3,11 @@ import Sailfish.Silica 1.0
 
 import QtMultimedia 5.6
 
-import org.nubecula.harbour.hafenschau 1.0
-
 import "../components/"
 
 BackgroundItem {
     property bool playing: false
-    property ContentItemAudio item
+    property var item
 
     width: parent.width
     height: columnAudio.height
@@ -20,26 +18,66 @@ BackgroundItem {
         width: parent.width - 2*x
         spacing: Theme.paddingMedium
 
-        RemoteImage {
-            id: headerImage
+        Item {
+            width: parent.width
+            height: headerImage.height + progressSlider.height
 
-            source: item.image
-            placeholderUrl: "/usr/share/harbour-hafenschau/images/audiograph.png"
+            RemoteImage {
+                id: headerImage
 
-            Image {
-                anchors.centerIn: parent
-                source: playing ? "image://theme/icon-l-pause" : "image://theme/icon-l-play"
+                source: item.teaserImage.videowebl.imageurl
+                placeholderUrl: "/usr/share/harbour-hafenschau/images/audiograph.png"
+
+                Image {
+                    anchors.centerIn: parent
+                    source: playing ? "image://theme/icon-l-pause" : "image://theme/icon-l-play"
+                }
+            }
+
+            Rectangle {
+                anchors.top: headerImage.bottom
+                width: parent.width
+                height: Theme.iconSizeMedium
+
+                color: "black"
+
+                Row {
+                    anchors.right: parent.right
+                    anchors.rightMargin: Theme.paddingSmall
+                    anchors.verticalCenter: parent.verticalCenter
+                    spacing: Theme.paddingSmall
+
+                    Label {
+                        text: new Date(audioPlayer.position).toISOString().substr(14, 5)
+                    }
+
+                    Label {
+                        text: "/"
+                    }
+
+                    Label {
+                        text: new Date(audioPlayer.duration).toISOString().substr(14, 5)
+                    }
+                }
             }
 
             Slider {
-                anchors.bottom: headerImage.bottom
-                width: parent.width
+                id: progressSlider
+
+                anchors.topMargin: -height / 2
+
+                anchors.top: headerImage.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                width: parent.width + 5 * Theme.paddingLarge - 16
+
                 minimumValue: 0
                 maximumValue: audioPlayer.duration
                 stepSize: 1000
-                value: audioPlayer.position
+                value: 0
+                handleVisible: true
 
-                onExited: audioPlayer.seek(value)
+                onReleased: audioPlayer.seek(value)
             }
         }
 
@@ -74,6 +112,11 @@ BackgroundItem {
     MediaPlayer {
         id: audioPlayer
         source: item.stream
+    }
+
+    Connections {
+        target: audioPlayer
+        onPositionChanged: progressSlider.value = audioPlayer.position
     }
 
     onClicked: {

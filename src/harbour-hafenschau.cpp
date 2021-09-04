@@ -3,66 +3,14 @@
 
 #include <sailfishapp.h>
 
-#include "hafenschauprovider.h"
+#include "api/apiinterface.h"
+#include "comments/commentsmodel.h"
 #include "comments/commentssortfiltermodel.h"
+#include "enums/enums.h"
+#include "news/newslistmodel.h"
 #include "news/newssortfiltermodel.h"
-
-//some constants to parameterize.
-const qint64 LOG_FILE_LIMIT = 3000000;
-const QString LOG_PATH = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-static const QString LOG_FILENAME = QStringLiteral("/hafenschau.log");
-
-void redirectDebugMessages(QtMsgType type, const QMessageLogContext & context, const QString & str)
-{
-    Q_UNUSED(context)
-
-    //thread safety
-    QMutex mutex;
-    mutex.lock();
-    QString txt;
-
-    //prepend timestamp to every message
-    QString datetime = QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss");
-    //prepend a log level label to every message
-    switch (type) {
-    case QtDebugMsg:
-        txt = QString("[Debug*] ");
-        break;
-    case QtWarningMsg:
-        txt = QString("[Warning] ");
-    break;
-    case QtInfoMsg:
-        txt = QString("[Info] ");
-    break;
-    case QtCriticalMsg:
-        txt = QString("[Critical] ");
-    break;
-    case QtFatalMsg:
-        txt = QString("[Fatal] ");
-    }
-
-    qDebug() << txt;
-
-    QString filePath = LOG_PATH + LOG_FILENAME;
-    QFile outFile(filePath);
-
-    //if file reached the limit, rotate to filename.1
-    if(outFile.size() > LOG_FILE_LIMIT){
-        //roll the log file.
-        QFile::remove(filePath + ".1");
-        QFile::rename(filePath, filePath + ".1");
-        QFile::resize(filePath, 0);
-    }
-
-    //write message
-    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
-    QTextStream ts(&outFile);
-    ts << datetime << txt << str << endl;
-
-    //close fd
-    outFile.close();
-    mutex.unlock();
-}
+#include "region/regionsmodel.h"
+#include "tools/datawriter.h"
 
 int main(int argc, char *argv[])
 {
@@ -70,16 +18,11 @@ int main(int argc, char *argv[])
     setenv("MOZ_DISABLE_CRASH_GUARD", "1", 1);
     setenv("MOZ_WEBGL_PREFER_EGL", "1", 1);
 
-#ifdef QT_DEBUG
-    //qInstallMessageHandler(redirectDebugMessages);
-#endif
-
     // Set up QML engine.
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QScopedPointer<QQuickView> v(SailfishApp::createView());
 
     app->setApplicationVersion(APP_VERSION);
-    //app->setApplicationName(QStringLiteral("harbour-hafenschau"));
     app->setOrganizationName(QStringLiteral("org.nubecula"));
     app->setOrganizationDomain(QStringLiteral("nubecula.org"));
 
@@ -89,44 +32,23 @@ int main(int argc, char *argv[])
    #define uri "org.nubecula.harbour.hafenschau"
 #endif
 
+    // register enums
+    qmlRegisterUncreatableType<DeveloperOption>(uri, 1, 0, "DeveloperOption", "");
+    qmlRegisterUncreatableType<NewsType>(uri, 1, 0, "NewsType", "");
+    qmlRegisterUncreatableType<Ressort>(uri, 1, 0, "Ressort", "");
+    qmlRegisterUncreatableType<VideoQuality>(uri, 1, 0, "VideoQuality", "");
+
+    // register types
+    qmlRegisterType<ApiInterface>(uri, 1, 0, "ApiInterface");
     qmlRegisterType<CommentsModel>(uri, 1, 0, "CommentsModel");
-    qmlRegisterType<CommentsSortFilterModel>(uri, 1, 0, "CommentsSortFilterModel");
-    qmlRegisterType<ContentItem>(uri, 1, 0, "ContentItem");
-    qmlRegisterType<ContentItemAudio>(uri, 1, 0, "ContentItemAudio");
-    qmlRegisterType<ContentItemBox>(uri, 1, 0, "ContentItemBox");
-    qmlRegisterType<ContentItemGallery>(uri, 1, 0, "ContentItemGallery");
-    qmlRegisterType<ContentItemList>(uri, 1, 0, "ContentItemList");
-    qmlRegisterType<ContentItemRelated>(uri, 1, 0, "ContentItemRelated");
-    qmlRegisterType<ContentItemSocial>(uri, 1, 0, "ContentItemSocial");
-    qmlRegisterType<ContentItemVideo>(uri, 1, 0, "ContentItemVideo");
-    qmlRegisterType<GalleryItem>(uri, 1, 0, "GalleryItem");
-    qmlRegisterType<GalleryModel>(uri, 1, 0, "GalleryModel");
-    qmlRegisterType<News>(uri, 1, 0, "News");
-    qmlRegisterType<NewsModel>(uri, 1, 0, "NewsModel");
+    qmlRegisterType<CommentsSortFilterModel>(uri, 1, 0, "CommentsSortFilterModel"); 
+    qmlRegisterType<DataWriter>(uri, 1, 0, "DataWriter");
+    qmlRegisterType<NewsListModel>(uri, 1, 0, "NewsListModel");
     qmlRegisterType<NewsSortFilterModel>(uri, 1, 0, "NewsSortFilterModel");
     qmlRegisterType<RegionsModel>(uri, 1, 0, "RegionsModel");
-    qmlRegisterType<RelatedItem>(uri, 1, 0, "RelatedItem");
-    qmlRegisterType<RelatedModel>(uri, 1, 0, "RelatedModel");
-
-    qmlRegisterSingletonType<HafenschauProvider>(uri,
-                                                       1,
-                                                       0,
-                                                       "HafenschauProvider",
-                                                       [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject * {
-
-                Q_UNUSED(engine)
-                Q_UNUSED(scriptEngine)
-
-                auto provider = new HafenschauProvider();
-
-                return provider;
-            });
-
 
     v->setSource(SailfishApp::pathTo("qml/harbour-hafenschau.qml"));
     v->show();
 
     return app->exec();
-
-    //return SailfishApp::main(argc, argv);
 }

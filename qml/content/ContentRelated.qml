@@ -1,12 +1,10 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 import "../components/"
 
 BackgroundItem {
-    property ContentItemRelated item
+    property var item
 
     width: parent.width
     height: columnBox.height
@@ -40,11 +38,9 @@ BackgroundItem {
             id: listView
             width: parent.width
 
-            height: Theme.itemSizeHuge * item.model().itemsCount()
+            height: Theme.itemSizeHuge * item.length
 
-            model: item.model()
-
-            contentHeight: Theme.itemSizeHuge
+            model: item
 
             delegate: ListItem {
                 id: delegate
@@ -59,11 +55,11 @@ BackgroundItem {
                     width: Theme.itemSizeHuge * 0.8
                     height: width
 
-                    source: model.image
+                    source: modelData.teaserImage.videoweb1x1l.imageurl
                     placeholderUrl: "/usr/share/harbour-hafenschau/images/dummy_thumbnail.png"
 
                     Image {
-                        visible: related_type === RelatedItem.RelatedVideo
+                        visible: modelData.type === "video"
                         anchors.centerIn: parent
                         source: "image://theme/icon-m-play"
                     }
@@ -79,9 +75,9 @@ BackgroundItem {
                     spacing: Theme.paddingSmall
 
                     Label {
-                        visible: related_type !== RelatedItem.RelatedVideo
+                        visible: modelData.type !== "video"
 
-                        text: topline
+                        text: modelData.topline
 
                         x: Theme.paddingMedium
                         width: parent.width - 2*x
@@ -90,7 +86,7 @@ BackgroundItem {
                         font.pixelSize: Theme.fontSizeSmall
                     }
                     Label {
-                        text: title
+                        text: modelData.title
 
                         x: Theme.paddingMedium
                         width: parent.width - 2*x
@@ -108,18 +104,14 @@ BackgroundItem {
                     x: Theme.horizontalPageMargin
                     width: parent.width - 2*x
                     color: Theme.primaryColor
-                }
+                }       
 
                 onClicked: {
-                    if (related_type === RelatedItem.RelatedVideo) {
-                        pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {url: stream})
-                        return
+                    if (modelData.type === "video") {
+                        pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {streams: modelData.streams})
+                    } else {
+                        pageStack.push(Qt.resolvedUrl("../pages/ReaderPage.qml"), {link: modelData.details})
                     }
-
-                    if (!HafenschauProvider.isInternalLink(link))
-                        pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: link})
-                    else
-                        HafenschauProvider.getInternalLink(link)
                 }
             }
         }

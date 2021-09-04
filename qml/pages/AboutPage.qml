@@ -13,6 +13,8 @@ Page {
         service: "harbour.sailhub.service"
         iface: "harbour.sailhub.service"
         path: "/harbour/sailhub/service"
+
+        onStatusChanged: console.log("DBUS :" + status)
     }
 
     SilicaFlickable {
@@ -107,7 +109,6 @@ Page {
             }
 
             ButtonLayout {
-                visible: sailHubInterface.Available
                 width: parent.width
 
                 Button {
@@ -120,35 +121,6 @@ Page {
                 width: 1
                 height: Theme.paddingLarge
             }
-
-//            SectionHeader{
-//                text: qsTr("Donations")
-//            }
-
-//            BackgroundItem{
-//                width: parent.width
-//                height: Theme.itemSizeMedium
-//                Row{
-//                    width:parent.width - 2 * x
-//                    height: parent.height
-//                    x:Theme.horizontalPageMargin
-//                    spacing:Theme.paddingMedium
-//                    Image {
-//                        width: parent.height
-//                        height: width
-//                        source: "qrc:///icons/paypal"
-//                    }
-//                    Label{
-//                        width: parent.width - parent.height - parent.spacing
-//                        anchors.verticalCenter: parent.verticalCenter
-//                        wrapMode: Text.WrapAnywhere
-//                        font.pixelSize: Theme.fontSizeSmall
-//                        color: parent.parent.pressed ? Theme.highlightColor : Theme.primaryColor
-//                        text: qsTr("If you like my work you can buy me a beer.")
-//                    }
-//                }
-//                onClicked: Qt.openUrlExternally("https://www.paypal.com/paypalme/nubecula/1")
-//            }
         }
     }
 }

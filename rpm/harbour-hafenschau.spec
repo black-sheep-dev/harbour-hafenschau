@@ -9,7 +9,7 @@ Name:       harbour-hafenschau
 # << macros
 
 Summary:    Hafenschau
-Version:    0.4.6
+Version:    0.5.0
 Release:    1
 Group:      Qt/Qt
 License:    MIT
@@ -24,6 +24,7 @@ Requires:   sailfish-components-webview-qt5
 Requires:   sailfish-components-webview-qt5-popups
 Requires:   sailfish-components-webview-qt5-pickers
 Requires:   libkeepalive >= 1.7.0
+Requires:   connman-qt5-declarative
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5DBus)
@@ -33,6 +34,7 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(qt5embedwidget) >= 1.14.9
 BuildRequires:  pkgconfig(sailfishsilica)
 BuildRequires:  pkgconfig(nemonotifications-qt5)
+BuildRequires:  pkgconfig(connman-qt5)
 BuildRequires:  desktop-file-utils
 
 %description

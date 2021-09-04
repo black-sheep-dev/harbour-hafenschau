@@ -1,10 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 BackgroundItem {
-    property ContentItem item
+    property var item
 
     width: parent.width
     height: columnBox.height
@@ -43,5 +41,5 @@ BackgroundItem {
         }
     }
 
-    onClicked: pageStack.push(Qt.resolvedUrl("../pages/DataReaderPage.qml"), { text: item.value });
+    onClicked: pageStack.push(Qt.resolvedUrl("../pages/DataReaderPage.qml"), { text: JSON.stringify(item, null, '\t') });
 }

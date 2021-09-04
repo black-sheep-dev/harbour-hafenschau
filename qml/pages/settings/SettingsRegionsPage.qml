@@ -3,6 +3,8 @@ import Sailfish.Silica 1.0
 
 import org.nubecula.harbour.hafenschau 1.0
 
+import "../../."
+
 Page {
     id: page
 
@@ -12,12 +14,20 @@ Page {
         PullDownMenu {
             MenuItem {
                 text: qsTr("Reset")
-                onClicked: listView.model.resetRegions();
+                onClicked: remorse.execute(qsTr("Reset region settings"), function() {
+                    regionsModel.resetRegions()
+                    settings.regions = ""
+                })
             }
         }
 
+        RemorsePopup { id: remorse }
+
         id: listView
-        model: HafenschauProvider.regionsModel()
+        model: RegionsModel {
+            id: regionsModel
+            activeRegions: Global.activeRegions
+        }
 
         anchors.fill: parent
 
@@ -56,6 +66,6 @@ Page {
         VerticalScrollDecorator {}
     }
 
-    onStatusChanged: if (status === PageStatus.Deactivating) HafenschauProvider.saveSettings()
+    onStatusChanged: if (status === PageStatus.Deactivating) Global.activeRegions = regionsModel.activeRegions
 }
 

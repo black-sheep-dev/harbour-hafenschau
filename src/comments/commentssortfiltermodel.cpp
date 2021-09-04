@@ -6,6 +6,8 @@ CommentsSortFilterModel::CommentsSortFilterModel(QObject *parent) :
     QSortFilterProxyModel(parent)
 {
     setSortRole(CommentsModel::TimestampRole);
+
+    connect(this, &CommentsSortFilterModel::sortOrderChanged, this, &CommentsSortFilterModel::sortModel);
 }
 
 void CommentsSortFilterModel::setPattern(const QString &pattern)
@@ -15,9 +17,23 @@ void CommentsSortFilterModel::setPattern(const QString &pattern)
     invalidateFilter();
 }
 
+Qt::SortOrder CommentsSortFilterModel::sortOrder() const
+{
+    return m_sortOrder;
+}
+
+void CommentsSortFilterModel::setSortOrder(Qt::SortOrder sortOrder)
+{
+    if (m_sortOrder == sortOrder)
+        return;
+
+    m_sortOrder = sortOrder;
+    emit sortOrderChanged(m_sortOrder);
+}
+
 void CommentsSortFilterModel::sortModel(Qt::SortOrder order)
 {
-    sort(order);
+    this->sort(0, order);
 }
 
 bool CommentsSortFilterModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const

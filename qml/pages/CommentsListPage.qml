@@ -6,13 +6,41 @@ import org.nubecula.harbour.hafenschau 1.0
 import "../delegates"
 
 Page {
+    property bool closed: false
     property string link
-    property CommentsModel commentsModel
     property bool loading
+    property string detailsLink
+    property string detailsWeb
 
     function refreshComments() {
         loading = true;
-        HafenschauProvider.getComments(link)
+
+        if (detailsLink.length > 0) {
+            api.request(detailsLink, detailsLink, false)
+        } else {
+            api.request(link, link, false)
+        }
+    }
+
+    Connections {
+        target: api
+        onRequestFailed: {
+            if (id !== link || id !== detailsLink) return
+            loading = false
+        }
+
+        onRequestFinished: {
+            if (id === link) {
+                detailsLink = data.details
+                detailsWeb = data.detailsWeb
+                closed = data.commentsAllowed
+                refreshComments()
+
+            } else if (id === detailsLink) {
+                loading = false
+                commentsModel.setComments(data.Items)
+            }
+        }
     }
 
     id: page
@@ -23,9 +51,28 @@ Page {
         PullDownMenu {
             busy: loading
             MenuItem {
+                visible: detailsWeb.length > 0
+                text: qsTr("Show in browser")
+                onClicked: Qt.openUrlExternally(detailsWeb)
+            }
+            MenuItem {
+                enabled: networkManager.connected
                 text: qsTr("Refresh")
                 onClicked: refreshComments()
             }
+            MenuItem {
+                text: settings.commentsSortOrder === Qt.AscendingOrder ? qsTr("Sort descending") : qsTr("Sort ascending")
+                onClicked: {
+                    if (settings.commentsSortOrder === Qt.AscendingOrder) {
+                        settings.commentsSortOrder = Qt.DescendingOrder
+                        filterModel.sortModel(Qt.DescendingOrder)
+                    } else {
+                        settings.commentsSortOrder = Qt.AscendingOrder
+                        filterModel.sortModel(Qt.AscendingOrder)
+                    }
+                }
+            }
+
             MenuItem {
                 text: listView.showSearch ? qsTr("Hide search") : qsTr("Search")
                 onClicked: {
@@ -46,7 +93,7 @@ Page {
             width: parent.width
 
             PageHeader {
-                title: commentsModel.closed ? qsTr("Comments (closed)") : qsTr("Comments");
+                title: closed ? qsTr("Comments (closed)") : qsTr("Comments");
             }
 
             SearchField {
@@ -89,7 +136,8 @@ Page {
 
             model: CommentsSortFilterModel {
                 id: filterModel
-                sourceModel: commentsModel
+                sortOrder: settings.commentsSortOrder
+                sourceModel: CommentsModel { id: commentsModel }
             }
 
             delegate: ListItem {
@@ -165,14 +213,6 @@ Page {
             }
 
             VerticalScrollDecorator {}
-        }
-    }
-
-    Connections {
-        target: HafenschauProvider
-        onCommentsModelAvailable: {
-            commentsModel = model
-            loading = false
         }
     }
 

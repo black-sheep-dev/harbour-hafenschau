@@ -1,31 +1,42 @@
 #include "commentsmodel.h"
 
+#include <QJsonArray>
+#include <QJsonObject>
+
 CommentsModel::CommentsModel(QObject *parent) :
     QAbstractListModel(parent)
 {
 
 }
 
-void CommentsModel::setComments(const QList<Comment> &comments)
+void CommentsModel::setComments(const QJsonArray &comments)
 {
     beginResetModel();
     m_comments.clear();
-    m_comments = comments;
+    m_comments = parseComments(comments);
     endResetModel();
 }
 
-bool CommentsModel::closed() const
+QList<Comment> CommentsModel::parseComments(const QJsonArray &comments) const
 {
-    return m_closed;
-}
+    QList<Comment> list;
 
-void CommentsModel::setClosed(bool closed)
-{
-    if (m_closed == closed)
-        return;
+    for (const auto &v : comments) {
+        const auto obj = v.toObject();
 
-    m_closed = closed;
-    emit closedChanged(m_closed);
+        if (obj.isEmpty())
+            continue;
+
+        Comment comment;
+        comment.author = obj.value("Benutzer").toString();
+        comment.text = obj.value("Kommentar").toString();
+        comment.timestamp = QDateTime::fromString(obj.value("Beitragsdatum").toString(), Qt::ISODate);
+        comment.title = obj.value("Titel").toString();
+
+        list.append(comment);
+    }
+
+    return list;
 }
 
 int CommentsModel::rowCount(const QModelIndex &parent) const

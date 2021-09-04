@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import Nemo.KeepAlive 1.2
 
 import org.nubecula.harbour.hafenschau 1.0
 
@@ -15,10 +16,8 @@ Page {
 
         Column {
             id: column
+
             width: parent.width
-
-
-
             spacing: Theme.paddingMedium
 
             PageHeader {
@@ -51,11 +50,74 @@ Page {
                 }
 
                 onCurrentIndexChanged: {
-                    HafenschauProvider.autoRefresh = currentIndex
+                    switch (currentIndex) {
+                    case 0:
+                        settings.autoRefresh = 0
+                        break
+
+                    case 1:
+                        settings.autoRefresh = BackgroundJob.ThirtySeconds
+                        break
+
+                    case 2:
+                        settings.autoRefresh = BackgroundJob.TwoAndHalfMinutes
+                        break
+
+                    case 3:
+                        settings.autoRefresh = BackgroundJob.FiveMinutes
+                        break
+
+                    case 4:
+                        settings.autoRefresh = BackgroundJob.FifteenMinutes
+                        break
+
+                    case 5:
+                        settings.autoRefresh = BackgroundJob.ThirtyMinutes
+                        break
+
+                    case 6:
+                        settings.autoRefresh = BackgroundJob.OneHour
+                        break
+
+                    default:
+                        settings.autoRefresh = 0
+                        break
+                    }
+
                     if (currentIndex === 0) notificationSwitch.checked = false
                 }
 
-                Component.onCompleted: currentIndex = HafenschauProvider.autoRefresh
+                Component.onCompleted: {
+                    switch (settings.autoRefresh) {
+                    case BackgroundJob.ThirtySeconds:
+                        currentIndex = 1
+                        break
+
+                    case BackgroundJob.TwoAndHalfMinutes:
+                        currentIndex = 2
+                        break
+
+                    case BackgroundJob.FiveMinutes:
+                        currentIndex = 3
+                        break
+
+                    case BackgroundJob.FifteenMinutes:
+                        currentIndex = 4
+                        break
+
+                    case BackgroundJob.ThirtyMinutes:
+                        currentIndex = 5
+                        break
+
+                    case BackgroundJob.OneHour:
+                        currentIndex = 6
+                        break
+
+                    default:
+                        currentIndex = 0
+                        break
+                    }
+                }
             }
 
             TextSwitch {
@@ -68,12 +130,10 @@ Page {
                 text: qsTr("Notification")
                 description: qsTr("Enable notification if breaking news is available")
 
-                onCheckedChanged: HafenschauProvider.notification = checked
+                onCheckedChanged: settings.notify = checked
 
-                Component.onCompleted: checked = HafenschauProvider.notification
+                Component.onCompleted: checked = settings.notify
             }
         }
     }
-
-    onStatusChanged: if (status === PageStatus.Deactivating) HafenschauProvider.saveSettings()
 }

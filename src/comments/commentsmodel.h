@@ -9,8 +9,6 @@ class CommentsModel : public QAbstractListModel
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool closed READ closed WRITE setClosed NOTIFY closedChanged)
-
 public:
     enum CommentRoles {
         AuthorRole                  = Qt::UserRole + 1,
@@ -22,24 +20,12 @@ public:
 
     explicit CommentsModel(QObject *parent = nullptr);
 
-    void setComments(const QList<Comment> &comments);
-
-    // properties
-    bool closed() const;
-
-signals:
-    // properties
-    void closedChanged(bool closed);
-
-public slots:
-    // properties
-    void setClosed(bool closed);
+    Q_INVOKABLE void setComments(const QJsonArray &comments);
 
 private:
-    QList<Comment> m_comments;
+    QList<Comment> parseComments(const QJsonArray &comments) const;
 
-    // properties
-    bool m_closed{false};
+    QList<Comment> m_comments;
 
     // QAbstractItemModel interface
 public:

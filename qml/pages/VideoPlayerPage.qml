@@ -7,8 +7,9 @@ import QtMultimedia 5.6
 import org.nubecula.harbour.hafenschau 1.0
 
 Page {
-    property bool playing: true
-    property string url
+    property alias title: titleLabel.text
+    property var streams
+    property bool showOverlay: false
 
     id: page
 
@@ -19,57 +20,137 @@ Page {
     SilicaFlickable {
         anchors.fill: parent
 
+        MediaPlayer {         
+            id: videoPlayer
+            autoPlay: true
+
+            source: {
+                if (settings.videoQualityAdaptive && streams.hasOwnProperty("adaptivestreaming")) return streams.adaptivestreaming
+
+                switch (settings.videoQuality) {
+                case VideoQuality.Low:
+                    return streams.h264s
+
+                case VideoQuality.Medium:
+                    return streams.h264m
+
+                case VideoQuality.High:
+                    return streams.h264xl
+
+                default:
+                    return streams.h264m
+                }
+            }
+        }
+
         Rectangle {
-            anchors.fill: parent
+            anchors.fill: output
             color: "black"
         }
 
-        MediaPlayer {
-            id: videoPlayer
-            source: url
-            autoPlay: true
+        Rectangle {
+            id: titleRect
+            color: "#000000CC"
+            y: showOverlay ? 0 : -height
+            width: parent.width
+            height: titleLabel.height + Theme.paddingMedium
+
+            Label {
+                id: titleLabel
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2*x
+                anchors.verticalCenter: parent.verticalCenter
+                wrapMode: Text.Wrap
+            }
+
+            Behavior on y {
+                NumberAnimation {
+                    duration: 100
+                    easing.type: Easing.InOutQuad
+                }
+            }
         }
 
         VideoOutput {
-            anchors.fill: parent
+            id: output
+            anchors.top: titleRect.bottom
+            anchors.bottom: controlRect.top
+            width: parent.width
             source: videoPlayer
 
-            Image {
-                visible: !playing
-                anchors.centerIn: parent
-                source: "image://theme/icon-l-play"
+            MouseArea {
+                id: playArea
+                anchors.fill: parent
+
+                onPressed: showOverlay = !showOverlay
             }
 
-            Slider {
-                id: seekSlider
-                anchors.bottom: parent.bottom
-                width: parent.width
-                minimumValue: 0
-                maximumValue: videoPlayer.duration
-                stepSize: 1000
-                value: videoPlayer.position
+            IconButton {
+                visible: showOverlay
+                anchors.centerIn: parent
+                icon.source: videoPlayer.playbackState === MediaPlayer.PlayingState ? "image://theme/icon-l-pause" : "image://theme/icon-l-play"
 
-                onExited: videoPlayer.seek(value)
+                onClicked: videoPlayer.playbackState === MediaPlayer.PlayingState ? videoPlayer.pause() : videoPlayer.play()
             }
         }
 
-        MouseArea {
-            id: playArea
-            anchors.top: parent.top
+        Rectangle {
+            id: controlRect
+            y: showOverlay ? parent.height - height : parent.height + progressSlider.height / 2
             width: parent.width
-            height: parent.height - seekSlider.height
+            height: Theme.iconSizeMedium
 
-            onPressed: {
-                if (playing) {
-                    playing = false;
-                    videoPlayer.pause();
-                } else {
-                    playing = true;
-                    videoPlayer.play();
+            color: "#000000CC"
+
+            Row {
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.paddingSmall
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: Theme.paddingSmall
+
+                Label {
+                    text: new Date(videoPlayer.position).toISOString().substr(14, 5)
+                }
+
+                Label {
+                    text: "/"
+                }
+
+                Label {
+                    text: new Date(videoPlayer.duration).toISOString().substr(14, 5)
                 }
             }
 
+            Slider {
+                id: progressSlider
+
+                anchors.topMargin: -height / 2
+
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                width: parent.width + 5 * Theme.paddingLarge - 16
+
+                minimumValue: 0
+                maximumValue: videoPlayer.duration
+                stepSize: 1000
+                value: 0
+                handleVisible: true
+
+                onReleased: videoPlayer.seek(value)
+            }
+
+            Behavior on y {
+                NumberAnimation {
+                    duration: 100
+                    easing.type: Easing.InOutQuad
+                }
+            }
         }
     }
-}
 
+    Connections {
+        target: videoPlayer
+        onPositionChanged: progressSlider.value = videoPlayer.position
+    }
+}

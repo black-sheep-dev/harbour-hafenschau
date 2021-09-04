@@ -1,3 +1,16 @@
+* Sun Sep 05 2021 Black Sheep <blacksheep@nubecula.org> 0.5.0-1
+- Big code refactoring
+- Improved audio player
+- Improved video player
+- Change video quality in settings
+- Sharing news
+- Use direct JsonObject data as source for reader page
+- Use Nemo.KeepAlive QML instead of C++
+- Use Nemo.Configurations instead of QSettings
+- Possibility to change sort order of comments (persistent setting)
+- UI fixes / improvements
+- Many bugfixes
+
 * Sat Aug 28 2021 Black Sheep <blacksheep@nubecula.org> 0.4.6-1
 - Fixed display error on social media content
 - UI fixes / improvements

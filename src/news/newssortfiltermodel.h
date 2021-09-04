@@ -3,8 +3,6 @@
 
 #include <QSortFilterProxyModel>
 
-#include "newsmodel.h"
-
 class NewsSortFilterModel : public QSortFilterProxyModel
 {
     Q_OBJECT

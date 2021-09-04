@@ -1,12 +1,10 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 import "../components/"
 
 BackgroundItem {
-    property ContentItemBox item
+    property var item
 
     width: parent.width
     height: columnBox.height
@@ -18,7 +16,7 @@ BackgroundItem {
         spacing: Theme.paddingMedium
 
         Separator {
-            visible: item.image.length === 0
+            visible: item.images.videowebl.imageurl.length === 0
             id: separatorTop
             width: parent.width
             color: Theme.highlightBackgroundColor
@@ -26,12 +24,15 @@ BackgroundItem {
 
         RemoteImage {
             id: headerImage
-            visible: item.image.length > 0
-            source: item.image
+            visible: item.images.videowebl.imageurl.length > 0
+            source: item.images.videowebl.imageurl
         }
 
         Label {
             id: labelSubtitle
+
+            visible: item.hasOwnProperty("subtitle")
+
             width: parent.width
 
             font.pixelSize: Theme.fontSizeSmall
@@ -42,6 +43,9 @@ BackgroundItem {
 
         Label {
             id: labelTitle
+
+            visible: item.hasOwnProperty("title")
+
             width: parent.width
 
             font.pixelSize: Theme.fontSizeMedium
@@ -53,6 +57,9 @@ BackgroundItem {
 
         Label {
             id: labelText
+
+            visible: item.hasOwnProperty("text")
+
             width: parent.width
 
             font.pixelSize: Theme.fontSizeSmall
@@ -70,9 +77,11 @@ BackgroundItem {
     }
 
     onClicked: {
-        if (!item.linkInternal)
-            pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), { url: item.link })
+        var link = item.link.match(/(?:ht|f)tps?:\/\/[-a-zA-Z0-9.]+\.[a-zA-Z]{2,3}(\/[^"<]*)?/g)[0]
+
+        if (link.substr(0, 31) === "https://www.tagesschau.de/api2/")
+            pageStack.push(Qt.resolvedUrl("../pages/ReaderPage.qml"), {link: link})
         else
-            HafenschauProvider.getInternalLink(item.link)
+            Qt.openUrlExternally(link)
     }
 }

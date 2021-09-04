@@ -1,10 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 Item {
-    property ContentItem item
+    property var item
 
     x: Theme.horizontalPageMargin
     width: parent.width - 2*x
@@ -14,12 +12,12 @@ Item {
         id: labelValue
         width: parent.width
 
-        font.pixelSize: Theme.fontSizeMedium
+        font.pixelSize: Theme.fontSizeLarge
         font.bold: true
         wrapMode: Text.WordWrap
         color: Theme.highlightColor
 
-        text: item.value
+        text: item.value.replace( /(<([^>]+)>)/ig, '')
     }
 }
 

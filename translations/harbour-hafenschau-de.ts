@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>I am not the producer of the content used in the app! The content and its copyright belongs to tagesschau.de!</source>
-        <translation>Ich bin nicht der Erzeuger des Inhalts, der in dieser Anwendung gezeigt wird! Der Inhalt und damit das Copyrigth gehört zu tagesschau.de!</translation>
+        <translation>Ich bin nicht der Erzeuger der Inhalte welcche in dieser Anwendung gezeigt werden! Die Inhalte und damit das Copyrigth gehören zu tagesschau.de!</translation>
     </message>
     <message>
         <source>This project tries to offer a solution to consume the contents of the German public broadcasting under Sailfish OS, since there is no native application.</source>
@@ -39,6 +39,14 @@
         <translation>Aktualisieren</translation>
     </message>
     <message>
+        <source>Sort descending</source>
+        <translation>Absteigend sortieren</translation>
+    </message>
+    <message>
+        <source>Sort ascending</source>
+        <translation>Aufsteigend sortieren</translation>
+    </message>
+    <message>
         <source>Hide search</source>
         <translation>Suche ausblenden</translation>
     </message>
@@ -47,20 +55,24 @@
         <translation>Suchen</translation>
     </message>
     <message>
-        <source>Comments</source>
-        <translation>Kommentare</translation>
+        <source>Comments (closed)</source>
+        <translation>Kommentare (geschlossen)</translation>
     </message>
     <message>
-        <source>No comments available</source>
-        <translation>Keine Kommentare vorhanden</translation>
+        <source>Comments</source>
+        <translation>Kommentare</translation>
     </message>
     <message>
         <source>From</source>
         <translation>Von</translation>
     </message>
     <message>
-        <source>Comments (closed)</source>
-        <translation>Kommentare (geschlossen)</translation>
+        <source>No comments available</source>
+        <translation>Keine Kommentare vorhanden</translation>
+    </message>
+    <message>
+        <source>Show in browser</source>
+        <translation>Im Browser anzeigen</translation>
     </message>
 </context>
 <context>
@@ -82,17 +94,6 @@
     <message>
         <source>Raw data viewer</source>
         <translation>Rohdaten Ansicht</translation>
-    </message>
-</context>
-<context>
-    <name>HafenschauProvider</name>
-    <message>
-        <source>Hafenschau</source>
-        <translation>Hafenschau</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation>Standard</translation>
     </message>
 </context>
 <context>
@@ -122,38 +123,47 @@
         <translation>Bitte aktualisieren oder die Internetverbindung prüfen!</translation>
     </message>
     <message>
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
         <source>Load more</source>
         <translation>Mehr laden</translation>
     </message>
-</context>
-<context>
-    <name>OpenExternalUrlDialog</name>
     <message>
-        <source>Open external url?</source>
-        <translation>Externe Adresse öffnen?</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation>Öffnen</translation>
+        <source>Failed to get news</source>
+        <translation>Laden von Nachrichten fehlgeschlagen</translation>
     </message>
 </context>
 <context>
     <name>ReaderPage</name>
     <message>
-        <source>Save news data</source>
-        <translation>Daten speichern</translation>
-    </message>
-    <message>
-        <source>Show Comments</source>
-        <translation>Zeige Kommentare</translation>
-    </message>
-    <message>
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
     </message>
     <message>
+        <source>Comments</source>
+        <translation>Kommentare</translation>
+    </message>
+    <message>
         <source>Time:</source>
         <translation>Zeit:</translation>
+    </message>
+    <message>
+        <source>Share</source>
+        <translation>Teilen</translation>
+    </message>
+    <message>
+        <source>Save news data</source>
+        <translation>Daten speichern</translation>
+    </message>
+    <message>
+        <source>Failed to load news</source>
+        <translation>Laden von Nachrichten fehlgeschlagen</translation>
+    </message>
+    <message>
+        <source>Check your internet connection</source>
+        <translation>Überprüfe deine Internetverbindung</translation>
     </message>
 </context>
 <context>
@@ -230,16 +240,20 @@
 <context>
     <name>SearchPage</name>
     <message>
+        <source>Failed to get news</source>
+        <translation>Laden von Nachrichten fehlgeschlagen</translation>
+    </message>
+    <message>
+        <source>Load more</source>
+        <translation>Mehr laden</translation>
+    </message>
+    <message>
         <source>No content found</source>
         <translation>Keine Inhalte gefunden</translation>
     </message>
     <message>
         <source>Type in a search pattern to find content</source>
-        <translation>Gib einen Suchbegriff ein um Inhalte zu finden</translation>
-    </message>
-    <message>
-        <source>Load more</source>
-        <translation>Mehr laden</translation>
+        <translation>Gebe einen Suchbegriff ein um Inhalte zu finden</translation>
     </message>
 </context>
 <context>
@@ -309,12 +323,12 @@
         <translation>Aktiviert automatisches Wechseln der Cover Seiten in einem festgelegten Intervall.</translation>
     </message>
     <message>
-        <source>Update interval</source>
-        <translation>Update Intervall</translation>
-    </message>
-    <message>
         <source>Update interval for cover page switch</source>
         <translation>Update Intervall für Cover Seiten Wechsel</translation>
+    </message>
+    <message>
+        <source>Update interval (msec)</source>
+        <translation>Update Intervall (msec)</translation>
     </message>
 </context>
 <context>
@@ -410,6 +424,14 @@
         <source>Manage webview options</source>
         <translation>Webansichts Optionen verwalten</translation>
     </message>
+    <message>
+        <source>Video Settings</source>
+        <translation>Video Einstellungen</translation>
+    </message>
+    <message>
+        <source>Manage video settings</source>
+        <translation>Video Optionen verwalten</translation>
+    </message>
 </context>
 <context>
     <name>SettingsRegionsPage</name>
@@ -419,7 +441,46 @@
     </message>
     <message>
         <source>Regional News</source>
-        <translation>Regional Nachrichten</translation>
+        <translation>Regionale Nachrichten</translation>
+    </message>
+    <message>
+        <source>Reset region settings</source>
+        <translation>Regionen zurücksetzen</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsVideoPage</name>
+    <message>
+        <source>Video Settings</source>
+        <translation>Video Einstellungen</translation>
+    </message>
+    <message>
+        <source>Choose video quality</source>
+        <translation>Video Qualität wählen</translation>
+    </message>
+    <message>
+        <source>Adaptive Streaming</source>
+        <translation>Adaptives Streamen</translation>
+    </message>
+    <message>
+        <source>Use adaptive streaming when possible</source>
+        <translation>Wenn möglich adpatives Streaming benutzen</translation>
+    </message>
+    <message>
+        <source>Quality</source>
+        <translation>Qualität</translation>
+    </message>
+    <message>
+        <source>Low</source>
+        <translation>Niedrig</translation>
+    </message>
+    <message>
+        <source>Medium</source>
+        <translation>Mittel</translation>
+    </message>
+    <message>
+        <source>High</source>
+        <translation>Hoch</translation>
     </message>
 </context>
 <context>
@@ -467,36 +528,8 @@
 <context>
     <name>harbour-hafenschau</name>
     <message>
-        <source>Connection refused</source>
-        <translation>Verbindung verweigert</translation>
-    </message>
-    <message>
-        <source>Host not found</source>
-        <translation>Host nicht gefunden</translation>
-    </message>
-    <message>
-        <source>Connection timed out</source>
-        <translation>Zeitüberschreitung der Verbindung</translation>
-    </message>
-    <message>
-        <source>Ssl handshake failed</source>
-        <translation>SSL-Handshake fehlgeschlagen</translation>
-    </message>
-    <message>
-        <source>Access denied</source>
-        <translation>Zugriff verweigert</translation>
-    </message>
-    <message>
-        <source>Not found</source>
-        <translation>Nicht gefunden</translation>
-    </message>
-    <message>
-        <source>Internal server error</source>
-        <translation>Interner Server Fehler</translation>
-    </message>
-    <message>
-        <source>Unkown connection error</source>
-        <translation>Unbekannter Verbindungsfehler</translation>
+        <source>Failed to get news</source>
+        <translation>Laden von Nachrichten fehlgeschlagen</translation>
     </message>
 </context>
 </TS>

@@ -1,12 +1,10 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 import "../components/"
 
 BackgroundItem {
-    property ContentItemVideo item
+    property var item
 
     width: parent.width
     height: columnVideo.height
@@ -20,7 +18,7 @@ BackgroundItem {
         RemoteImage {
             id: headerImage
 
-            source: item.image
+            source: item.teaserImage.videowebl.imageurl
             placeholderUrl: "/usr/share/harbour-hafenschau/images/video_dummy.png"
 
             Image {
@@ -48,5 +46,5 @@ BackgroundItem {
         }
     }
 
-    onClicked: pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {url: item.stream})
+    onClicked: pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {streams: item.streams, title: item.title})
 }
