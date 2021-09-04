@@ -14,7 +14,6 @@ BackgroundItem {
         spacing: Theme.paddingMedium
 
         Image {
-            id: headerImage
             source: "/usr/share/harbour-hafenschau/images/unkown.png"
             cache: true
             smooth: true
@@ -24,7 +23,6 @@ BackgroundItem {
         }
 
         Label {
-            id: labelTitle
             width: parent.width
 
             font.pixelSize: Theme.fontSizeSmall
@@ -35,7 +33,6 @@ BackgroundItem {
         }
 
         Separator {
-            id: separatorBottom
             width: parent.width
             color: Theme.highlightBackgroundColor
         }

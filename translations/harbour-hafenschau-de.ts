@@ -76,6 +76,16 @@
     </message>
 </context>
 <context>
+    <name>ContentGallery</name>
+    <message numerus="yes">
+        <source>Gallery with %n pictures</source>
+        <translation>
+            <numerusform>Galerie mit %n Bild</numerusform>
+            <numerusform>Galerie mit %n Bilder</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
     <name>ContentRelated</name>
     <message>
         <source>More on the subject</source>

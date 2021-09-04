@@ -15,14 +15,12 @@ BackgroundItem {
         spacing: Theme.paddingMedium
 
         Separator {
-            id: separatorTop
             x: Theme.horizontalPageMargin
             width: parent.width - 2*x
             color: Theme.highlightBackgroundColor
         }
 
         Label {
-            id: labelHeader
             x: Theme.horizontalPageMargin
             width: parent.width - 2*x
 
@@ -99,7 +97,6 @@ BackgroundItem {
 
                 Separator {
                     visible: index < (listView.count - 1)
-                    id: separatorBottom
                     anchors.bottom: parent.bottom
                     x: Theme.horizontalPageMargin
                     width: parent.width - 2*x

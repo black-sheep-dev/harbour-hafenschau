@@ -14,13 +14,11 @@ BackgroundItem {
         spacing: Theme.paddingMedium
 
         Separator {
-            id: separatorTop
             width: parent.width
             color: Theme.highlightBackgroundColor
         }
 
         Label {
-            id: labelHeader
             width: parent.width
 
             font.pixelSize: Theme.fontSizeMedium
@@ -32,10 +30,9 @@ BackgroundItem {
         }
 
         SilicaListView {
-            id: listView
             width: parent.width
 
-            height: Theme.itemSizeSmall * listView.count
+            height: Theme.itemSizeSmall * count
 
             model: item.items
 
@@ -46,7 +43,6 @@ BackgroundItem {
                 contentHeight: Theme.itemSizeSmall
 
                 Label {
-                    id: listItemLabel
                     width: parent.width
                     anchors.verticalCenter: parent.verticalCenter
                     wrapMode: Text.WordWrap
@@ -55,7 +51,7 @@ BackgroundItem {
 
                     linkColor: Theme.highlightColor
 
-                    text: modelData
+                    text: modelData.url
 
                     onLinkActivated: {
                         var link = modelData.url.match(/(?:ht|f)tps?:\/\/[-a-zA-Z0-9.]+\.[a-zA-Z]{2,3}(\/[^"<]*)?/g)[0]

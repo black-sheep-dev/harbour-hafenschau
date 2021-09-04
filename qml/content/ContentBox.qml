@@ -17,20 +17,16 @@ BackgroundItem {
 
         Separator {
             visible: item.images.videowebl.imageurl.length === 0
-            id: separatorTop
             width: parent.width
             color: Theme.highlightBackgroundColor
         }
 
         RemoteImage {
-            id: headerImage
             visible: item.images.videowebl.imageurl.length > 0
             source: item.images.videowebl.imageurl
         }
 
         Label {
-            id: labelSubtitle
-
             visible: item.hasOwnProperty("subtitle")
 
             width: parent.width
@@ -42,8 +38,6 @@ BackgroundItem {
         }
 
         Label {
-            id: labelTitle
-
             visible: item.hasOwnProperty("title")
 
             width: parent.width
@@ -56,8 +50,6 @@ BackgroundItem {
         }
 
         Label {
-            id: labelText
-
             visible: item.hasOwnProperty("text")
 
             width: parent.width
@@ -70,7 +62,6 @@ BackgroundItem {
         }
 
         Separator {
-            id: separatorBottom
             width: parent.width
             color: Theme.highlightBackgroundColor
         }

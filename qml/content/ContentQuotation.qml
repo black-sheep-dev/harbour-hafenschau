@@ -14,7 +14,6 @@ Item {
         spacing: Theme.paddingMedium
 
         Separator {
-            id: separatorTop
             width: parent.width
             color: Theme.highlightBackgroundColor
         }
@@ -28,7 +27,6 @@ Item {
             }
 
             Label {
-                id: labelValue
                 width: parent.width - quotationIcon.width - parent.spacing
                 color: Theme.highlightColor
                 font.pixelSize: Theme.fontSizeSmall
@@ -41,7 +39,6 @@ Item {
             }
         }
         Separator {
-            id: separatorBottom
             width: parent.width
             color: Theme.highlightBackgroundColor
         }

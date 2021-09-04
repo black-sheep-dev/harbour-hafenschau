@@ -1,8 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 import "../components/"
 
 BackgroundItem {
@@ -24,13 +22,10 @@ BackgroundItem {
         }
 
         RemoteImage {
-            id: headerImage
-
             placeholderUrl: "/usr/share/harbour-hafenschau/images/webcontent.png"
         }
 
         Label {
-            id: titleLabel
             width: parent.width
 
             font.pixelSize: Theme.fontSizeMedium
@@ -45,15 +40,4 @@ BackgroundItem {
     }
 
     onClicked: pageStack.push(Qt.resolvedUrl("../pages/WebViewPage.qml"), { url: item.value })
-
-    Connections {
-        target: HafenschauProvider
-        onHtmlEmbedAvailable: {
-            if (url !== item.value) return
-            titleLabel.text = title
-            headerImage.source = image
-        }
-    }
-
-    Component.onCompleted: HafenschauProvider.getHtmlEmbed(item.value)
 }

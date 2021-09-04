@@ -16,8 +16,6 @@ BackgroundItem {
         spacing: Theme.paddingMedium
 
         RemoteImage {
-            id: headerImage
-
             source: item.teaserImage.videowebl.imageurl
             placeholderUrl: "/usr/share/harbour-hafenschau/images/video_dummy.png"
 
@@ -28,7 +26,6 @@ BackgroundItem {
         }
 
         Label {
-            id: labelTitle
             width: parent.width
 
             font.pixelSize: Theme.fontSizeSmall
@@ -40,7 +37,6 @@ BackgroundItem {
         }
 
         Separator {
-            id: separatorBottom
             width: parent.width
             color: Theme.highlightBackgroundColor
         }

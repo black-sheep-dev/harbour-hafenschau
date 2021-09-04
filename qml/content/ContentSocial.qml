@@ -16,13 +16,11 @@ BackgroundItem {
         spacing: Theme.paddingMedium
 
         Separator {
-            id: separatorTop
             width: parent.width
             color: Theme.highlightBackgroundColor
         }
 
         Label {
-            id: labelTitle
             width: parent.width
 
             font.pixelSize: Theme.fontSizeMedium
@@ -34,14 +32,12 @@ BackgroundItem {
         }
 
         RemoteImage {
-            id: headerImage
             visible: item.images.gross16x9.imageurl.length > 0
 
             source: "https://" + item.images.gross16x9.imageurl.substr(28)
         }
 
         Label {
-            id: labelShorttext
             width: parent.width
 
             font.pixelSize: Theme.fontSizeSmall
@@ -52,7 +48,6 @@ BackgroundItem {
         }
 
         Row {
-            id: accountRow
             width: parent.width
             height: Theme.itemSizeMedium
             spacing: Theme.paddingMedium
@@ -69,7 +64,6 @@ BackgroundItem {
             }
 
             Label {
-                id: labelText
                 width: parent.width - avatarImage.width - parent.spacing
 
                 anchors.verticalCenter: avatarImage.verticalCenter
@@ -85,7 +79,6 @@ BackgroundItem {
         }
 
         Separator {
-            id: separatorBottom
             width: parent.width
             color: Theme.highlightBackgroundColor
         }
