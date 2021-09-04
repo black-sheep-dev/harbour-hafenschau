@@ -7,6 +7,16 @@ BackgroundItem {
     width: parent.width
     height: columnBox.height
 
+    function openLink(link) {
+        if (link.length === 0) return
+        const l = link.match(/(?:ht|f)tps?:\/\/[-a-zA-Z0-9.]+\.[a-zA-Z]{2,3}(\/[^"<]*)?/g)[0]
+
+        if (l.substr(0, 31) === "https://www.tagesschau.de/api2/")
+            pageStack.push(Qt.resolvedUrl("../pages/ReaderPage.qml"), {link: l})
+        else
+            Qt.openUrlExternally(l)
+    }
+
     Column {
         id: columnBox
         x: Theme.horizontalPageMargin
@@ -29,39 +39,38 @@ BackgroundItem {
             text: item.title
         }
 
-        SilicaListView {
-            width: parent.width
-
-            height: Theme.itemSizeSmall * count
-
+        Repeater {
             model: item.items
 
+            BackgroundItem {
+                contentHeight: Math.max(contentRow.height + 2*Theme.paddingSmall, Theme.itemSizeSmall)
 
-            delegate: ListItem {
-                id: delegate
-
-                contentHeight: Theme.itemSizeSmall
-
-                Label {
+                Row {
+                    id: contentRow
                     width: parent.width
                     anchors.verticalCenter: parent.verticalCenter
-                    wrapMode: Text.WordWrap
+                    spacing: Theme.paddingSmall
 
-                    font.pixelSize: Theme.fontSizeSmall
+                    Icon {
+                        id: linkIcon
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: "image://theme/icon-s-attach"
+                    }
 
-                    linkColor: Theme.highlightColor
+                    Label {
+                        width: parent.width - linkIcon.width - parent.spacing
+                        anchors.verticalCenter: parent.verticalCenter
+                        wrapMode: Text.WordWrap
 
-                    text: modelData.url
+                        font.pixelSize: Theme.fontSizeSmall
 
-                    onLinkActivated: {
-                        var link = modelData.url.match(/(?:ht|f)tps?:\/\/[-a-zA-Z0-9.]+\.[a-zA-Z]{2,3}(\/[^"<]*)?/g)[0]
+                        linkColor: Theme.highlightColor
 
-                        if (link.substr(0, 31) === "https://www.tagesschau.de/api2/")
-                            pageStack.push(Qt.resolvedUrl("../pages/ReaderPage.qml"), {link: link})
-                        else
-                            Qt.openUrlExternally(link)
+                        text: modelData.url
                     }
                 }
+
+                onClicked: openLink(modelData.url)
             }
         }
     }
