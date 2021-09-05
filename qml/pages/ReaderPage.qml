@@ -41,7 +41,7 @@ Page {
     SilicaFlickable {
         PullDownMenu {
             MenuItem {
-                visible: settings.developerOptions & DeveloperOption.SaveNews
+                visible: settings.developerSaveNews
 
                 text: qsTr("Save news data")
                 onClicked: dataWriter.saveNews(news)
@@ -267,8 +267,11 @@ Page {
             } else if (item.type === "socialmedia") {
                 component = Qt.createComponent("../content/ContentSocial.qml")
                 item = item.social
+            } else if (item.type === "htmlEmbed") {
+                component = Qt.createComponent("../content/ContentHtmlEmbed.qml")
+                item = item.htmlEmbed
             } else {
-                if (settings.developerOptions & DeveloperOption.ShowUnkownContent)
+                if (!(settings.developerOptions & DeveloperOption.ShowUnkownContent))
                     continue
 
                 component = Qt.createComponent("../content/ContentUnkown.qml")

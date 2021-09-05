@@ -4,7 +4,8 @@ import Sailfish.Silica 1.0
 import "../components/"
 
 BackgroundItem {
-    property ContentItem item
+    property var item
+    readonly property string placeholderImage: "/usr/share/harbour-hafenschau/images/webcontent.png"
 
     visible: titleLabel.text.length > 0
     width: parent.width
@@ -16,28 +17,26 @@ BackgroundItem {
         width: parent.width - 2*x
         spacing: Theme.paddingMedium
 
-        Separator {
-            width: parent.width
-            color: Theme.highlightBackgroundColor
-        }
-
         RemoteImage {
-            placeholderUrl: "/usr/share/harbour-hafenschau/images/webcontent.png"
-        }
+            source: {
+                if (!item.hasOwnProperty("url")) return placeholderImage
 
-        Label {
-            width: parent.width
+                var split = item.url.split("/")
+                if (split[2] !== "app.23degrees.io")
+                    return placeholderImage
 
-            font.pixelSize: Theme.fontSizeMedium
-            wrapMode: Text.WordWrap
-            color: Theme.highlightColor
-        }
+                return "https://app.23degrees.io/services/image/v1/getPreviewFromSlug/" + split[4] + "/preview.png"
+            }
 
-        Separator {
-            width: parent.width
-            color: Theme.highlightBackgroundColor
+            placeholderUrl: placeholderImage
         }
     }
 
-    onClicked: pageStack.push(Qt.resolvedUrl("../pages/WebViewPage.qml"), { url: item.value })
+    onClicked: {
+        if (settings.internalWebView) {
+            pageStack.animatorPush(Qt.resolvedUrl("../pages/WebViewPage.qml"), {url: item.url })
+        } else {
+            Qt.openUrlExternally(item.url)
+        }
+    }
 }
