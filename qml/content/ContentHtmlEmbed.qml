@@ -7,7 +7,6 @@ BackgroundItem {
     property var item
     readonly property string placeholderImage: "/usr/share/harbour-hafenschau/images/webcontent.png"
 
-    visible: titleLabel.text.length > 0
     width: parent.width
     height: columnBox.height
 
