@@ -3,14 +3,14 @@ import Sailfish.Silica 1.0
 
 import "../components/"
 
-BackgroundItem {
+Item {
     property var item
 
     width: parent.width
-    height: columnBox.height
+    height: columnHeader.height + columnList.height
 
     Column {
-        id: columnBox
+        id: columnHeader
         width: parent.width
         spacing: Theme.paddingMedium
 
@@ -31,77 +31,83 @@ BackgroundItem {
 
             text: qsTr("More on the subject")
         }
+    }
 
-        SilicaListView {
-            id: listView
-            width: parent.width
+    Column {
+        id: columnList
+        width: parent.width
+        anchors.top: columnHeader.bottom
 
-            height: Theme.itemSizeHuge * item.length
-
+        Repeater {
             model: item
 
-            delegate: ListItem {
-                id: delegate
+            BackgroundItem {
+                width: parent.width
+                height: Theme.itemSizeHuge
 
-                contentHeight: Theme.itemSizeHuge
-
-                RemoteImage {
-                    id: thumbnailImage
-                    anchors.verticalCenter: parent.verticalCenter
-
+                Row {
+                    id: contentRow
                     x: Theme.horizontalPageMargin
-                    width: Theme.itemSizeHuge * 0.8
-                    height: width
-
-                    source: modelData.teaserImage.videoweb1x1l.imageurl
-                    placeholderUrl: "/usr/share/harbour-hafenschau/images/dummy_thumbnail.png"
-
-                    Image {
-                        visible: modelData.type === "video"
-                        anchors.centerIn: parent
-                        source: "image://theme/icon-m-play"
-                    }
-                }
-
-                Column {
-                    id: column
-
-                    anchors.left: thumbnailImage.right
-                    anchors.right: parent.right
+                    width: parent.width - 2*x
                     anchors.verticalCenter: parent.verticalCenter
+                    anchors.topMargin: Theme.paddingSmall
+                    anchors.bottomMargin: Theme.paddingSmall
+                    spacing: Theme.paddingMedium
 
-                    spacing: Theme.paddingSmall
+                    RemoteImage {
+                        id: thumbnailImage
+                        anchors.verticalCenter: parent.verticalCenter
+                        x: Theme.horizontalPageMargin
+                        width: Theme.itemSizeHuge * 0.8
+                        height: width
 
-                    Label {
-                        visible: modelData.type !== "video"
+                        source: modelData.teaserImage.videoweb1x1l.imageurl
+                        placeholderUrl: "/usr/share/harbour-hafenschau/images/dummy_thumbnail.png"
 
-                        text: modelData.topline
-
-                        x: Theme.paddingMedium
-                        width: parent.width - 2*x
-                        wrapMode: Text.WordWrap
-
-                        font.pixelSize: Theme.fontSizeSmall
+                        Image {
+                            visible: modelData.type === "video"
+                            anchors.centerIn: parent
+                            source: "image://theme/icon-m-play"
+                        }
                     }
-                    Label {
-                        text: modelData.title
 
-                        x: Theme.paddingMedium
-                        width: parent.width - 2*x
-                        wrapMode: Text.WordWrap
+                    Column {
+                        width: parent.width - thumbnailImage.width - parent.spacing
+                        anchors.verticalCenter: parent.verticalCenter
+                        spacing: Theme.paddingSmall
 
-                        font.pixelSize: Theme.fontSizeMedium
-                        color: Theme.highlightColor
+                        Label {
+                            visible: modelData.type !== "video"
+
+                            text: modelData.topline
+
+                            x: Theme.paddingMedium
+                            width: parent.width - 2*x
+                            wrapMode: Text.WordWrap
+
+                            font.pixelSize: Theme.fontSizeSmall
+                        }
+                        Label {
+                            text: modelData.title
+
+                            x: Theme.paddingMedium
+                            width: parent.width - 2*x
+                            wrapMode: Text.WordWrap
+
+                            font.pixelSize: Theme.fontSizeMedium
+                            color: Theme.highlightColor
+                        }
                     }
                 }
 
                 Separator {
-                    visible: index < (listView.count - 1)
+                    id: separatorBottom
+                    visible: index < (item.length - 1)
                     anchors.bottom: parent.bottom
                     x: Theme.horizontalPageMargin
                     width: parent.width - 2*x
                     color: Theme.primaryColor
-                }       
+                }
 
                 onClicked: {
                     if (modelData.type === "video") {
