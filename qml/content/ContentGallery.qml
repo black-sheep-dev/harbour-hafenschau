@@ -31,6 +31,7 @@ BackgroundItem {
 
         Label {
             width: parent.width
+            font.pixelSize: Theme.fontSizeSmall
             text: qsTr("Gallery with %n pictures", "", item.length)
         }
 
