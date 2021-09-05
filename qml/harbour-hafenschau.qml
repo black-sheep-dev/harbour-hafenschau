@@ -97,8 +97,9 @@ ApplicationWindow
             const ids = []
 
             data.regional.forEach(function(news) {
+                const id = news.sophoraId
+
                 news.regionIds.forEach(function(region) {
-                    const id = news.sophoraId
 
                     if ( Global.activeRegions.indexOf(String(region)) >= 0 && ids.indexOf(id) < 0 ) {
                         regionalNews.push(news)
@@ -195,7 +196,6 @@ ApplicationWindow
     BackgroundJob {
         enabled: settings.autoRefresh > 0
         frequency: settings.autoRefresh
-        triggeredOnEnable: true
 
         onTriggered: {
             mainModel.checkForUpdate()
