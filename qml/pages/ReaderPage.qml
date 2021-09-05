@@ -14,6 +14,12 @@ Page {
 
     function checkForUpdate() {
         error = false
+
+        if (updateCheckUrl === undefined) {
+            refresh(false)
+            return
+        }
+
         api.request(updateCheckUrl, updateCheckUrl, false)
     }
 
@@ -211,7 +217,8 @@ Page {
             if (page.link !== id) return
 
             page.news = data
-            page.updateCheckUrl = data.updateCheckUrl
+
+            if (data.hasOwnProperty("updateCheckUrl")) page.updateCheckUrl = data.updateCheckUrl
             loading = false
             refreshContent()
         }
