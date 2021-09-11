@@ -38,5 +38,5 @@ BackgroundItem {
         }
     }
 
-    onClicked: pageStack.push(Qt.resolvedUrl("../pages/DataReaderPage.qml"), { text: JSON.stringify(item, null, '\t') });
+    onClicked: pageStack.animatorPush(Qt.resolvedUrl("../pages/DataReaderPage.qml"), { text: JSON.stringify(item, null, '\t') });
 }

@@ -10,7 +10,7 @@
 #   - translation filenames have to be changed
 
 # VERSION
-VERSION = 0.5.2-1
+VERSION = 0.5.3-1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # The name of your application
@@ -51,6 +51,7 @@ DISTFILES += qml/harbour-hafenschau.qml \
     qml/content/ContentText.qml \
     qml/content/ContentUnkown.qml \
     qml/content/ContentVideo.qml \
+    qml/content/ContentWebview.qml \
     qml/cover/CoverPage.qml \
     qml/delegates/NewsListItem.qml \
     qml/global.qml \

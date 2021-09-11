@@ -9,6 +9,7 @@ import org.nubecula.harbour.hafenschau 1.0
 Page {
     property alias title: titleLabel.text
     property var streams
+    property string livestream: ""
     property bool showOverlay: false
 
     id: page
@@ -25,6 +26,8 @@ Page {
             autoPlay: true
 
             source: {
+                if (livestream.length > 0) return livestream
+
                 if (settings.videoQualityAdaptive && streams.hasOwnProperty("adaptivestreaming")) return streams.adaptivestreaming
 
                 switch (settings.videoQuality) {
@@ -113,16 +116,20 @@ Page {
                 }
 
                 Label {
+                    visible: livestream.length === 0
                     text: "/"
                 }
 
                 Label {
+                    visible: livestream.length === 0
                     text: new Date(videoPlayer.duration).toISOString().substr(14, 5)
                 }
             }
 
             Slider {
                 id: progressSlider
+
+                enabled: livestream.length === 0
 
                 anchors.topMargin: -height / 2
 

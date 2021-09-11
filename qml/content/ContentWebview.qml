@@ -16,7 +16,7 @@ Item {
         wrapMode: Text.WordWrap
         linkColor: Theme.highlightColor
 
-        text: item.value
+        text: item.inline
 
         onLinkActivated: {
             if (link.substr(0, 31) === "https://www.tagesschau.de/api2/")

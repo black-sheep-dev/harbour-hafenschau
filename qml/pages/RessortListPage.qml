@@ -128,7 +128,7 @@ Page {
 
             onClicked: {
                 if (model.ressort)
-                pageStack.push(Qt.resolvedUrl(page), {
+                pageStack.animatorPush(Qt.resolvedUrl(page), {
                                                  ressort: model.ressort,
                                                  ressortTitle: model.title
                                             })

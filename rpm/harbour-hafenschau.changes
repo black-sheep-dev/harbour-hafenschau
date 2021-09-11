@@ -1,3 +1,8 @@
+* Sat Sep 11 2021 Black Sheep <blacksheep@nubecula.org> 0.5.3-1
+- Add livestream of Tagesschau24
+- Support for webview content
+- Bugfixes
+
 * Sun Sep 05 2021 Black Sheep <blacksheep@nubecula.org> 0.5.2-1
 - Add HTML embed widget
 - UI fixes

@@ -111,12 +111,19 @@ Item {
 
                 onClicked: {
                     if (modelData.type === "video") {
-                        pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {
+                        pageStack.animatorPush(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {
                                            title: modelData.title,
                                            streams: modelData.streams
                                        })
+                    } if (modelData.type === "webview") {
+                        if (settings.internalWebView) {
+                            pageStack.animatorPush(Qt.resolvedUrl("../pages/WebViewPage.qml"), {url: modelData.detailsweb })
+                        } else {
+                            Qt.openUrlExternally(modelData
+                                                 .detailsweb)
+                        }
                     } else {
-                        pageStack.push(Qt.resolvedUrl("../pages/ReaderPage.qml"), {link: modelData.details})
+                        pageStack.animatorPush(Qt.resolvedUrl("../pages/ReaderPage.qml"), {link: modelData.details})
                     }
                 }
             }

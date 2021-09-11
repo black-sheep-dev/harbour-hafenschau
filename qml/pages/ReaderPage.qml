@@ -270,6 +270,9 @@ Page {
             } else if (item.type === "htmlEmbed") {
                 component = Qt.createComponent("../content/ContentHtmlEmbed.qml")
                 item = item.htmlEmbed
+            } else if (item.type === "webview") {
+                component = Qt.createComponent("../content/ContentWebview.qml")
+                item = item.webview
             } else {
                 if (!(settings.developerOptions & DeveloperOption.ShowUnkownContent))
                     continue

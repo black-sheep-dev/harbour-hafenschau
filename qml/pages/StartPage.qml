@@ -23,13 +23,17 @@ Page {
                 onClicked: pageStack.animatorPush(Qt.resolvedUrl("settings/SettingsPage.qml"))
             }
             MenuItem {
+                text: qsTr("Livestream")
+                onClicked: pageStack.animatorPush(Qt.resolvedUrl("VideoPlayerPage.qml"), {
+                                                      title: "Tagesschau 24 (Live)",
+                                                      livestream: "https://tagesschau-lh.akamaihd.net/i/tagesschau_3@66339/master.m3u8"
+                                                  })
+            }
+
+            MenuItem {
                 text: qsTr("All News")
                 onClicked: pageStack.animatorPush(Qt.resolvedUrl("RessortListPage.qml"))
             }
-//            MenuItem {
-//                text: qsTr("Test")
-//                //onClicked: HafenschauProvider.test()
-//            }
             MenuItem {
                 enabled: networkManager.connected
                 text: qsTr("Refresh")

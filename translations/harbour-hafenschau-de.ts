@@ -534,6 +534,10 @@
         <source>Check your internet connection</source>
         <translation>Überprüfen deine Internetverbindung</translation>
     </message>
+    <message>
+        <source>Livestream</source>
+        <translation>Livestream</translation>
+    </message>
 </context>
 <context>
     <name>harbour-hafenschau</name>
