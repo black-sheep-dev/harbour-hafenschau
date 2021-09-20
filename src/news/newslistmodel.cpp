@@ -16,6 +16,11 @@ NewsListModel::~NewsListModel()
     m_items.clear();
 }
 
+int NewsListModel::count() const
+{
+    return m_items.count();
+}
+
 QString NewsListModel::newsDetails(int index) const
 {
     if (index < 0 || index >= m_items.count())
@@ -34,6 +39,8 @@ void NewsListModel::addItems(const QJsonArray &items)
     beginInsertRows(QModelIndex(), m_items.count(), m_items.count() + list.count() - 1);
     m_items.append(list);
     endInsertRows();
+
+    emit countChanged(m_items.count());
 }
 
 void NewsListModel::setItems(const QJsonArray &items)
@@ -42,6 +49,8 @@ void NewsListModel::setItems(const QJsonArray &items)
     m_items.clear();
     m_items = parseItems(items);
     endResetModel();
+
+    emit countChanged(m_items.count());
 }
 
 void NewsListModel::clear()
@@ -49,6 +58,8 @@ void NewsListModel::clear()
     beginResetModel();
     m_items.clear();
     endResetModel();
+
+    emit countChanged(m_items.count());
 }
 
 void NewsListModel::refresh()

@@ -1,3 +1,8 @@
+* Mon Sep 20 2021 Black Sheep <blacksheep@nubecula.org> 0.5.4-1
+- Cover redesign
+- Open specific news with cover action
+- UI fixes
+
 * Sat Sep 11 2021 Black Sheep <blacksheep@nubecula.org> 0.5.3-1
 - Add livestream of Tagesschau24
 - Support for webview content

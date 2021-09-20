@@ -33,8 +33,6 @@ Page {
     allowedOrientations: Orientation.All
 
     PageBusyIndicator {
-        anchors.centerIn: parent
-        size: BusyIndicatorSize.Large
         running: loading && news === undefined
     }
 
@@ -80,6 +78,10 @@ Page {
 
         anchors.fill: parent
         contentHeight: headerImage.height + columnHeader.height + columnContent.height + bottomSpacer.height
+
+        opacity: (loading && news === undefined) ? 0.0 : 1.0
+
+        Behavior on opacity { FadeAnimation {} }
 
         ViewPlaceholder {
             enabled: error && !loading

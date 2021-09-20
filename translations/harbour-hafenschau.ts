@@ -527,14 +527,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No news available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Check your internet connection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Livestream</source>
         <translation type="unfinished"></translation>
     </message>

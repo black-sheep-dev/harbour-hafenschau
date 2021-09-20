@@ -45,6 +45,10 @@ Page {
 
         anchors.fill: parent
 
+        opacity: (mainModel.loading && listView.count === 0) ? 0.0 : 1.0
+
+        Behavior on opacity { FadeAnimation {} }
+
         header: PageHeader {
             title: qsTr("Top News")
         }
@@ -68,11 +72,11 @@ Page {
             }
         }
 
-        ViewPlaceholder {
-            enabled: listView.count === 0 && !mainModel.loading
-            text: qsTr("No news available")
-            hintText: qsTr("Check your internet connection")
-        }
+//        ViewPlaceholder {
+//            enabled: !mainModel.loading && listView.count === 0
+//            text: qsTr("No news available")
+//            hintText: qsTr("Check your internet connection")
+//        }
 
         VerticalScrollDecorator {}
     }

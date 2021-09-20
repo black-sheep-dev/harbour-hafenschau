@@ -9,6 +9,8 @@ class NewsListModel : public QAbstractListModel
 {
     Q_OBJECT
 
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
+
 public:
     enum NewsItemRoles {
         DatetimeRole        = Qt::UserRole + 1,
@@ -27,9 +29,13 @@ public:
     explicit NewsListModel(QObject *parent = nullptr);
     ~NewsListModel() override;
 
+    int count() const;
     Q_INVOKABLE QString newsDetails(int index) const;
     Q_INVOKABLE void addItems(const QJsonArray &items);
     Q_INVOKABLE void setItems(const QJsonArray &items);
+
+signals:
+    void countChanged(int count);
 
 public slots:
     void clear();
@@ -39,7 +45,6 @@ private:
     QList<NewsItem> parseItems(const QJsonArray &items);
 
     QList<NewsItem> m_items;
-
 
     // QAbstractItemModel interface
 public:

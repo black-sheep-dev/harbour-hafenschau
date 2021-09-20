@@ -527,14 +527,6 @@
         <translation>Aktuelle Nachrichten</translation>
     </message>
     <message>
-        <source>No news available</source>
-        <translation>Keine Nachrichten verfügbar</translation>
-    </message>
-    <message>
-        <source>Check your internet connection</source>
-        <translation>Überprüfen deine Internetverbindung</translation>
-    </message>
-    <message>
         <source>Livestream</source>
         <translation>Livestream</translation>
     </message>

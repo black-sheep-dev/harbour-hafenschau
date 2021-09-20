@@ -7,87 +7,104 @@ import org.nubecula.harbour.hafenschau 1.0
 import "../components/"
 
 CoverBackground {
+    property int currentIndex: 0
+
+    function increment() {
+        if (currentIndex === (mainModel.count - 1)) {
+            currentIndex = 0
+        } else {
+            currentIndex++
+        }
+    }
+
+    Connections {
+        target: mainModel
+        onCountChanged: currentIndex = 0
+    }
+
+    id: coverBackground
+
     Timer {
         id: timer
         interval: settings.coverSwitchInterval
         repeat: true
         running: settings.coverSwitch
 
-        onTriggered: view.incrementCurrentIndex()
+        onTriggered: increment()
     }
 
-//    DBusInterface {
-//        id: dbusInterface
+    DBusInterface {
+        id: dbusInterface
 
-//        service: "harbour.hafenschau.service"
-//        iface: "harbour.hafenschau.service"
-//        path: "/harbour/hafenschau/service"
-//    }
+        service: "harbour.hafenschau.service"
+        iface: "harbour.hafenschau.service"
+        path: "/harbour/hafenschau/service"
+    }
 
-    SlideshowView {
-        id: view
-        anchors.fill: parent
+    Row {
+        x: currentIndex * parent.width * -1
+        height: parent.height
 
-        model: mainModel
+        Behavior on x {
+            NumberAnimation { duration: currentIndex === (mainModel.count - 1) ? 0 : 250 }
+        }
 
-        delegate: Rectangle {
-            property variant delegateData: model
+        Repeater {
+            model: mainModel
 
-            anchors.fill: parent
-            color: "#000000"
+            Rectangle {
+                width: coverBackground.width
+                height: coverBackground.height
+                color: "#000000"
 
-            RemoteImage {
-                id: imageDelegate
-                anchors.fill: parent
-                anchors.centerIn: parent
-                fillMode: Image.PreserveAspectCrop
+                RemoteImage {
+                    id: imageDelegate
+                    anchors.fill: parent
+                    anchors.centerIn: parent
+                    fillMode: Image.PreserveAspectCrop
 
-                opacity: 0.5
+                    opacity: 0.5
 
-                source: model.thumbnail
-            }
-
-            Column {
-                anchors.fill: parent
-                spacing: Theme.paddingSmall
-
-                Item {
-                    width: 1
-                    height: Theme.paddingSmall
+                    source: model.thumbnail
                 }
 
-                Label {
-                    x: Theme.horizontalPageMargin
-                    width: parent.width - 2*x
-                    text: model.title
-                    font.bold: true
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: Theme.fontSizeSmall
-                }
+                Column {
+                    anchors.fill: parent
+                    spacing: Theme.paddingSmall
 
-                Label {
-                    x: Theme.horizontalPageMargin
-                    width: parent.width - 2*x
-                    text: model.firstSentence
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: Theme.fontSizeExtraSmall
+                    Item {
+                        width: 1
+                        height: Theme.paddingSmall
+                    }
+
+                    Label {
+                        x: Theme.horizontalPageMargin
+                        width: parent.width - 2*x
+                        text: model.title
+                        font.bold: true
+                        wrapMode: Text.WordWrap
+                        font.pixelSize: Theme.fontSizeSmall
+                    }
+
+                    Label {
+                        x: Theme.horizontalPageMargin
+                        width: parent.width - 2*x
+                        text: model.firstSentence
+                        wrapMode: Text.WordWrap
+                        font.pixelSize: Theme.fontSizeExtraSmall
+                    }
                 }
             }
         }
     }
 
-
     CoverActionList {
         id: coverAction
 
-//        CoverAction {
-//            iconSource: "image://theme/icon-cover-search"
-////            onTriggered: dbusInterface.call("open", mainModel.data(view.currentIndex, NewsListModel.DetailsRole))
-//            onTriggered: {
-//                console.log(view.count)
-//                console.log(view.currentItem.delegateData.details)
-//            }
-//        }
+        CoverAction {
+            iconSource: "image://theme/icon-cover-search"
+            onTriggered: dbusInterface.call("open", mainModel.newsDetails(currentIndex))
+        }
 
         CoverAction {
             iconSource: "image://theme/icon-cover-refresh"
@@ -96,7 +113,7 @@ CoverBackground {
 
         CoverAction {
             iconSource: "image://theme/icon-cover-next"
-            onTriggered: view.incrementCurrentIndex()
+            onTriggered: increment()
         }
     }
 }
