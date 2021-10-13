@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import Nemo.DBus 2.0
 
 import org.nubecula.harbour.hafenschau 1.0
 
@@ -31,14 +30,6 @@ CoverBackground {
         running: settings.coverSwitch
 
         onTriggered: increment()
-    }
-
-    DBusInterface {
-        id: dbusInterface
-
-        service: "harbour.hafenschau.service"
-        iface: "harbour.hafenschau.service"
-        path: "/harbour/hafenschau/service"
     }
 
     Row {
@@ -103,7 +94,7 @@ CoverBackground {
 
         CoverAction {
             iconSource: "image://theme/icon-cover-search"
-            onTriggered: dbusInterface.call("open", mainModel.newsDetails(currentIndex))
+            onTriggered: dbusAdaptor.open(mainModel.newsDetails(currentIndex))
         }
 
         CoverAction {

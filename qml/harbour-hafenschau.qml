@@ -214,6 +214,7 @@ ApplicationWindow
     Component.onCompleted: refreshActiveRegions()
 
     DBusAdaptor {
+        id: dbusAdaptor
         service: "harbour.hafenschau.service"
         iface: "harbour.hafenschau.service"
         path: "/harbour/hafenschau/service"

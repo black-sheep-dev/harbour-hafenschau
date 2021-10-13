@@ -1,12 +1,12 @@
 [Desktop Entry]
 Type=Application
-X-Nemo-Application-Type=silica-qt5
 Icon=harbour-hafenschau
-Exec=/usr/bin/harbour-hafenschau %u
+Exec=sailjail -p harbour-hafenschau.desktop /usr/bin/harbour-hafenschau
 Name=Hafenschau
 Categories=Network
 
-#[X-Sailjail]
-#Permissions=Documents;Internet;Sharing
-#OrganizationName=org.nubecula
-#ApplicationName=hafenschau
+[X-Sailjail]
+OrganizationName=org.nubecula
+ApplicationName=Hafenschau
+Permissions=Documents;Internet;Sharing;WebView
+ExecDBus=/usr/bin/harbour-hafenschau -prestart

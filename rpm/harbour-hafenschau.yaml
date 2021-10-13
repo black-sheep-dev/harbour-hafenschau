@@ -1,6 +1,6 @@
 Name: harbour-hafenschau
 Summary: Hafenschau
-Version: 0.5.4
+Version: 0.6.0
 Release: 1
 # The contents of the Group field should be one of the groups listed here:
 # https://github.com/mer-tools/spectacle/blob/master/data/GROUPS
@@ -36,12 +36,6 @@ PkgConfigBR:
 # Runtime dependencies which are not automatically detected
 Requires:
   - sailfishsilica-qt5 >= 0.10.9
-  - sailfish-components-media-qt5
-  - sailfish-components-pickers-qt5
-  - embedlite-components-qt5 >= 1.21.2
-  - sailfish-components-webview-qt5
-  - sailfish-components-webview-qt5-popups
-  - sailfish-components-webview-qt5-pickers
   - libkeepalive >= 1.7.0
   - connman-qt5-declarative
 

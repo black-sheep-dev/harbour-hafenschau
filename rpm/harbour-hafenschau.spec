@@ -9,7 +9,7 @@ Name:       harbour-hafenschau
 # << macros
 
 Summary:    Hafenschau
-Version:    0.5.4
+Version:    0.6.0
 Release:    1
 Group:      Qt/Qt
 License:    MIT
@@ -17,12 +17,6 @@ URL:        https://github.com/black-sheep-dev/harbour-hafenschau
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-hafenschau.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
-Requires:   sailfish-components-media-qt5
-Requires:   sailfish-components-pickers-qt5
-Requires:   embedlite-components-qt5 >= 1.21.2
-Requires:   sailfish-components-webview-qt5
-Requires:   sailfish-components-webview-qt5-popups
-Requires:   sailfish-components-webview-qt5-pickers
 Requires:   libkeepalive >= 1.7.0
 Requires:   connman-qt5-declarative
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2

@@ -3,6 +3,8 @@ import Sailfish.Silica 1.0
 import Nemo.DBus 2.0
 
 Page {
+    readonly property string appId: "harbour-hafenschau"
+
     id: page
 
     allowedOrientations: Orientation.All
@@ -32,7 +34,7 @@ Page {
 
             Image {
                 id: logo
-                source: "/usr/share/icons/hicolor/512x512/apps/" + Qt.application.name + ".png"
+                source: "/usr/share/icons/hicolor/512x512/apps/" + appId + ".png"
                 smooth: true
                 height: parent.width / 2
                 width: parent.width / 2
@@ -100,12 +102,12 @@ Page {
                         wrapMode: Text.WrapAnywhere
                         font.pixelSize: Theme.fontSizeSmall
 
-                        text: "https://github.com/black-sheep-dev/" + Qt.application.name
+                        text: "https://github.com/black-sheep-dev/" + appId
                         color: parent.parent.pressed ? Theme.highlightColor : Theme.primaryColor
 
                     }
                 }
-                onClicked: Qt.openUrlExternally("https://github.com/black-sheep-dev/"  + Qt.application.name)
+                onClicked: Qt.openUrlExternally("https://github.com/black-sheep-dev/"  + appId)
             }
 
             ButtonLayout {
@@ -113,7 +115,7 @@ Page {
 
                 Button {
                     text: qsTr("Give star")
-                    onClicked: sailHubInterface.call("addStar", ["black-sheep-dev", Qt.application.name])
+                    onClicked: sailHubInterface.call("addStar", ["black-sheep-dev", appId])
                 }
             }
 

@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QScopedPointer<QQuickView> v(SailfishApp::createView());
 
+    app->setApplicationName(QStringLiteral("Hafenschau"));
     app->setApplicationVersion(APP_VERSION);
     app->setOrganizationName(QStringLiteral("org.nubecula"));
     app->setOrganizationDomain(QStringLiteral("nubecula.org"));
