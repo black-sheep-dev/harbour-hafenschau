@@ -6,9 +6,7 @@ Image {
 
     id: remoteImage
     width: parent.width
-    height: 9 / 16 * parent.width
-    sourceSize.width: width
-    sourceSize.height: height
+    height: width / sourceSize.width * sourceSize.height
 
     fillMode: Image.PreserveAspectCrop
 

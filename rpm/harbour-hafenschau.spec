@@ -9,7 +9,7 @@ Name:       harbour-hafenschau
 # << macros
 
 Summary:    Hafenschau
-Version:    0.6.0
+Version:    0.6.1
 Release:    1
 Group:      Qt/Qt
 License:    MIT
@@ -25,8 +25,8 @@ BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(Qt5Network)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
-BuildRequires:  pkgconfig(qt5embedwidget) >= 1.14.9
 BuildRequires:  pkgconfig(sailfishsilica)
+BuildRequires:  pkgconfig(qt5embedwidget) >= 1.14.9
 BuildRequires:  pkgconfig(nemonotifications-qt5)
 BuildRequires:  pkgconfig(connman-qt5)
 BuildRequires:  desktop-file-utils

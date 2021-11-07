@@ -33,7 +33,6 @@ BackgroundItem {
 
         RemoteImage {
             visible: item.images.gross16x9.imageurl.length > 0
-
             source: "https://" + item.images.gross16x9.imageurl.substr(28)
         }
 

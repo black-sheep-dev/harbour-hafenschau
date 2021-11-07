@@ -8,5 +8,5 @@ Categories=Network
 [X-Sailjail]
 OrganizationName=org.nubecula
 ApplicationName=Hafenschau
-Permissions=Documents;Internet;Sharing;WebView
+Permissions=Documents;Internet;Sharing;WebView;Audio
 ExecDBus=/usr/bin/harbour-hafenschau -prestart

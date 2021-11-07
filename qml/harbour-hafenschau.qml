@@ -135,11 +135,11 @@ ApplicationWindow
     }
 
     Notification {
-        function show(message, icn) {
+        function show(message) {
             replacesId = 0
             previewSummary = ""
             previewBody = message
-            icon = icn || ""
+            icon = "/usr/share/icons/hicolor/86x86/apps/" + appId + ".png"
             publish()
         }
 
@@ -157,6 +157,7 @@ ApplicationWindow
             summary = news.title
             subText = news.firstSentence
             body = news.firstSentence
+            icon = "/usr/share/icons/hicolor/86x86/apps/" + appId + ".png"
             remoteActions = [{
                 name: "default",
                 service: "harbour.hafenschau.service",
