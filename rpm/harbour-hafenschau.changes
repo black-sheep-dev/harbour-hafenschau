@@ -1,3 +1,7 @@
+* Sat Dec 18 2021 Black Sheep <blacksheep@nubecula.org> 0.6.2-1
+- Code improvements
+- Bugfixes
+
 * Sun Nov 07 2021 Black Sheep <blacksheep@nubecula.org> 0.6.1-1
 - Fixed Sailjail Permissions (Audio was missing)
 - Fixed image sizes
