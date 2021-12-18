@@ -6,12 +6,9 @@ The copyright belongs to tagesschau.de!
 
 >![](icons/128x128/harbour-hafenschau.png)
 
-#### Sailfish OS
-This application is tested with Sailfish OS Versions:
-
-- 3.4.0.24 (Pallas Yllästunturi) (armv7hl)
-- 3.4.0.24 (Pallas Yllästunturi) (i486)
-- 4.0.1.48 (Koli) (armv7hl)
+## Version compatibility
+Starting with Version 0.6.0 the application needs at least SailfishOS 4.2.
+If you use an older version of SailfishOS use app version 0.5.3 instead.
 
 #### Current state of development
 
