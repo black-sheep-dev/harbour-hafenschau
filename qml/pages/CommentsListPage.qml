@@ -34,7 +34,7 @@ Page {
                 detailsLink = data.details
                 detailsWeb = data.detailsWeb
                 closed = data.commentsAllowed
-                refreshComments()
+                if (data.count > 0) refreshComments()
 
             } else if (id === detailsLink) {
                 loading = false
