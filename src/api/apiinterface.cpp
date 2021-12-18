@@ -77,17 +77,13 @@ void ApiInterface::onRequestFinished(QNetworkReply *reply)
     }
 
     // read and unzip data
-    const QByteArray raw = reply->readAll();
-
-    QByteArray data = gunzip(raw);
-    if (data.isEmpty())
-        data = raw;
+    const auto data = gunzip(reply->readAll());
 
     // delete reply
     reply->deleteLater();
 
     // parse data
-    QJsonParseError error;
+    QJsonParseError error{};
 
     const QJsonObject obj = QJsonDocument::fromJson(data, &error).object();
 
@@ -105,7 +101,7 @@ void ApiInterface::onRequestFinished(QNetworkReply *reply)
 QByteArray ApiInterface::gunzip(const QByteArray &data)
 {
     if (data.size() <= 4) {
-        return QByteArray();
+        return data;
     }
 
     QByteArray result;
@@ -124,7 +120,7 @@ QByteArray ApiInterface::gunzip(const QByteArray &data)
 
     ret = inflateInit2(&strm, 15 +  32); // gzip decoding
     if (ret != Z_OK)
-        return QByteArray();
+        return data;
 
     // run inflate()
     do {
@@ -140,7 +136,7 @@ QByteArray ApiInterface::gunzip(const QByteArray &data)
         case Z_DATA_ERROR:
         case Z_MEM_ERROR:
             (void)inflateEnd(&strm);
-            return QByteArray();
+            return data;
         }
 
         result.append(out, CHUNK_SIZE - strm.avail_out);
