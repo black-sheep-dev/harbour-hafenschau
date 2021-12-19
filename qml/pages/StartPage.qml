@@ -20,19 +20,7 @@ Page {
             busy: mainModel.loading
             MenuItem {
                 text: qsTr("Settings")
-                onClicked: pageStack.animatorPush(Qt.resolvedUrl("settings/SettingsPage.qml"))
-            }
-            MenuItem {
-                text: qsTr("Livestream")
-                onClicked: pageStack.animatorPush(Qt.resolvedUrl("VideoPlayerPage.qml"), {
-                                                      title: "Tagesschau 24 (Live)",
-                                                      livestream: "https://tagesschau-lh.akamaihd.net/i/tagesschau_3@66339/master.m3u8"
-                                                  })
-            }
-
-            MenuItem {
-                text: qsTr("All News")
-                onClicked: pageStack.animatorPush(Qt.resolvedUrl("RessortListPage.qml"))
+                onClicked: pageStack.push(Qt.resolvedUrl("settings/SettingsPage.qml"))
             }
             MenuItem {
                 enabled: networkManager.connected
@@ -61,25 +49,28 @@ Page {
             onClicked: {
                 if (model.type === NewsType.WebView) {
                     if (settings.internalWebView) {
-                        pageStack.animatorPush(Qt.resolvedUrl("WebViewPage.qml"), {url: model.detailsWeb })
+                        pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), {url: model.detailsWeb })
                     } else {
                         Qt.openUrlExternally(model.detailsWeb)
                     }
 
                 } else {
-                    pageStack.animatorPush(Qt.resolvedUrl("ReaderPage.qml"), {link: model.details})
+                    pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {link: model.details})
                 }
             }
         }
 
-//        ViewPlaceholder {
-//            enabled: !mainModel.loading && listView.count === 0
-//            text: qsTr("No news available")
-//            hintText: qsTr("Check your internet connection")
-//        }
+        ViewPlaceholder {
+            visible: !mainModel.loading
+            enabled: listView.count === 0
+            text: qsTr("No news available")
+            hintText: qsTr("Check your internet connection")
+        }
 
         VerticalScrollDecorator {}
     }
 
     Component.onCompleted: mainModel.refresh()
+
+    onStatusChanged: if (status === PageStatus.Active) pageStack.pushAttached(Qt.resolvedUrl("RessortListPage.qml"))
 }

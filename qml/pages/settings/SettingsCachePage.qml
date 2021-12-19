@@ -31,12 +31,12 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 borderWidth: 0.1 * width
 
-                progressValue: api.cacheSize() / 50000000
+                progressValue: api.cacheSize() / api.maxCacheSize()
 
                 Label {
                     anchors.centerIn: parent
 
-                    text: Math.round(api.cacheSize() / 1000000) + "/50 MB"
+                    text: Math.round(api.cacheSize() / 1000000) + "/" + Math.round(api.maxCacheSize() / 1000000) + " MB"
                 }
             }
 

@@ -11,23 +11,30 @@
 
 #include <zlib.h>
 
-ApiInterface::ApiInterface(QObject *parent) :
-    QObject(parent)
+ApiInterface::ApiInterface(QNetworkAccessManager *manager, QObject *parent) :
+    QObject(parent),
+    m_manager(manager)
 {
-    m_cache->setCacheDirectory(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + QStringLiteral("/api"));
-    m_manager->setCache(m_cache);
+    m_manager->setParent(this);
+//    m_cache->setCacheDirectory(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + QStringLiteral("/api"));
+//    m_manager->setCache(m_cache);
 
     connect(m_manager, &QNetworkAccessManager::finished, this, &ApiInterface::onRequestFinished);
 }
 
-quint64 ApiInterface::cacheSize()
+qint64 ApiInterface::cacheSize() const
 {
-    return m_cache->cacheSize();
+    return m_manager->cache()->cacheSize();
 }
 
-void ApiInterface::clearCache()
+void ApiInterface::clearCache() const
 {
-    m_cache->clear();
+    m_manager->cache()->clear();
+}
+
+qint64 ApiInterface::maxCacheSize() const
+{
+    return qobject_cast<QNetworkDiskCache *>(m_manager->cache())->maximumCacheSize();
 }
 
 void ApiInterface::request(const QString &query, const QString &id, bool cached)
@@ -41,10 +48,11 @@ void ApiInterface::request(const QString &query, const QString &id, bool cached)
 
     QNetworkRequest request(query);
 
-    if (cached)
-        request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferNetwork);
-    else
+    if (cached) {
+        request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
+    } else {
         request.setRawHeader("Cache-Control", "no-cache");
+    }
 
     request.setRawHeader("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:80.0) Gecko/20100101 Firefox/80.0");
     request.setRawHeader("Accept", "application/json");

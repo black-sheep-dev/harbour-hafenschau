@@ -42,5 +42,5 @@ BackgroundItem {
         }
     }
 
-    onClicked: pageStack.animatorPush(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {streams: item.streams, title: item.title})
+    onClicked: pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {streams: item.streams, title: item.title})
 }

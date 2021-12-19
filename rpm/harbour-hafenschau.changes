@@ -1,3 +1,9 @@
+* Sun Dec 19 2021 Black Sheep <blacksheep@nubecula.org> 0.7.0-1
+- Main pages "actual news" / "all news" / "livestreams" relocated. Swipe left right in main view.
+- More livestreams added
+- Improved caching
+- UI / Code fixes
+
 * Sat Dec 18 2021 Black Sheep <blacksheep@nubecula.org> 0.6.2-1
 - Code improvements
 - Bugfixes

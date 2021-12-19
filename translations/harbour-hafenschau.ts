@@ -27,10 +27,6 @@
         <source>Sources</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Give star</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>CommentsListPage</name>
@@ -515,10 +511,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>All News</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
@@ -527,7 +519,34 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Livestream</source>
+        <source>No news available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check your internet connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>StreamsListPage</name>
+    <message>
+        <source>Livestreams</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Livestream of events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Broadcasting of information and news programmes, reports, documentaries and talk programmes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Live TV stream</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Livestream of parliamentary sessions</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

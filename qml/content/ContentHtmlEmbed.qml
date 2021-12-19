@@ -33,7 +33,7 @@ BackgroundItem {
 
     onClicked: {
         if (settings.internalWebView) {
-            pageStack.animatorPush(Qt.resolvedUrl("../pages/WebViewPage.qml"), {url: item.url })
+            pageStack.push(Qt.resolvedUrl("../pages/WebViewPage.qml"), {url: item.url })
         } else {
             Qt.openUrlExternally(item.url)
         }

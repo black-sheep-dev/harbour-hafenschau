@@ -39,7 +39,7 @@ ApplicationWindow
         }
     }
 
-    ApiInterface { id: api }
+    //ApiInterface { id: api }
 
     DataWriter { id: dataWriter }
 
@@ -229,7 +229,7 @@ ApplicationWindow
 
         function open(news) {
             __silica_applicationwindow_instance.activate()
-            pageStack.animatorPush(Qt.resolvedUrl("pages/ReaderPage.qml"), {
+            pageStack.push(Qt.resolvedUrl("pages/ReaderPage.qml"), {
                                 link: news
                            })
         }

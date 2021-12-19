@@ -12,10 +12,11 @@ class ApiInterface : public QObject
 {
     Q_OBJECT
 public:
-    explicit ApiInterface(QObject *parent = nullptr);
+    explicit ApiInterface(QNetworkAccessManager *manager, QObject *parent = nullptr);
 
-    Q_INVOKABLE quint64 cacheSize();
-    Q_INVOKABLE void clearCache();
+    Q_INVOKABLE qint64 cacheSize() const;
+    Q_INVOKABLE void clearCache() const;
+    Q_INVOKABLE qint64 maxCacheSize() const;
 
 signals:
     void requestFinished(const QString &id, const QJsonObject &data);
@@ -31,8 +32,8 @@ private slots:
 private:
     QByteArray gunzip(const QByteArray &data);
 
-    QNetworkDiskCache *m_cache{new QNetworkDiskCache(this)};
-    QNetworkAccessManager *m_manager{new QNetworkAccessManager(this)};
+    //QNetworkDiskCache *m_cache{new QNetworkDiskCache(this)};
+    QNetworkAccessManager *m_manager{nullptr};
 };
 
 #endif // APIINTERFACE_H

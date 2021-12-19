@@ -128,7 +128,7 @@ Page {
 
             onClicked: {
                 if (model.ressort)
-                pageStack.animatorPush(Qt.resolvedUrl(page), {
+                pageStack.push(Qt.resolvedUrl(page), {
                                                  ressort: model.ressort,
                                                  ressortTitle: model.title
                                             })
@@ -137,6 +137,8 @@ Page {
 
         VerticalScrollDecorator {}
     }
+
+    onStatusChanged: if (status === PageStatus.Active) pageStack.pushAttached(Qt.resolvedUrl("StreamsListPage.qml"))
 }
 
 

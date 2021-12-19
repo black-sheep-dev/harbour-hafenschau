@@ -27,10 +27,6 @@
         <source>Sources</source>
         <translation>Quellen</translation>
     </message>
-    <message>
-        <source>Give star</source>
-        <translation>Stern geben</translation>
-    </message>
 </context>
 <context>
     <name>CommentsListPage</name>
@@ -515,10 +511,6 @@
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <source>All News</source>
-        <translation>Alle Nachrichten</translation>
-    </message>
-    <message>
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -527,8 +519,35 @@
         <translation>Aktuelle Nachrichten</translation>
     </message>
     <message>
-        <source>Livestream</source>
-        <translation>Livestream</translation>
+        <source>No news available</source>
+        <translation>Keine Nachrichten verfügbar</translation>
+    </message>
+    <message>
+        <source>Check your internet connection</source>
+        <translation>Überprüfe deine Internetverbindung</translation>
+    </message>
+</context>
+<context>
+    <name>StreamsListPage</name>
+    <message>
+        <source>Livestreams</source>
+        <translation>Livestreams</translation>
+    </message>
+    <message>
+        <source>Livestream of events</source>
+        <translation>Liveübertragungen von Ereignissen</translation>
+    </message>
+    <message>
+        <source>Broadcasting of information and news programmes, reports, documentaries and talk programmes</source>
+        <translation>Ausstrahlung von Informations- und Nachrichtensendungen, Reportagen, Dokumentationen und Gesprächssendungen</translation>
+    </message>
+    <message>
+        <source>Live TV stream</source>
+        <translation>TV Live-Übertragung</translation>
+    </message>
+    <message>
+        <source>Livestream of parliamentary sessions</source>
+        <translation>Live Übertragungen von Parlamentssitzungen</translation>
     </message>
 </context>
 <context>

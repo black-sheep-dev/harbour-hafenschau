@@ -124,11 +124,11 @@ Page {
 
                 onClicked: {
                     if (model.type === NewsType.WebView) {
-                        pageStack.animatorPush(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: model.detailsWeb })
+                        pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: model.detailsWeb })
                     } else if (model.type === NewsType.Video) {
-                        pageStack.animatorPush(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {streams: model.streams})
+                        pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {streams: model.streams})
                     } else {
-                        pageStack.animatorPush(Qt.resolvedUrl("ReaderPage.qml"), {link: model.details})
+                        pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {link: model.details})
                     }
                 }
             }

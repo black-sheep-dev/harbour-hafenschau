@@ -4,6 +4,7 @@
 #include <sailfishapp.h>
 
 #include "api/apiinterface.h"
+#include "api/networkaccessmanagerfactory.h"
 #include "comments/commentsmodel.h"
 #include "comments/commentssortfiltermodel.h"
 #include "enums/enums.h"
@@ -21,11 +22,17 @@ int main(int argc, char *argv[])
     // Set up QML engine.
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QScopedPointer<QQuickView> v(SailfishApp::createView());
+    QQmlContext *context = v.data()->rootContext();
 
+    NetworkAccessManagerFactory factory;
+    v->engine()->setNetworkAccessManagerFactory(&factory);
+
+    // set app data
     app->setApplicationName(QStringLiteral("Hafenschau"));
     app->setApplicationVersion(APP_VERSION);
     app->setOrganizationName(QStringLiteral("org.nubecula"));
     app->setOrganizationDomain(QStringLiteral("nubecula.org"));
+
 
 #ifndef QT_DEBUG
     auto uri = "org.nubecula.harbour.hafenschau";
@@ -39,8 +46,13 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<Ressort>(uri, 1, 0, "Ressort", "");
     qmlRegisterUncreatableType<VideoQuality>(uri, 1, 0, "VideoQuality", "");
 
+    // register uncreatable types
+    auto api = new ApiInterface(factory.create(nullptr));
+    context->setContextProperty("api", api);
+    qmlRegisterUncreatableType<ApiInterface>(uri, 1, 0, "ApiInterface", "");
+
     // register types
-    qmlRegisterType<ApiInterface>(uri, 1, 0, "ApiInterface");
+
     qmlRegisterType<CommentsModel>(uri, 1, 0, "CommentsModel");
     qmlRegisterType<CommentsSortFilterModel>(uri, 1, 0, "CommentsSortFilterModel"); 
     qmlRegisterType<DataWriter>(uri, 1, 0, "DataWriter");

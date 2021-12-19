@@ -42,5 +42,5 @@ BackgroundItem {
         }
     }
 
-    onClicked: pageStack.animatorPush(Qt.resolvedUrl("../pages/GalleryPage.qml"), {items: item})
+    onClicked: pageStack.push(Qt.resolvedUrl("../pages/GalleryPage.qml"), {items: item})
 }

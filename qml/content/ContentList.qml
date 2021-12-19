@@ -12,7 +12,7 @@ BackgroundItem {
         const l = link.match(/(?:ht|f)tps?:\/\/[-a-zA-Z0-9.]+\.[a-zA-Z]{2,3}(\/[^"<]*)?/g)[0]
 
         if (l.substr(0, 31) === "https://www.tagesschau.de/api2/")
-            pageStack.animatorPush(Qt.resolvedUrl("../pages/ReaderPage.qml"), {link: l})
+            pageStack.push(Qt.resolvedUrl("../pages/ReaderPage.qml"), {link: l})
         else
             Qt.openUrlExternally(l)
     }

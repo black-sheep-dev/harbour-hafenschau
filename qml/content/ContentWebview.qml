@@ -20,7 +20,7 @@ Item {
 
         onLinkActivated: {
             if (link.substr(0, 31) === "https://www.tagesschau.de/api2/")
-                pageStack.animatorPush(Qt.resolvedUrl("../pages/ReaderPage.qml"), {link: link})
+                pageStack.push(Qt.resolvedUrl("../pages/ReaderPage.qml"), {link: link})
             else
                 Qt.openUrlExternally(link)
         }
