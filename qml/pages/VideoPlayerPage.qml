@@ -16,7 +16,7 @@ Page {
 
     allowedOrientations: Orientation.All
 
-    DisplayBlanking { preventBlanking: true }
+    DisplayBlanking { id: keepAlive }
 
     SilicaFlickable {
         anchors.fill: parent
@@ -160,4 +160,6 @@ Page {
         target: videoPlayer
         onPositionChanged: progressSlider.value = videoPlayer.position
     }
+
+    onStatusChanged: keepAlive.preventBlanking = (status === PageStatus.Active)
 }
