@@ -10,7 +10,7 @@
 #   - translation filenames have to be changed
 
 # VERSION
-VERSION = 0.7.0-1
+VERSION = 0.7.1-1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # The name of your application
@@ -115,10 +115,10 @@ HEADERS += \
 RESOURCES += \
     ressources.qrc
 
-dbus.files = data/harbour.hafenschau.service
-dbus.path = $$INSTALL_ROOT/usr/share/dbus-1/services
+#dbus.files = data/harbour.hafenschau.service
+#dbus.path = $$INSTALL_ROOT/usr/share/dbus-1/services
 
 images.files = images/*.png
 images.path = $$INSTALL_ROOT/usr/share/harbour-hafenschau/images
 
-INSTALLS += dbus images
+INSTALLS += images

@@ -25,7 +25,7 @@ BackgroundItem {
             RemoteImage {
                 id: headerImage
 
-                source: item.teaserImage.videowebl.imageurl
+                source: item.teaserImage === undefined ? "/usr/share/harbour-hafenschau/images/audiograph.png" : item.teaserImage.videowebl.imageurl
                 placeholderUrl: "/usr/share/harbour-hafenschau/images/audiograph.png"
 
                 Image {
