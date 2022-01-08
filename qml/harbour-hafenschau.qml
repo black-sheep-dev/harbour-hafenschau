@@ -160,9 +160,9 @@ ApplicationWindow
             icon = "/usr/share/icons/hicolor/86x86/apps/" + appId + ".png"
             remoteActions = [{
                 name: "default",
-                service: "harbour.hafenschau.service",
-                path: "/harbour/hafenschau/service",
-                iface: "harbour.hafenschau.service",
+                service: "org.nubecula.hafenschau",
+                path: "/",
+                iface: "org.nubecula.hafenschau",
                 method: "open",
                 arguments: [news.details]
             }]
@@ -204,34 +204,39 @@ ApplicationWindow
         }
     }
 
-    NetworkManager {
-        id: networkManager
-    }
-
     initialPage: Component { StartPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: defaultAllowedOrientations
 
     Component.onCompleted: refreshActiveRegions()
 
-    DBusAdaptor {
-        id: dbusAdaptor
-        service: "harbour.hafenschau.service"
-        iface: "harbour.hafenschau.service"
-        path: "/harbour/hafenschau/service"
-        xml: '\
-              <interface name="harbour.hafenschau.service">
-                <method name="open">
-                    <arg name="news" type="s" direction="in">
-                    </arg>
-                </method>
-              </interface>'
+//    DBusAdaptor {
+//        id: dbusAdaptor
+//        service: "org.nubecula.hafenschau"
+//        iface: "org.nubecula.hafenschau"
+//        path: "/"
+//        xml: '\
+//              <interface name="org.nubecula.hafenschau">
+//                <method name="open">
+//                    <arg name="news" type="s" direction="in">
+//                    </arg>
+//                </method>
+//                <method name="openUrl">
+//                    <arg name="arguments" type="as" direction="in">
+//                    </arg>
+//                </method>
+//              </interface>'
 
-        function open(news) {
-            __silica_applicationwindow_instance.activate()
-            pageStack.push(Qt.resolvedUrl("pages/ReaderPage.qml"), {
-                                link: news
-                           })
-        }
-    }
+//        function open(news) {
+//            __silica_applicationwindow_instance.activate()
+//            pageStack.push(Qt.resolvedUrl("pages/ReaderPage.qml"), {
+//                                link: news
+//                           })
+//        }
+
+//        function openUrl(arguments) {
+//            __silica_applicationwindow_instance.activate()
+//            console.log(arguments)
+//        }
+//    }
 }

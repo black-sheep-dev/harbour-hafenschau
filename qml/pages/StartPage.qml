@@ -23,7 +23,6 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("settings/SettingsPage.qml"))
             }
             MenuItem {
-                enabled: networkManager.connected
                 text: qsTr("Refresh")
                 onClicked: mainModel.checkForUpdate()
             }

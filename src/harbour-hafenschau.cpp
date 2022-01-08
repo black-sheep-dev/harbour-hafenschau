@@ -28,10 +28,10 @@ int main(int argc, char *argv[])
     v->engine()->setNetworkAccessManagerFactory(&factory);
 
     // set app data
-    app->setApplicationName(QStringLiteral("Hafenschau"));
+    app->setApplicationName(QStringLiteral("hafenschau"));
     app->setApplicationVersion(APP_VERSION);
     app->setOrganizationName(QStringLiteral("org.nubecula"));
-    app->setOrganizationDomain(QStringLiteral("nubecula.org"));
+    app->setOrganizationDomain(QStringLiteral("org.nubecula"));
 
 
 #ifndef QT_DEBUG
@@ -52,7 +52,6 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<ApiInterface>(uri, 1, 0, "ApiInterface", "");
 
     // register types
-
     qmlRegisterType<CommentsModel>(uri, 1, 0, "CommentsModel");
     qmlRegisterType<CommentsSortFilterModel>(uri, 1, 0, "CommentsSortFilterModel"); 
     qmlRegisterType<DataWriter>(uri, 1, 0, "DataWriter");

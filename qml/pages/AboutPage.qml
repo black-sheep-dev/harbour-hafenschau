@@ -9,15 +9,15 @@ Page {
 
     allowedOrientations: Orientation.All
 
-//    DBusInterface {
-//        id: sailHubInterface
+    DBusInterface {
+        id: sailHubInterface
 
-//        service: "harbour.sailhub.service"
-//        iface: "harbour.sailhub.service"
-//        path: "/harbour/sailhub/service"
+        service: "org.nubecula.sailhub"
+        iface: "org.nubecula.sailhub"
+        path: "/"
 
-//        onStatusChanged: console.log("DBUS :" + status)
-//    }
+        onStatusChanged: console.log("DBUS :" + status)
+    }
 
     SilicaFlickable {
         anchors.fill: parent
@@ -110,14 +110,14 @@ Page {
                 onClicked: Qt.openUrlExternally("https://github.com/black-sheep-dev/"  + appId)
             }
 
-//            ButtonLayout {
-//                width: parent.width
+            ButtonLayout {
+                width: parent.width
 
-//                Button {
-//                    text: qsTr("Give star")
-//                    onClicked: sailHubInterface.call("addStar", ["black-sheep-dev", appId])
-//                }
-//            }
+                Button {
+                    text: qsTr("Give star")
+                    onClicked: sailHubInterface.call("addStar", ["black-sheep-dev", appId])
+                }
+            }
 
             Item {
                 width: 1

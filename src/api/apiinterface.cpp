@@ -16,8 +16,6 @@ ApiInterface::ApiInterface(QNetworkAccessManager *manager, QObject *parent) :
     m_manager(manager)
 {
     m_manager->setParent(this);
-//    m_cache->setCacheDirectory(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + QStringLiteral("/api"));
-//    m_manager->setCache(m_cache);
 
     connect(m_manager, &QNetworkAccessManager::finished, this, &ApiInterface::onRequestFinished);
 }

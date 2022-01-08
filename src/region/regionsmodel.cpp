@@ -21,7 +21,7 @@ RegionsModel::RegionsModel(QObject *parent) :
             << QStringLiteral("Thüringen");
 }
 
-QList<int> RegionsModel::activeRegions() const
+const QList<int> &RegionsModel::activeRegions() const
 {
     return m_activeRegions;
 }

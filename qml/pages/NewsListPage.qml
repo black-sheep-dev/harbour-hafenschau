@@ -79,7 +79,6 @@ Page {
             busy: newsModel.loading
 
             MenuItem {
-                enabled: networkManager.connected
                 text: qsTr("Refresh")
                 onClicked: refresh()
             }

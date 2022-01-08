@@ -18,7 +18,7 @@ public:
 
     explicit RegionsModel(QObject *parent = nullptr);
 
-    QList<int> activeRegions() const;
+    const QList<int> &activeRegions() const;
     Q_INVOKABLE void resetRegions();
     void setActiveRegions(const QList<int> &regions);
 

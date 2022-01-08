@@ -32,7 +32,6 @@ private slots:
 private:
     QByteArray gunzip(const QByteArray &data);
 
-    //QNetworkDiskCache *m_cache{new QNetworkDiskCache(this)};
     QNetworkAccessManager *m_manager{nullptr};
 };
 

@@ -1,6 +1,6 @@
 Name: harbour-hafenschau
 Summary: Hafenschau
-Version: 0.7.1
+Version: 0.7.2
 Release: 1
 # The contents of the Group field should be one of the groups listed here:
 # https://github.com/mer-tools/spectacle/blob/master/data/GROUPS
@@ -13,6 +13,7 @@ Sources:
 - '%{name}-%{version}.tar.bz2'
 Description: |
   Hafenschau is a native content viewer for german news portal www.tagesschau.de
+
 Builder: qmake5
 
 # This section specifies build dependencies that are resolved using pkgconfig.
@@ -26,16 +27,15 @@ PkgConfigBR:
   - Qt5Quick
   - nemonotifications-qt5
   - qt5embedwidget >= 1.14.9
-  - connman-qt5
+  - keepalive
 
 # Build dependencies without a pkgconfig setup can be listed here
-#PkgBR:
+PkgBR:
+  - qt5-qttools-linguist
 
 # Runtime dependencies which are not automatically detected
 Requires:
   - sailfishsilica-qt5 >= 0.10.9
-  - libkeepalive >= 1.7.0
-  - connman-qt5-declarative
 
 # All installed files
 Files:
@@ -43,7 +43,6 @@ Files:
   - '%{_datadir}/%{name}'
   - '%{_datadir}/applications/%{name}.desktop'
   - '%{_datadir}/icons/hicolor/*/apps/%{name}.png'
-#  - '%{_datadir}/dbus-1/services/harbour.hafenschau.service'
 
 # For more information about yaml and what's supported in Sailfish OS
 # build system, please see https://wiki.merproject.org/wiki/Spectacle

@@ -56,7 +56,6 @@ Page {
                 onClicked: Qt.openUrlExternally(detailsWeb)
             }
             MenuItem {
-                enabled: networkManager.connected
                 text: qsTr("Refresh")
                 onClicked: refreshComments()
             }

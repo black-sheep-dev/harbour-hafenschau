@@ -46,7 +46,6 @@ Page {
             }
 
             MenuItem {
-                enabled: networkManager.connected
                 text: qsTr("Refresh")
                 onClicked: checkForUpdate()
             }

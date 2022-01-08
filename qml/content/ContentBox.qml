@@ -58,6 +58,8 @@ BackgroundItem {
             wrapMode: Text.WordWrap
             linkColor: Theme.highlightColor
 
+            textFormat: Text.RichText
+
             text: item.text
         }
 

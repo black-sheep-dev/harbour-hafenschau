@@ -10,7 +10,7 @@
 #   - translation filenames have to be changed
 
 # VERSION
-VERSION = 0.7.1-1
+VERSION = 0.7.2-1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # The name of your application
@@ -23,9 +23,9 @@ CONFIG += link_pkgconfig sailfishapp
 PKGCONFIG += \
     qt5embedwidget \
     nemonotifications-qt5 \
-    connman-qt5
+    qt5embedwidget \
+    keepalive
 
-LIBS += -L../../lib -lkeepalive
 LIBS += -lz
 
 SOURCES += src/harbour-hafenschau.cpp \
@@ -114,9 +114,6 @@ HEADERS += \
 
 RESOURCES += \
     ressources.qrc
-
-#dbus.files = data/harbour.hafenschau.service
-#dbus.path = $$INSTALL_ROOT/usr/share/dbus-1/services
 
 images.files = images/*.png
 images.path = $$INSTALL_ROOT/usr/share/harbour-hafenschau/images
