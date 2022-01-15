@@ -6,6 +6,8 @@ The copyright belongs to tagesschau.de!
 
 >![](icons/128x128/harbour-hafenschau.png)
 
+[![](https://github.com/black-sheep-dev/harbour-hafenschau/actions/workflows/main.yml/badge.svg)](https://github.com/black-sheep-dev/harbour-hafenschau/actions/workflows/main.yml)
+
 ## Version compatibility
 Starting with Version 0.6.0 the application needs at least SailfishOS 4.2.
 If you use an older version of SailfishOS use app version 0.5.3 instead.
