@@ -9,14 +9,43 @@ BackgroundItem {
     width: parent.width
     height: columnBox.height
 
+    Timer {
+        id: switchTimer
+        running: item.length > 1
+        repeat: true
+        interval: 5000
+
+        onTriggered: {
+            if (slideShow.currentIndex < item.length)
+                slideShow.incrementCurrentIndex()
+            else
+                slideShow.currentIndex = 0
+        }
+    }
+
     Column {
         id: columnBox
         x: Theme.horizontalPageMargin
         width: parent.width - 2*x
         spacing: Theme.paddingMedium
 
-        RemoteImage {
-            source: item[0].videowebl.imageurl
+        SlideshowView {
+            id: slideShow
+            width: parent.width
+            height: parent.width * 9 / 16
+
+            itemHeight: parent.width * 9 / 16
+            itemWidth: parent.width
+
+            clip: true
+
+            model: item
+
+            delegate: RemoteImage {
+                source: modelData.videowebl.imageurl
+            }
+
+            onDragStarted: switchTimer.stop()
         }
 
         Label {
@@ -26,14 +55,25 @@ BackgroundItem {
             wrapMode: Text.WordWrap
             color: Theme.highlightColor
 
-            text: item[0].title
+            text: item[slideShow.currentIndex].title
         }
 
-        Label {
+        Row {
+            visible: item.length > 1
             width: parent.width
-            font.pixelSize: Theme.fontSizeSmall
-            text: qsTr("Gallery with %n pictures", "", item.length)
+            spacing: Theme.paddingLarge
+
+            Label {
+                font.pixelSize: Theme.fontSizeSmall
+                text: qsTr("Gallery with %n pictures", "", item.length)
+            }
+
+            Label {
+               font.pixelSize: Theme.fontSizeSmall
+               text: (slideShow.currentIndex + 1) + " / " + item.length
+            }
         }
+
 
         Separator {
             id: separatorBottom

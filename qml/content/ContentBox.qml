@@ -27,7 +27,7 @@ BackgroundItem {
         }
 
         Label {
-            visible: item.hasOwnProperty("subtitle")
+            visible: item.hasOwnProperty("subtitle") && item.subtitle.length > 0
 
             width: parent.width
 
@@ -38,7 +38,7 @@ BackgroundItem {
         }
 
         Label {
-            visible: item.hasOwnProperty("title")
+            visible: item.hasOwnProperty("title") && item.title.length > 0
 
             width: parent.width
 
@@ -50,7 +50,7 @@ BackgroundItem {
         }
 
         Label {
-            visible: item.hasOwnProperty("text")
+            visible: item.hasOwnProperty("text") && item.text.length > 0
 
             width: parent.width
 

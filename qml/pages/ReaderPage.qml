@@ -39,7 +39,7 @@ Page {
     SilicaFlickable {
         PullDownMenu {
             MenuItem {
-                visible: settings.developerSaveNews
+                visible: settings.developerOptions & DeveloperOption.SaveNews
 
                 text: qsTr("Save news data")
                 onClicked: dataWriter.saveNews(news)
