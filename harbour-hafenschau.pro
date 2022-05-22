@@ -17,7 +17,7 @@ DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 TARGET = harbour-hafenschau
 DEFINES += APP_TARGET=\\\"$$TARGET\\\"
 
-QT += multimedia dbus
+QT += dbus
 
 CONFIG += link_pkgconfig sailfishapp
 PKGCONFIG += \
