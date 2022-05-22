@@ -32,6 +32,21 @@ BuildRequires:  desktop-file-utils
 %description
 Hafenschau is a native content viewer for german news portal www.tagesschau.de
 
+%if "%{?vendor}" == "chum"
+PackageName: Hafenschau
+Type: desktop-application
+Categories:
+    - Utility
+Custom:
+    DescriptionMD: https://github.com/black-sheep-dev/harbour-hafenschau/raw/master/README.md
+    Repo: https://github.com/black-sheep-dev/harbour-hafenschau/
+Icon: https://raw.githubusercontent.com/black-sheep-dev/harbour-hafenschau/master/icons/172x172/harbour-hafenschau.png
+Screenshots:
+    - https://github.com/black-sheep-dev/harbour-hafenschau/raw/master/metadata/screenshot1.png
+Url:
+    Donation: https://www.paypal.com/paypalme/nubecula/1
+%endif
+
 
 %prep
 %setup -q -n %{name}-%{version}
