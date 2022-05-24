@@ -21,12 +21,12 @@ With this option you are able to save the news item data for debugging purpose. 
 
 #### Features
 
--     News Reader
--     Audio Player
--     Video Player
--     Integrated Web View (crashes on i486)
--     Search for news content
--     Show comments for content
+- News Reader
+- Audio Player
+- Video Player
+- Integrated Web View (crashes on i486)
+- Search for news content
+- Show comments for content
 
 #### Intention of this project
 
