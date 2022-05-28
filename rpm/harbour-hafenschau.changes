@@ -1,3 +1,8 @@
+* Sat May 28 2022 Black Sheep <blacksheep@nubecula.org> 0.7.4-1
+- Add option to open actual news instead of news list when pressing the cover
+- UI improvements
+- Cleanup
+
 * Sun May 22 2022 Black Sheep <blacksheep@nubecula.org> 0.7.3-1
 - Fixed developer option store data could not be disabled
 - Fixed gallery plugin
