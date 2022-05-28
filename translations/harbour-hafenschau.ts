@@ -329,15 +329,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Turns on automatich switch of cover pages in a defined interval.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Update interval for cover page switch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Update interval (msec)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show news directly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open news instead of news list when pressing cover.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turns on automatic switch of cover pages in a defined interval.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

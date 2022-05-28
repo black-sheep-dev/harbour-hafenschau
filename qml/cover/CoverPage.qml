@@ -4,21 +4,20 @@ import Sailfish.Silica 1.0
 import org.nubecula.harbour.hafenschau 1.0
 
 import "../components/"
+import "../."
 
 CoverBackground {
-    property int currentIndex: 0
-
     function increment() {
-        if (currentIndex === (mainModel.count - 1)) {
-            currentIndex = 0
+        if (currentCoverIndex === (mainModel.count - 1)) {
+            currentCoverIndex = 0
         } else {
-            currentIndex++
+            currentCoverIndex++
         }
     }
 
     Connections {
         target: mainModel
-        onCountChanged: currentIndex = 0
+        onCountChanged: currentCoverIndex = 0
     }
 
     id: coverBackground
@@ -33,11 +32,11 @@ CoverBackground {
     }
 
     Row {
-        x: currentIndex * parent.width * -1
+        x: currentCoverIndex * parent.width * -1
         height: parent.height
 
         Behavior on x {
-            NumberAnimation { duration: currentIndex === (mainModel.count - 1) ? 0 : 250 }
+            NumberAnimation { duration: currentCoverIndex === (mainModel.count - 1) ? 0 : 250 }
         }
 
         Repeater {
@@ -91,11 +90,6 @@ CoverBackground {
 
     CoverActionList {
         id: coverAction
-
-        CoverAction {
-            iconSource: "image://theme/icon-cover-search"
-            onTriggered: dbusAdaptor.open(mainModel.newsDetails(currentIndex))
-        }
 
         CoverAction {
             iconSource: "image://theme/icon-cover-refresh"

@@ -60,6 +60,10 @@ ListItem {
 
                 font.pixelSize: Theme.fontSizeExtraSmall
             }
+            Item {
+                width: 1
+                height: Theme.paddingSmall
+            }
         }
     }
 

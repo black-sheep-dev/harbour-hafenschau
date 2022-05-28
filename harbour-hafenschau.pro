@@ -23,7 +23,6 @@ CONFIG += link_pkgconfig sailfishapp
 PKGCONFIG += \
     qt5embedwidget \
     nemonotifications-qt5 \
-    qt5embedwidget \
     keepalive
 
 LIBS += -lz

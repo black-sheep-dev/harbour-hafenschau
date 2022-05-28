@@ -29,7 +29,7 @@
     </message>
     <message>
         <source>Give star</source>
-        <translation type="unfinished"></translation>
+        <translation>Stern geben</translation>
     </message>
 </context>
 <context>
@@ -329,16 +329,24 @@
         <translation>Cover wechseln</translation>
     </message>
     <message>
-        <source>Turns on automatich switch of cover pages in a defined interval.</source>
-        <translation>Aktiviert automatisches Wechseln der Cover Seiten in einem festgelegten Intervall.</translation>
-    </message>
-    <message>
         <source>Update interval for cover page switch</source>
         <translation>Update Intervall für Cover Seiten Wechsel</translation>
     </message>
     <message>
         <source>Update interval (msec)</source>
         <translation>Update Intervall (msec)</translation>
+    </message>
+    <message>
+        <source>Show news directly</source>
+        <translation>Nachrichten direkt anzeigen</translation>
+    </message>
+    <message>
+        <source>Open news instead of news list when pressing cover.</source>
+        <translation>Öffne die aktuelle Nachricht und nicht die Übersicht wenn das Cover gedrückt wird.</translation>
+    </message>
+    <message>
+        <source>Turns on automatic switch of cover pages in a defined interval.</source>
+        <translation>Schaltet den automatischen Wechsel der Coverseiten in einem Intervall ein.</translation>
     </message>
 </context>
 <context>

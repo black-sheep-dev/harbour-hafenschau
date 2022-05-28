@@ -117,7 +117,7 @@ Page {
             anchors.top: headerImage.bottom
             x: Theme.horizontalPageMargin
             width: parent.width - 2*x
-            spacing: Theme.paddingSmall
+            spacing: Theme.paddingLarge
 
             Item {
                 height: Theme.paddingSmall
@@ -191,7 +191,7 @@ Page {
             anchors.top: columnHeader.bottom
             width: parent.width
 
-            spacing: Theme.paddingMedium
+            spacing: Theme.paddingLarge
         }
 
         Item {

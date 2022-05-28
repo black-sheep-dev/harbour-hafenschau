@@ -22,11 +22,22 @@ Page {
             }
 
             TextSwitch {
+                id: coverShowSwitch
+                x: Theme.horizontalPageMargin
+                width: page.width - 2*x
+                text: qsTr("Show news directly")
+                description: qsTr("Open news instead of news list when pressing cover.")
+
+                onCheckedChanged: settings.coverShowNews = checked
+                Component.onCompleted: checked = settings.coverShowNews
+            }
+
+            TextSwitch {
                 id: coverSwitch
                 x: Theme.horizontalPageMargin
                 width: page.width - 2*x
                 text: qsTr("Switch Cover")
-                description: qsTr("Turns on automatich switch of cover pages in a defined interval.")
+                description: qsTr("Turns on automatic switch of cover pages in a defined interval.")
 
                 onCheckedChanged: settings.coverSwitch = checked
                 Component.onCompleted: checked = settings.coverSwitch

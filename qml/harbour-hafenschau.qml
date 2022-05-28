@@ -16,6 +16,8 @@ ApplicationWindow
 {
     id: root
 
+    property int currentCoverIndex: 0
+
     function refreshActiveRegions() {
         if (settings.regions.length === 0) return
         var regions = settings.regions.split(',')
@@ -182,6 +184,7 @@ ApplicationWindow
 
         property int autoRefresh: 0
         property int commentsSortOrder: Qt.AscendingOrder
+        property bool coverShowNews: true
         property bool coverSwitch: true
         property int coverSwitchInterval: 10000
         property int developerOptions: 0
@@ -210,33 +213,11 @@ ApplicationWindow
 
     Component.onCompleted: refreshActiveRegions()
 
-//    DBusAdaptor {
-//        id: dbusAdaptor
-//        service: "org.nubecula.hafenschau"
-//        iface: "org.nubecula.hafenschau"
-//        path: "/"
-//        xml: '\
-//              <interface name="org.nubecula.hafenschau">
-//                <method name="open">
-//                    <arg name="news" type="s" direction="in">
-//                    </arg>
-//                </method>
-//                <method name="openUrl">
-//                    <arg name="arguments" type="as" direction="in">
-//                    </arg>
-//                </method>
-//              </interface>'
+    onVisibleChanged: {
+        if (!visible || !settings.coverShowNews) return
 
-//        function open(news) {
-//            __silica_applicationwindow_instance.activate()
-//            pageStack.push(Qt.resolvedUrl("pages/ReaderPage.qml"), {
-//                                link: news
-//                           })
-//        }
-
-//        function openUrl(arguments) {
-//            __silica_applicationwindow_instance.activate()
-//            console.log(arguments)
-//        }
-//    }
+        pageStack.push(Qt.resolvedUrl("pages/ReaderPage.qml"), {
+                           link: mainModel.newsDetails(currentCoverIndex)
+                       })
+    }
 }
