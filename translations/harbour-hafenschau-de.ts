@@ -27,10 +27,6 @@
         <source>Sources</source>
         <translation>Quellen</translation>
     </message>
-    <message>
-        <source>Give star</source>
-        <translation>Stern geben</translation>
-    </message>
 </context>
 <context>
     <name>CommentsListPage</name>
