@@ -6,6 +6,8 @@ The copyright belongs to tagesschau.de!
 
 >![](icons/128x128/harbour-hafenschau.png)
 
+![](https://www.codefactor.io/repository/github/black-sheep-dev/harbour-hafenschau/badge?style=plastic)
+
 [![](https://github.com/black-sheep-dev/harbour-hafenschau/actions/workflows/main.yml/badge.svg)](https://github.com/black-sheep-dev/harbour-hafenschau/actions/workflows/main.yml)
 
 ## Version compatibility
