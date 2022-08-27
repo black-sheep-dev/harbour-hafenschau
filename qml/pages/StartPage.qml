@@ -57,6 +57,14 @@ Page {
                     pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {link: model.details})
                 }
             }
+
+            menu: ContextMenu {
+                enabled: model.shareUrl.length > 0
+                MenuItem {
+                    text: qsTr("Copy link to clipboard")
+                    onClicked: Clipboard.text = model.shareUrl
+                }
+            }
         }
 
         ViewPlaceholder {

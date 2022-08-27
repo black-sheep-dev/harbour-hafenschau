@@ -140,6 +140,10 @@
         <source>Failed to get news</source>
         <translation>Laden von Nachrichten fehlgeschlagen</translation>
     </message>
+    <message>
+        <source>Copy link to clipboard</source>
+        <translation>Link in Zwischenablage kopieren</translation>
+    </message>
 </context>
 <context>
     <name>ReaderPage</name>
@@ -156,10 +160,6 @@
         <translation>Zeit:</translation>
     </message>
     <message>
-        <source>Share</source>
-        <translation>Teilen</translation>
-    </message>
-    <message>
         <source>Save news data</source>
         <translation>Daten speichern</translation>
     </message>
@@ -170,6 +170,10 @@
     <message>
         <source>Check your internet connection</source>
         <translation>Überprüfe deine Internetverbindung</translation>
+    </message>
+    <message>
+        <source>Copy link to clipboard</source>
+        <translation>Link in Zwischenablage kopieren</translation>
     </message>
 </context>
 <context>
@@ -533,6 +537,10 @@
     <message>
         <source>Check your internet connection</source>
         <translation>Überprüfe deine Internetverbindung</translation>
+    </message>
+    <message>
+        <source>Copy link to clipboard</source>
+        <translation>Link in Zwischenablage kopieren</translation>
     </message>
 </context>
 <context>

@@ -52,8 +52,8 @@ Page {
 
             MenuItem {
                 visible: news.hasOwnProperty("shareURL")
-                text: qsTr("Share")
-                onClicked: Qt.openUrlExternally(news.shareURL)
+                text: qsTr("Copy link to clipboard")
+                onClicked: Clipboard.text = news.shareURL
             }
 
             MenuItem {

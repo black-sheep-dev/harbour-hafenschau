@@ -166,6 +166,14 @@ Page {
             delegate: NewsListItem {
                 id: delegate
 
+                menu: ContextMenu {
+                    enabled: model.shareUrl.length > 0
+                    MenuItem {
+                        text: qsTr("Copy link to clipboard")
+                        onClicked: Clipboard.text = model.shareUrl
+                    }
+                }
+
                 onClicked: {
                     if (model.type === NewsType.WebView) {
                         if (settings.internalWebView) {

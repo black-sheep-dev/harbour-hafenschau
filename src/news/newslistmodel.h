@@ -22,7 +22,8 @@ public:
         TitleRole,
         ToplineRole,
         TypeRole,
-        SearchRole
+        SearchRole,
+        ShareUrlRole
     };
     Q_ENUM(NewsItemRoles)
 

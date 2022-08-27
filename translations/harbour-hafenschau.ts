@@ -140,6 +140,10 @@
         <source>Failed to get news</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Copy link to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ReaderPage</name>
@@ -156,10 +160,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Share</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Save news data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -169,6 +169,10 @@
     </message>
     <message>
         <source>Check your internet connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy link to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -532,6 +536,10 @@
     </message>
     <message>
         <source>Check your internet connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy link to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -10,6 +10,7 @@ struct NewsItem {
     QString details;
     QString detailsWeb;
     QString firstSentence;
+    QString shareUrl;
     QJsonObject streams;
     QString thumbnail;
     QString title;

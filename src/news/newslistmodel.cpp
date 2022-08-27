@@ -87,6 +87,7 @@ QList<NewsItem> NewsListModel::parseItems(const QJsonArray &items)
                 .value("imageurl").toString();
         item.title = obj.value("title").toString();
         item.topline = obj.value("topline").toString();
+        item.shareUrl = obj.value("shareURL").toString();
 
         const QString type = obj.value("type").toString();
         if (type == QLatin1String("story")) {
@@ -152,6 +153,9 @@ QVariant NewsListModel::data(const QModelIndex &index, int role) const
     case SearchRole:
         return item.title + item.topline + item.firstSentence;
 
+    case ShareUrlRole:
+        return item.shareUrl;
+
     default:
         return QVariant();
     }
@@ -171,6 +175,7 @@ QHash<int, QByteArray> NewsListModel::roleNames() const
     roles[ToplineRole]          = "topline";
     roles[TypeRole]             = "type";
     roles[SearchRole]           = "search";
+    roles[ShareUrlRole]         = "shareUrl";
 
     return roles;
 }
