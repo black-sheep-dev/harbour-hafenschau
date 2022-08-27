@@ -125,28 +125,6 @@ ApplicationWindow
         }
     }
 
-//    Connections {
-//        target: api
-//        onRequestFailed: {
-//            if (id.substr(0, 9) !== "mainModel") return
-//            mainModel.loading = false
-//            mainModel.error = true
-//            notification.show(qsTr("Failed to get news"))
-//        }
-
-//        onRequestFinished: {
-//            if (id.substr(0, 9) !== "mainModel") return
-
-//            mainModel.loading = false
-
-//            if (id === "mainModel.checkForUpdates") {
-//                mainModel.checkUpdateCount(data)
-//            } else if (id === "mainModel.refresh") {
-//                mainModel.setData(data)
-//            }
-//        }
-//    }
-
     Notification {
         function show(message) {
             replacesId = 0
