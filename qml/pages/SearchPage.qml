@@ -124,7 +124,7 @@ Page {
 
                 onClicked: {
                     if (model.type === NewsType.WebView) {
-                        pageStack.push(Qt.resolvedUrl("../dialogs/OpenExternalUrlDialog.qml"), {url: model.detailsWeb })
+                        pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), {url: model.detailsWeb })
                     } else if (model.type === NewsType.Video) {
                         pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {streams: model.streams})
                     } else {
