@@ -1,3 +1,8 @@
+* Sat Aug 27 2022 Black Sheep <blacksheep@nubecula.org> 0.8.0-1
+- Refactoring of api code
+- Add copy link to clipboard to menu and context menu
+- Bugfixes
+
 * Sat May 28 2022 Black Sheep <blacksheep@nubecula.org> 0.7.4-1
 - Add option to open actual news instead of news list when pressing the cover
 - UI improvements
