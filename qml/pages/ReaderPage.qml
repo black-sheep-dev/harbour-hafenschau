@@ -6,26 +6,34 @@ import org.nubecula.harbour.hafenschau 1.0
 import "../components/"
 
 Page {
-    property bool error: false
-    property string link
-    property bool loading: true
-    property var news
-    property string updateCheckUrl
+    property alias link: newsRequest.query
+    property alias news: newsRequest.result
 
     function checkForUpdate() {
-        error = false
+            if (news.updateCheckUrl === undefined) {
+                refresh(false)
+                return
+            }
 
-        if (updateCheckUrl === undefined) {
-            refresh(false)
-            return
+            checkForUpdateRequest.query = news.updateCheckUrl
+            api.request(checkForUpdateRequest)
         }
 
-        api.request(updateCheckUrl, updateCheckUrl, false)
+    function refresh(cached) {
+        newsRequest.cached = cached
+        api.request(newsRequest)
     }
 
-    function refresh(cached) {
-        error = false
-        api.request(link, link, cached)
+    ApiRequest {
+        id: newsRequest
+
+        onFinished: refreshContent()
+    }
+
+    ApiRequest {
+        id: checkForUpdateRequest
+
+        onFinished: if (resultRaw === "true") refresh(false)
     }
 
     id: page
@@ -33,11 +41,13 @@ Page {
     allowedOrientations: Orientation.All
 
     PageBusyIndicator {
-        running: loading && news === undefined
+        running: newsRequest.loading && news === undefined
     }
 
     SilicaFlickable {
         PullDownMenu {
+            busy: newsRequest.loading
+
             MenuItem {
                 visible: settings.developerOptions & DeveloperOption.SaveNews
 
@@ -61,29 +71,29 @@ Page {
                 text: qsTr("Comments")
                 onClicked: pageStack.push(Qt.resolvedUrl("CommentsListPage.qml"), {link: news.comments})
             }
-
-            busy: loading
         }
 
         PushUpMenu {
+            busy: newsRequest.loading
             visible: news.hasOwnProperty("comments")
+
             MenuItem {
                 text: qsTr("Comments")
                 onClicked: pageStack.push(Qt.resolvedUrl("CommentsListPage.qml"), {link: news.comments})
             }
         }
 
-        visible: !loading
+        visible: !newsRequest.loading
 
         anchors.fill: parent
         contentHeight: headerImage.height + columnHeader.height + columnContent.height + bottomSpacer.height
 
-        opacity: (loading && news === undefined) ? 0.0 : 1.0
+        opacity: (newsRequest.loading && news === undefined) ? 0.0 : 1.0
 
         Behavior on opacity { FadeAnimation {} }
 
         ViewPlaceholder {
-            enabled: error && !loading
+            enabled: newsRequest.error > 0
             text: qsTr("Failed to load news")
             hintText: qsTr("Check your internet connection")
         }
@@ -91,7 +101,6 @@ Page {
         RemoteImage {
             id: headerImage
 
-            visible: !error
             opacity: news === undefined ? 0:1
 
             Behavior on opacity {
@@ -107,7 +116,6 @@ Page {
         Column {
             id: columnHeader
 
-            visible: !error
             opacity: news === undefined ? 0:1
 
             Behavior on opacity {
@@ -181,7 +189,6 @@ Page {
         Column {
             id: columnContent
 
-            visible: !error
             opacity: news === undefined ? 0:1
 
             Behavior on opacity {
@@ -203,31 +210,13 @@ Page {
         }
     }
 
-    Component.onCompleted: refresh(true)
-
-    Connections {
-        target: api
-        onRequestFailed: {
-            if (page.link !== id) return
-
-            notification.show(qsTr("Failed to load news"))
-            loading = false
-            page.error = true
-        }
-        onRequestFinished: {
-            if (page.link !== id) return
-
-            page.news = data
-
-            if (data.hasOwnProperty("updateCheckUrl")) page.updateCheckUrl = data.updateCheckUrl
-            loading = false
-            refreshContent()
-        }
-        onRequestFinishedWithRawData: {
-            if (page.updateCheckUrl !== id) return
-            if (data === "true") refresh(false)
-        }
+    ViewPlaceholder {
+        enabled: newsRequest.error > 0
+        text: qsTr("Failed to load news")
+        hintText: qsTr("Check your internet connection")
     }
+
+    Component.onCompleted: refresh(true)
 
     function refreshContent() {
         for(var i = columnContent.children.length; i > 0; i--) {

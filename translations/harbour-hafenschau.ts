@@ -70,6 +70,13 @@
         <source>Show in browser</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>%n comment(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>ContentGallery</name>
@@ -249,10 +256,6 @@
 </context>
 <context>
     <name>SearchPage</name>
-    <message>
-        <source>Failed to get news</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Load more</source>
         <translation type="unfinished"></translation>
@@ -563,13 +566,6 @@
     </message>
     <message>
         <source>Livestream of parliamentary sessions</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>harbour-hafenschau</name>
-    <message>
-        <source>Failed to get news</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

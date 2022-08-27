@@ -70,6 +70,13 @@
         <source>Show in browser</source>
         <translation>Im Browser anzeigen</translation>
     </message>
+    <message numerus="yes">
+        <source>%n comment(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>ContentGallery</name>
@@ -165,7 +172,7 @@
     </message>
     <message>
         <source>Failed to load news</source>
-        <translation>Laden von Nachrichten fehlgeschlagen</translation>
+        <translation type="unfinished">Laden fehlgeschlagen</translation>
     </message>
     <message>
         <source>Check your internet connection</source>
@@ -249,10 +256,6 @@
 </context>
 <context>
     <name>SearchPage</name>
-    <message>
-        <source>Failed to get news</source>
-        <translation>Laden von Nachrichten fehlgeschlagen</translation>
-    </message>
     <message>
         <source>Load more</source>
         <translation>Mehr laden</translation>
@@ -564,13 +567,6 @@
     <message>
         <source>Livestream of parliamentary sessions</source>
         <translation>Live Übertragungen von Parlamentssitzungen</translation>
-    </message>
-</context>
-<context>
-    <name>harbour-hafenschau</name>
-    <message>
-        <source>Failed to get news</source>
-        <translation>Laden von Nachrichten fehlgeschlagen</translation>
     </message>
 </context>
 </TS>

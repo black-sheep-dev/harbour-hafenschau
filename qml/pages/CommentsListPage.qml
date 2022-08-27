@@ -7,49 +7,46 @@ import "../delegates"
 
 Page {
     property bool closed: false
-    property string link
-    property bool loading
-    property string detailsLink
+    property int count: 0
+    property alias link: checkCommentsRequest.query
     property string detailsWeb
 
-    function refreshComments() {
-        loading = true;
-
-        if (detailsLink.length > 0) {
-            api.request(detailsLink, detailsLink, false)
-        } else {
-            api.request(link, link, false)
-        }
-    }
-
-    Connections {
-        target: api
-        onRequestFailed: {
-            if (id !== link || id !== detailsLink) return
-            loading = false
-        }
-
-        onRequestFinished: {
-            if (id === link) {
-                detailsLink = data.details
-                detailsWeb = data.detailsWeb
-                closed = data.commentsAllowed
-                if (data.count > 0) refreshComments()
-
-            } else if (id === detailsLink) {
-                loading = false
-                commentsModel.setComments(data.Items)
-            }
-        }
-    }
-
     id: page
-
     allowedOrientations: Orientation.All
+
+    function refreshComments() {
+        if (commentsRequest.query.length > 0) {
+            api.request(commentsRequest)
+        } else {
+            api.request(checkCommentsRequest)
+        }
+    }
+
+    ApiRequest {
+        id: commentsRequest
+
+        onFinished: commentsModel.setComments(result.Items)
+    }
+
+    ApiRequest {
+        id: checkCommentsRequest
+
+        onFinished: {
+            closed = result.commentsAllowed
+            count = result.count
+            commentsRequest.query = result.details
+            detailsWeb = result.detailsWeb
+            refreshComments()
+        }
+    }
+
+    PageBusyIndicator {
+        running: (commentsRequest.loading || checkCommentsRequest.loading) && listView.count == 0
+    }
 
     SilicaFlickable {
         PullDownMenu {
-            busy: loading
+            busy: commentsRequest.loading || checkCommentsRequest.loading
             MenuItem {
                 visible: detailsWeb.length > 0
                 text: qsTr("Show in browser")
@@ -93,6 +90,7 @@ Page {
 
             PageHeader {
                 title: closed ? qsTr("Comments (closed)") : qsTr("Comments");
+                description: qsTr("%n comment(s)", "", count)
             }
 
             SearchField {

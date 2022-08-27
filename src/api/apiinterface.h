@@ -3,10 +3,13 @@
 
 #include <QObject>
 
+#include <QHash>
 #include <QNetworkAccessManager>
 #include <QNetworkDiskCache>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+
+#include "apirequest.h"
 
 class ApiInterface : public QObject
 {
@@ -18,13 +21,8 @@ public:
     Q_INVOKABLE void clearCache() const;
     Q_INVOKABLE qint64 maxCacheSize() const;
 
-signals:
-    void requestFinished(const QString &id, const QJsonObject &data);
-    void requestFinishedWithRawData(const QString &id, const QString &data);
-    void requestFailed(const QString &id, int error = 0);
-
 public slots:
-    void request(const QString &query, const QString &id, bool cached = true);
+    void request(ApiRequest *request);
 
 private slots:
     void onRequestFinished(QNetworkReply *reply);
@@ -33,6 +31,7 @@ private:
     QByteArray gunzip(const QByteArray &data);
 
     QNetworkAccessManager *m_manager{nullptr};
+    QHash<QString, ApiRequest *> m_requests;
 };
 
 #endif // APIINTERFACE_H

@@ -41,13 +41,25 @@ ApplicationWindow
         }
     }
 
-    //ApiInterface { id: api }
-
     DataWriter { id: dataWriter }
+
+
+    ApiRequest {
+        id: mainModelRequest
+        query: "https://www.tagesschau.de/api2/homepage/"
+
+        onFinished: mainModel.setData(result)
+    }
+
+    ApiRequest {
+        id: checkForUpdateRequest
+
+        onFinished: mainModel.checkUpdateCount(result)
+    }
 
     NewsListModel {
         property bool error: false
-        property bool loading: false
+        property bool loading: mainModelRequest.loading || checkForUpdateRequest.loading
         property string newStoriesCountLink: ""
 
         id: mainModel
@@ -56,9 +68,8 @@ ApplicationWindow
             if (cached === undefined)
                 cached = false
 
-            error = false
-            loading = true
-            api.request("https://www.tagesschau.de/api2/homepage/", "mainModel.refresh", cached)
+            mainModelRequest.cached = cached
+            api.request(mainModelRequest)
         }
 
         function checkForUpdate() {
@@ -67,8 +78,8 @@ ApplicationWindow
                 return
             }
 
-            error = false
-            api.request(newStoriesCountLink, "mainModel.checkForUpdates", false)
+            checkForUpdateRequest.query = newStoriesCountLink
+            api.request(checkForUpdateRequest)
         }
 
         function checkUpdateCount(data) {
@@ -114,27 +125,27 @@ ApplicationWindow
         }
     }
 
-    Connections {
-        target: api
-        onRequestFailed: {
-            if (id.substr(0, 9) !== "mainModel") return
-            mainModel.loading = false
-            mainModel.error = true
-            notification.show(qsTr("Failed to get news"))
-        }
+//    Connections {
+//        target: api
+//        onRequestFailed: {
+//            if (id.substr(0, 9) !== "mainModel") return
+//            mainModel.loading = false
+//            mainModel.error = true
+//            notification.show(qsTr("Failed to get news"))
+//        }
 
-        onRequestFinished: {
-            if (id.substr(0, 9) !== "mainModel") return
+//        onRequestFinished: {
+//            if (id.substr(0, 9) !== "mainModel") return
 
-            mainModel.loading = false
+//            mainModel.loading = false
 
-            if (id === "mainModel.checkForUpdates") {
-                mainModel.checkUpdateCount(data)
-            } else if (id === "mainModel.refresh") {
-                mainModel.setData(data)
-            }
-        }
-    }
+//            if (id === "mainModel.checkForUpdates") {
+//                mainModel.checkUpdateCount(data)
+//            } else if (id === "mainModel.refresh") {
+//                mainModel.setData(data)
+//            }
+//        }
+//    }
 
     Notification {
         function show(message) {

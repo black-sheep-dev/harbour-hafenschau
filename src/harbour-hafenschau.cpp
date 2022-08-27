@@ -4,6 +4,7 @@
 #include <sailfishapp.h>
 
 #include "api/apiinterface.h"
+#include "api/apirequest.h"
 #include "api/networkaccessmanagerfactory.h"
 #include "comments/commentsmodel.h"
 #include "comments/commentssortfiltermodel.h"
@@ -52,6 +53,7 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<ApiInterface>(uri, 1, 0, "ApiInterface", "");
 
     // register types
+    qmlRegisterType<ApiRequest>(uri, 1, 0, "ApiRequest");
     qmlRegisterType<CommentsModel>(uri, 1, 0, "CommentsModel");
     qmlRegisterType<CommentsSortFilterModel>(uri, 1, 0, "CommentsSortFilterModel"); 
     qmlRegisterType<DataWriter>(uri, 1, 0, "DataWriter");

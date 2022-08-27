@@ -35,32 +35,38 @@ qint64 ApiInterface::maxCacheSize() const
     return qobject_cast<QNetworkDiskCache *>(m_manager->cache())->maximumCacheSize();
 }
 
-void ApiInterface::request(const QString &query, const QString &id, bool cached)
+void ApiInterface::request(ApiRequest *request)
 {
-#ifdef QT_DEBUG
-    qDebug() << "REQUEST";
-    qDebug() << "QUERY: " << query;
-    qDebug() << "ID: " << id;
-    qDebug() << "CACHED: " << cached;
-#endif
-
-    QNetworkRequest request(query);
-
-    if (cached) {
-        request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
-    } else {
-        request.setRawHeader("Cache-Control", "no-cache");
+    if (request == nullptr) {
+        return;
     }
 
-    request.setRawHeader("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:80.0) Gecko/20100101 Firefox/80.0");
-    request.setRawHeader("Accept", "application/json");
-    request.setRawHeader("Connection", "keep-alive");
-    request.setRawHeader("Accept-Encoding", "gzip");
+    if (m_requests.keys().contains(request->uuid())) {
+        return;
+    }
 
-    request.setSslConfiguration(QSslConfiguration::defaultConfiguration());
+    request->setLoading(true);
+    request->setError(0);
+    m_requests.insert(request->uuid(), request);
 
-    auto reply = m_manager->get(request);
-    reply->setProperty("id", id);
+    // send
+    QNetworkRequest req(request->query());
+
+    if (request->cached()) {
+        req.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
+    } else {
+        req.setRawHeader("Cache-Control", "no-cache");
+    }
+
+    req.setRawHeader("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:80.0) Gecko/20100101 Firefox/80.0");
+    req.setRawHeader("Accept", "application/json");
+    req.setRawHeader("Connection", "keep-alive");
+    req.setRawHeader("Accept-Encoding", "gzip");
+
+    req.setSslConfiguration(QSslConfiguration::defaultConfiguration());
+
+    auto reply = m_manager->get(req);
+    reply->setProperty("uuid", request->uuid());
 }
 
 void ApiInterface::onRequestFinished(QNetworkReply *reply)
@@ -73,11 +79,20 @@ void ApiInterface::onRequestFinished(QNetworkReply *reply)
         return;
 
     // read request id
-    const QString id = reply->property("id").toString();
+    const auto uuid = reply->property("uuid").toString();
+    if (!m_requests.keys().contains(uuid)) {
+        reply->deleteLater();
+        return;
+    }
+    auto request = m_requests.take(uuid);
+
+    if (request == nullptr) {
+        return;
+    }
 
     // check if an error occured
     if (reply->error()) {
-        emit requestFailed(id, reply->error());
+        request->setError(reply->error());
         reply->deleteLater();
         return;
     }
@@ -91,17 +106,18 @@ void ApiInterface::onRequestFinished(QNetworkReply *reply)
     // parse data
     QJsonParseError error{};
 
-    const QJsonObject obj = QJsonDocument::fromJson(data, &error).object();
+    request->setResult(QJsonDocument::fromJson(data, &error).object());
 
     if (error.error) {
 #ifdef QT_DEBUG
         qDebug() << QStringLiteral("JSON parse error");
 #endif
-        emit requestFinishedWithRawData(id, data);
+        request->setError(QNetworkReply::UnknownContentError);
+        request->setResultRaw(data);
         return;
     }
 
-    emit requestFinished(id, obj);
+    request->setLoading(false);
 }
 
 QByteArray ApiInterface::gunzip(const QByteArray &data)

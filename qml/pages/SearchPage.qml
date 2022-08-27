@@ -17,12 +17,12 @@ Page {
         newsModel.loading = true
         newsModel.error = false
 
-        const query = "https://www.tagesschau.de/api2/search/"
-        query += "?searchText=" + searchField.text
-        query += "&resultPage=" + currentPage
-        query += "&pageSize=" + pageSize
+        searchRequest.query = "https://www.tagesschau.de/api2/search/"
+                + "?searchText=" + searchField.text
+                + "&resultPage=" + currentPage
+                + "&pageSize=" + pageSize
 
-        api.request(query, "search", false)
+        api.request(searchRequest)
     }
 
     function reset() {
@@ -32,27 +32,16 @@ Page {
         newsModel.clear()
     }
 
-    Connections {
-        target: api
-        onRequestFailed: {
-            if (id !== "search") return
-            newsModel.loading = false
-            newsModel.error = true
-            notification.show(qsTr("Failed to get news"))
-        }
+    ApiRequest {
+        id: searchRequest
 
-        onRequestFinished: {
-            if (id !== "search") return
-
-            newsModel.loading = false
-
+        onFinished: {
             if (currentPage > 0) {
-                newsModel.addItems(data.searchResults)
+                newsModel.addItems(result.searchResults)
             } else {
-                newsModel.setItems(data.searchResults)
+                newsModel.setItems(result.searchResults)
             }
-
-            totalItemCount = data.totalItemCount
+            totalItemCount = result.totalItemCount
         }
     }
 
@@ -62,7 +51,7 @@ Page {
 
     SilicaFlickable {
         PushUpMenu {
-            busy: newsModel.loading
+            busy: searchRequest.loading
             visible: totalItemCount  > pageSize * currentPage + 1
             MenuItem {
                 text: qsTr("Load more") + " (" + (currentPage + 1) + "/" + (Math.floor(totalItemCount / pageSize)) + ")"
@@ -100,7 +89,7 @@ Page {
         }
 
         PageBusyIndicator {
-            running: newsModel.loading && listView.count === 0
+            running: searchRequest.loading && listView.count === 0
         }
 
         SilicaListView {

@@ -11,37 +11,35 @@ Page {
     property int ressort: Ressort.Undefined
     property string ressortQuery
 
-    property string previousPage
-    property string nextPage
-
     id: page
 
     allowedOrientations: Orientation.All
 
-    function checkRequest(request) {
-        const parts = request.split('.')
-        if (parts.length <= 3) return false
-
-        if (parts[0] !== "ressortModel") return false
-        if (parts[1] !== String(ressort)) return false
-
-        return true
-    }
-
     function refresh() {
-        newsModel.loading = true
-        newsModel.error = false
-
-        const query = "https://www.tagesschau.de/api2/news/"
-        query += ressortQuery
-
-        api.request(query, "ressortModel." + ressort + ".refresh", false)
+        newsRequest.query = "https://www.tagesschau.de/api2/news/" + ressortQuery
+        api.request(newsRequest)
     }
 
     function loadMore() {
-        newsModel.loading = true
-        newsModel.error = false
-        api.request(nextPage, "ressortModel." + ressort + ".loadMore", false)
+        api.request(loadMoreRequest)
+    }
+
+    ApiRequest {
+        id: newsRequest
+
+        onFinished: {
+            newsModel.setItems(result.news)
+            loadMoreRequest.query = result.nextPage
+        }
+    }
+
+    ApiRequest {
+        id: loadMoreRequest
+
+        onFinished: {
+            newsModel.addItems(result.news)
+            loadMoreRequest.query = result.nextPage
+        }
     }
 
     Connections {
@@ -71,12 +69,12 @@ Page {
     }
 
     PageBusyIndicator {
-        running: newsModel.loading && listView.count === 0
+        running: newsRequest.loading && listView.count === 0
     }
 
     SilicaFlickable {
         PullDownMenu {
-            busy: newsModel.loading
+            busy: newsRequest.loading || loadMoreRequest.loading
 
             MenuItem {
                 text: qsTr("Refresh")
@@ -96,8 +94,9 @@ Page {
         }
 
         PushUpMenu {
-            busy: newsModel.loading
-            visible: nextPage.length > 0
+            busy: newsRequest.loading || loadMoreRequest.loading
+
+            visible: loadMoreRequest.query.length > 0
 
             MenuItem  {
                 text: qsTr("Load more")
@@ -155,12 +154,7 @@ Page {
 
             model: NewsSortFilterModel {
                 id: filterModel
-                sourceModel: NewsListModel {
-                    property bool error: false
-                    property bool loading: false
-
-                    id: newsModel
-                }
+                sourceModel: NewsListModel { id: newsModel }
             }
 
             delegate: NewsListItem {

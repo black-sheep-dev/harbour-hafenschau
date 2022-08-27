@@ -29,6 +29,7 @@ LIBS += -lz
 
 SOURCES += src/harbour-hafenschau.cpp \
     src/api/apiinterface.cpp \
+    src/api/apirequest.cpp \
     src/api/networkaccessmanagerfactory.cpp \
     src/comments/commentsmodel.cpp \
     src/comments/commentssortfiltermodel.cpp \
@@ -96,6 +97,7 @@ TRANSLATIONS += translations/harbour-hafenschau-de.ts
 
 HEADERS += \
     src/api/apiinterface.h \
+    src/api/apirequest.h \
     src/api/networkaccessmanagerfactory.h \
     src/comments/comment.h \
     src/comments/commentsmodel.h \
