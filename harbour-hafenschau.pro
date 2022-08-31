@@ -1,5 +1,5 @@
 # VERSION
-VERSION = 0.8.0-1
+VERSION = 0.8.1-1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # The name of your application

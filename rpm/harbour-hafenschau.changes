@@ -1,3 +1,8 @@
+* Wed Aug 31 2022 Black Sheep <blacksheep@nubecula.org> 0.8.1-1
+- UI improvements
+- Cleanup
+- Fixed translations
+
 * Sat Aug 27 2022 Black Sheep <blacksheep@nubecula.org> 0.8.0-1
 - Refactoring of api code
 - Add copy link to clipboard to menu and context menu
