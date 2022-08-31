@@ -36,6 +36,11 @@ void ApiRequest::setError(int error)
     emit errorChanged();
 }
 
+bool ApiRequest::hasResult() const
+{
+    return !m_result.isEmpty() || !m_resultRaw.isEmpty();
+}
+
 bool ApiRequest::loading() const
 {
     return m_loading;
@@ -74,6 +79,7 @@ void ApiRequest::setResult(const QJsonObject &result)
     m_result = result;
     emit resultChanged();
     emit finished();
+    emit hasResultChanged();
 }
 
 const QString &ApiRequest::resultRaw() const
@@ -88,6 +94,7 @@ void ApiRequest::setResultRaw(const QString &result)
     m_resultRaw = result;
     emit resultRawChanged();
     emit finished();
+    emit hasResultChanged();
 }
 
 const QString &ApiRequest::uuid() const

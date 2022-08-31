@@ -42,32 +42,6 @@ Page {
         }
     }
 
-    Connections {
-        target: api
-        onRequestFailed: {
-            if (checkRequest(id)) return
-            newsModel.loading = false
-            newsModel.error = true
-            notification.show(qsTr("Failed to get news"))
-        }
-
-        onRequestFinished: {
-            if (checkRequest(id)) return
-
-            const mode = id.split('.')[2]
-
-            newsModel.loading = false
-
-            if (mode === "refresh") {
-                newsModel.setItems(data.news)
-            } else if (mode === "loadMore") {
-                newsModel.addItems(data.news)
-            }
-
-            nextPage = data.nextPage
-        }
-    }
-
     PageBusyIndicator {
         running: newsRequest.loading && listView.count === 0
     }
@@ -187,7 +161,7 @@ Page {
             }
 
             ViewPlaceholder {
-                enabled: listView.count === 0 && !newsModel.loading
+                enabled: listView.count === 0 && newsRequest.hasResult
                 text: qsTr("No news available")
                 hintText: {
                     if (ressort === Ressort.Regional)
@@ -202,11 +176,14 @@ Page {
     }
 
     onStatusChanged: {
-        if (status === PageStatus.Deactivating) {
+        if (status === PageStatus.Active) {
+            refresh()
+        } else if (status === PageStatus.Deactivating) {
             searchField.focus = false
             searchField.text = ""
             listView.showSearch = false
         }
+
     }
 
     Component.onCompleted: {
@@ -249,8 +226,6 @@ Page {
         }
 
         ressortQuery = query
-
-        refresh()
     }
 }
 

@@ -11,6 +11,7 @@ class ApiRequest : public QObject
 
     Q_PROPERTY(bool cached READ cached WRITE setCached NOTIFY cachedChanged)
     Q_PROPERTY(int error READ error WRITE setError NOTIFY errorChanged)
+    Q_PROPERTY(bool hasResult READ hasResult NOTIFY hasResultChanged)
     Q_PROPERTY(bool loading READ loading WRITE setLoading NOTIFY loadingChanged)
     Q_PROPERTY(QString query READ query WRITE setQuery NOTIFY queryChanged)
     Q_PROPERTY(QJsonObject result READ result WRITE setResult NOTIFY resultChanged)
@@ -26,6 +27,8 @@ public:
     int error() const;
     void setError(int error);
 
+    bool hasResult() const;
+
     bool loading() const;
     void setLoading(bool loading);
 
@@ -38,7 +41,7 @@ public:
     const QString &resultRaw() const;
     void setResultRaw(const QString &result);
 
-    const QString &uuid() const;
+    const QString &uuid() const; 
 
 signals:
     void finished();
@@ -51,6 +54,8 @@ signals:
     void resultRawChanged();
     void uuidChanged();
 
+    void hasResultChanged();
+
 private:
     bool m_cached{false};
     int m_error{0};
@@ -59,8 +64,6 @@ private:
     QJsonObject m_result;
     QString m_resultRaw;
     QString m_uuid;
-
-
 };
 
 #endif // APIREQUEST_H

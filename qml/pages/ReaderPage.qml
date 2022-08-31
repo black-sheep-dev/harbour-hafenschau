@@ -41,7 +41,7 @@ Page {
     allowedOrientations: Orientation.All
 
     PageBusyIndicator {
-        running: newsRequest.loading && news === undefined
+        running: newsRequest.loading  && !newsRequest.hasResult
     }
 
     SilicaFlickable {
@@ -83,14 +83,8 @@ Page {
             }
         }
 
-        visible: !newsRequest.loading
-
         anchors.fill: parent
         contentHeight: headerImage.height + columnHeader.height + columnContent.height + bottomSpacer.height
-
-        opacity: (newsRequest.loading && news === undefined) ? 0.0 : 1.0
-
-        Behavior on opacity { FadeAnimation {} }
 
         ViewPlaceholder {
             enabled: newsRequest.error > 0
@@ -101,10 +95,10 @@ Page {
         RemoteImage {
             id: headerImage
 
-            opacity: news === undefined ? 0:1
+            opacity: !newsRequest.hasResult ? 0:1
 
             Behavior on opacity {
-                FadeAnimation {}
+                FadeAnimation { duration: 150 }
             }
 
             anchors.left: parent.left
@@ -116,10 +110,10 @@ Page {
         Column {
             id: columnHeader
 
-            opacity: news === undefined ? 0:1
+            opacity: !newsRequest.hasResult ? 0:1
 
             Behavior on opacity {
-                FadeAnimation {}
+                FadeAnimation { duration: 500 }
             }
 
             anchors.top: headerImage.bottom
@@ -189,10 +183,10 @@ Page {
         Column {
             id: columnContent
 
-            opacity: news === undefined ? 0:1
+            opacity: !newsRequest.hasResult ? 0:1
 
             Behavior on opacity {
-                FadeAnimation {}
+                FadeAnimation { duration: 1000 }
             }
 
             anchors.top: columnHeader.bottom
@@ -208,15 +202,15 @@ Page {
             height: Theme.paddingMedium
             width: 1
         }
+
+        ViewPlaceholder {
+            enabled: newsRequest.error > 0
+            text: qsTr("Failed to load news")
+            hintText: qsTr("Check your internet connection")
+        }
     }
 
-    ViewPlaceholder {
-        enabled: newsRequest.error > 0
-        text: qsTr("Failed to load news")
-        hintText: qsTr("Check your internet connection")
-    }
-
-    Component.onCompleted: refresh(true)
+    onStatusChanged: if (status === PageStatus.Active) refresh(true)
 
     function refreshContent() {
         for(var i = columnContent.children.length; i > 0; i--) {

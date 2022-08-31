@@ -25,7 +25,6 @@ ApplicationWindow
         Global.activeRegions = regions.filter(function(value, index, arr) {
             return value > 0
         })
-        //console.log(Global.activeRegions)
     }
 
     Connections {
@@ -38,6 +37,7 @@ ApplicationWindow
             } else {
                 settings.regions = ""
             }
+            mainModel.refresh()
         }
     }
 

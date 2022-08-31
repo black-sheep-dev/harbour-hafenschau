@@ -14,9 +14,6 @@ Page {
     readonly property int pageSize: 20
 
     function search() {
-        newsModel.loading = true
-        newsModel.error = false
-
         searchRequest.query = "https://www.tagesschau.de/api2/search/"
                 + "?searchText=" + searchField.text
                 + "&resultPage=" + currentPage
@@ -123,7 +120,7 @@ Page {
             }
 
             ViewPlaceholder {
-                enabled: listView.count === 0 && !newsModel.loading
+                enabled: listView.count === 0 && !searchRequest.loading
                 text: qsTr("No content found")
                 hintText: qsTr("Type in a search pattern to find content")
             }
