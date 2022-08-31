@@ -72,9 +72,9 @@
     </message>
     <message numerus="yes">
         <source>%n comment(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n Kommentar</numerusform>
+            <numerusform>%n Kommentare</numerusform>
         </translation>
     </message>
 </context>
@@ -144,10 +144,6 @@
         <translation>Mehr laden</translation>
     </message>
     <message>
-        <source>Failed to get news</source>
-        <translation>Laden von Nachrichten fehlgeschlagen</translation>
-    </message>
-    <message>
         <source>Copy link to clipboard</source>
         <translation>Link in Zwischenablage kopieren</translation>
     </message>
@@ -172,7 +168,7 @@
     </message>
     <message>
         <source>Failed to load news</source>
-        <translation type="unfinished">Laden fehlgeschlagen</translation>
+        <translation>Laden fehlgeschlagen</translation>
     </message>
     <message>
         <source>Check your internet connection</source>

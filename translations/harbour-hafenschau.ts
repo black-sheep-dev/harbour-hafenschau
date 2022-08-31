@@ -144,10 +144,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to get news</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Copy link to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
