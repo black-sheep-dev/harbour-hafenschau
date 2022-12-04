@@ -65,7 +65,7 @@ Item {
 
                     news.regionIds.forEach(function(region) {
 
-                        if ( regions.indexOf(String(region)) >= 0 && ids.indexOf(id) < 0 ) {
+                        if ( regions.indexOf(region) >= 0 && ids.indexOf(id) < 0 ) {
                             regionalNews.push(news)
                             ids.push(id)
                         }

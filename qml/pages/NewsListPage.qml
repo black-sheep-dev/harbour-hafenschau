@@ -15,7 +15,14 @@ Page {
 
     NewsModel {
         id: newsModel
-        url: "https://tagesschau.de/api2/news?ressort=" + ressort
+        url: {
+            if (ressort === "regional") {
+                const regions = JSON.parse(config.activeRegions)
+                return "https://tagesschau.de/api2/news?regions=" + regions.join(',')
+            } else {
+                return "https://tagesschau.de/api2/news?ressort=" + ressort
+            }
+        }
     }
 
     PageBusyIndicator {
