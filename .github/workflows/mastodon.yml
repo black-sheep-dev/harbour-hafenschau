@@ -1,5 +1,7 @@
 name: Promote new release on Mastodon
 
+on:
+
 jobs:
   build:
     - name: get latest hafenschau release
