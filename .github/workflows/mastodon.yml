@@ -1,12 +1,13 @@
 name: Promote new release on Mastodon
 
 on:
+  release
 
 jobs:
   build:
     runs-on: ubuntu-latest
     
-    #steps:
+    steps:
     #  - name: get latest hafenschau release
     ##    uri:
     #    url: https://api.github.com/repos/black-sheep-dev/harbour-hafenschau/releases/latest
