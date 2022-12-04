@@ -45,7 +45,7 @@ DISTFILES += qml/harbour-hafenschau.qml \
     qml/pages/settings/SettingsVideoPage.qml \
     qml/pages/settings/SettingsWebviewPage.qml \
     qml/qmldir \
-    rpm/harbour-hafenschau.changes.in \
+    rpm/harbour-hafenschau.changes \
     rpm/harbour-hafenschau.changes.run.in \
     rpm/harbour-hafenschau.spec \
     rpm/harbour-hafenschau.yaml \
