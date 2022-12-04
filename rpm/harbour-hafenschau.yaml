@@ -1,11 +1,12 @@
 Name: harbour-hafenschau
 Summary: Hafenschau
-Version: 0.8.1
+Version: 0.9.0
 Release: 1
 # The contents of the Group field should be one of the groups listed here:
 # https://github.com/mer-tools/spectacle/blob/master/data/GROUPS
 Group: Qt/Qt
 URL: https://github.com/black-sheep-dev/harbour-hafenschau
+BuildArch: noarch
 License: MIT
 # This must be generated before uploading a package to a remote build service.
 # Usually this line does not need to be modified.
@@ -28,20 +29,17 @@ Description: |
     Url:
         Donation: https://www.paypal.com/paypalme/nubecula/1
     %endif
-
 Builder: qmake5
 
 # This section specifies build dependencies that are resolved using pkgconfig.
 # This is the preferred way of specifying build dependencies for your package.
 PkgConfigBR:
-  - sailfishapp >= 1.0.2
+  - sailfishapp >= 1.0.3
   - Qt5Core
-  - Qt5DBus
-  - Qt5Network
   - Qt5Qml
   - Qt5Quick
+  - qt5embedwidget
   - nemonotifications-qt5
-  - qt5embedwidget >= 1.14.9
   - keepalive
 
 # Build dependencies without a pkgconfig setup can be listed here
@@ -51,13 +49,11 @@ PkgBR:
 # Runtime dependencies which are not automatically detected
 Requires:
   - sailfishsilica-qt5 >= 0.10.9
+  - libsailfishapp-launcher
 
 # All installed files
 Files:
-  - '%{_bindir}'
+  - '%defattr(0644,root,root,-)'
   - '%{_datadir}/%{name}'
   - '%{_datadir}/applications/%{name}.desktop'
   - '%{_datadir}/icons/hicolor/*/apps/%{name}.png'
-
-# For more information about yaml and what's supported in Sailfish OS
-# build system, please see https://wiki.merproject.org/wiki/Spectacle

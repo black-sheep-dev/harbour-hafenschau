@@ -34,7 +34,7 @@ BackgroundItem {
             font.pixelSize: Theme.fontSizeSmall
             wrapMode: Text.WordWrap
 
-            text: item.subtitle
+            text: item.hasOwnProperty("subtitle") ? item.subtitle : ""
         }
 
         Label {
@@ -60,7 +60,7 @@ BackgroundItem {
 
             textFormat: Text.RichText
 
-            text: item.text
+            text: item.hasOwnProperty("text") ? item.text : ""
         }
 
         Separator {

@@ -9,22 +9,22 @@ Name:       harbour-hafenschau
 # << macros
 
 Summary:    Hafenschau
-Version:    0.8.1
+Version:    0.9.0
 Release:    1
 Group:      Qt/Qt
 License:    MIT
+BuildArch:  noarch
 URL:        https://github.com/black-sheep-dev/harbour-hafenschau
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-hafenschau.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
-BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
+Requires:   libsailfishapp-launcher
+BuildRequires:  pkgconfig(sailfishapp) >= 1.0.3
 BuildRequires:  pkgconfig(Qt5Core)
-BuildRequires:  pkgconfig(Qt5DBus)
-BuildRequires:  pkgconfig(Qt5Network)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
+BuildRequires:  pkgconfig(qt5embedwidget)
 BuildRequires:  pkgconfig(nemonotifications-qt5)
-BuildRequires:  pkgconfig(qt5embedwidget) >= 1.14.9
 BuildRequires:  pkgconfig(keepalive)
 BuildRequires:  qt5-qttools-linguist
 BuildRequires:  desktop-file-utils
@@ -80,7 +80,7 @@ desktop-file-install --delete-original       \
 
 %files
 %defattr(-,root,root,-)
-%{_bindir}
+%defattr(0644,root,root,-)
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png

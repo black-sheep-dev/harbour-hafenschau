@@ -1,7 +1,6 @@
 pragma Singleton
-
 import QtQuick 2.0
 
 QtObject {
-    property var activeRegions: []
+    readonly property string appVersion: "0.9.0"
 }

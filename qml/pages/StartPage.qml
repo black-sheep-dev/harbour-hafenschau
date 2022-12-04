@@ -1,8 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 import "../delegates"
 import "../."
 
@@ -12,19 +10,23 @@ Page {
     allowedOrientations: Orientation.All
 
     PageBusyIndicator {
-        running: mainModel.loading && listView.count === 0
+        running: mainNews.busy && listView.count === 0
     }
 
     SilicaListView {
         PullDownMenu {
-            busy: mainModel.loading
+            busy: mainNews.busy
+            MenuItem {
+                text: qsTr("About")
+                onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
+            }
             MenuItem {
                 text: qsTr("Settings")
                 onClicked: pageStack.push(Qt.resolvedUrl("settings/SettingsPage.qml"))
             }
             MenuItem {
                 text: qsTr("Refresh")
-                onClicked: mainModel.checkForUpdate()
+                onClicked: mainNews.refresh()
             }
         }
 
@@ -32,43 +34,31 @@ Page {
 
         anchors.fill: parent
 
-        opacity: (mainModel.loading && listView.count === 0) ? 0.0 : 1.0
-
-        Behavior on opacity { FadeAnimation {} }
-
         header: PageHeader {
             title: qsTr("Top News")
         }
 
-        model: mainModel
+        model: mainNews.items
 
         delegate: NewsListItem {
             id: delegate
 
             onClicked: {
-                if (model.type === NewsType.WebView) {
-                    if (settings.internalWebView) {
-                        pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), {url: model.detailsWeb })
+                if (modelData.type === "webview") {
+                    if (config.internalWebView) {
+                        pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), {url: modelData.detailsweb})
                     } else {
-                        Qt.openUrlExternally(model.detailsWeb)
+                        Qt.openUrlExternally(modelData.detailsweb)
                     }
 
                 } else {
-                    pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {link: model.details})
-                }
-            }
-
-            menu: ContextMenu {
-                enabled: model.shareUrl.length > 0
-                MenuItem {
-                    text: qsTr("Copy link to clipboard")
-                    onClicked: Clipboard.text = model.shareUrl
+                    pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {news: mainNews.items[index]})
                 }
             }
         }
 
         ViewPlaceholder {
-            visible: !mainModel.loading
+            visible: !mainNews.busy
             enabled: listView.count === 0
             text: qsTr("No news available")
             hintText: qsTr("Check your internet connection")
@@ -76,8 +66,6 @@ Page {
 
         VerticalScrollDecorator {}
     }
-
-    Component.onCompleted: mainModel.refresh()
 
     onStatusChanged: if (status === PageStatus.Active) pageStack.pushAttached(Qt.resolvedUrl("RessortListPage.qml"))
 }

@@ -1,218 +1,134 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 import "../delegates"
+import "../models"
 
 Page {
-    property bool closed: false
-    property int count: 0
-    property alias link: checkCommentsRequest.query
-    property string detailsWeb
+    property alias link: commentsModel.link
 
     id: page
     allowedOrientations: Orientation.All
 
-    function refreshComments() {
-        if (commentsRequest.query.length > 0) {
-            api.request(commentsRequest)
-        } else {
-            api.request(checkCommentsRequest)
-        }
-    }
-
-    ApiRequest {
-        id: commentsRequest
-
-        onFinished: commentsModel.setComments(result.Items)
-    }
-
-    ApiRequest {
-        id: checkCommentsRequest
-
-        onFinished: {
-            closed = result.commentsAllowed
-            count = result.count
-            commentsRequest.query = result.details
-            detailsWeb = result.detailsWeb
-            refreshComments()
-        }
+    CommentsModel {
+        id: commentsModel
+        sortOrder: config.commentsSortOrder
     }
 
     PageBusyIndicator {
-        running: (commentsRequest.loading || checkCommentsRequest.loading) && listView.count == 0
+        running: commentsModel.busy && listView.count == 0
     }
 
-    SilicaFlickable {
+    SilicaListView {
         PullDownMenu {
-            busy: commentsRequest.loading || checkCommentsRequest.loading
+            busy: commentsModel.busy
             MenuItem {
-                visible: detailsWeb.length > 0
+                visible: commentsModel.detailsWeb.length > 0
                 text: qsTr("Show in browser")
-                onClicked: Qt.openUrlExternally(detailsWeb)
+                onClicked: Qt.openUrlExternally(commentsModel.detailsWeb)
             }
             MenuItem {
                 text: qsTr("Refresh")
-                onClicked: refreshComments()
+                onClicked: commentsModel.refresh()
             }
             MenuItem {
-                text: settings.commentsSortOrder === Qt.AscendingOrder ? qsTr("Sort descending") : qsTr("Sort ascending")
+                text: config.commentsSortOrder === Qt.AscendingOrder ? qsTr("Sort descending") : qsTr("Sort ascending")
                 onClicked: {
-                    if (settings.commentsSortOrder === Qt.AscendingOrder) {
-                        settings.commentsSortOrder = Qt.DescendingOrder
-                        filterModel.sortModel(Qt.DescendingOrder)
+                    if (config.commentsSortOrder === Qt.AscendingOrder) {
+                        config.commentsSortOrder = Qt.DescendingOrder
                     } else {
-                        settings.commentsSortOrder = Qt.AscendingOrder
-                        filterModel.sortModel(Qt.AscendingOrder)
-                    }
-                }
-            }
-
-            MenuItem {
-                text: listView.showSearch ? qsTr("Hide search") : qsTr("Search")
-                onClicked: {
-                    listView.showSearch = !listView.showSearch
-
-                    if (!listView.showSearch) {
-                        searchField.focus = false
-                        searchField.text = ""
+                        config.commentsSortOrder = Qt.AscendingOrder
                     }
                 }
             }
         }
 
+        id: listView
         anchors.fill: parent
+        header: PageHeader {
+            title: commentsModel.commentsAllowed ? qsTr("Comments") : qsTr("Comments (closed)");
+            description: qsTr("%n comment(s)", "", commentsModel.count)
+        }
 
-        Column {
-            id: header
-            width: parent.width
+        clip: true
+        model: commentsModel.items
 
-            PageHeader {
-                title: closed ? qsTr("Comments (closed)") : qsTr("Comments");
-                description: qsTr("%n comment(s)", "", count)
-            }
+        delegate: ListItem {
+            contentHeight: contentColumn.height
 
-            SearchField {
-                id: searchField
+            Column {
+                id: contentColumn
                 width: parent.width
-                height: listView.showSearch ? implicitHeight : 0
-                opacity: listView.showSearch ? 1 : 0
-                onTextChanged: {
-                    filterModel.setPattern(text)
+                spacing: Theme.paddingSmall
+
+                Label {
+                    text: new Date(modelData.Beitragsdatum).toLocaleString()
+
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2*x
+                    wrapMode: Text.WordWrap
+
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    color: Theme.highlightColor
+                }
+                Label {
+                    text: qsTr("From") + ": " + modelData.Benutzer
+
+
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2*x
+                    wrapMode: Text.WordWrap
+
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    color: Theme.highlightColor
+                }
+                Label {
+                    text: modelData.Titel
+
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2*x
+                    wrapMode: Text.WordWrap
+
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.highlightColor
+                }
+                Label {
+                    text: modelData.Kommentar
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2*x
+                    wrapMode: Text.WordWrap
+
+                    font.pixelSize: Theme.fontSizeExtraSmall
                 }
 
-                EnterKey.onClicked: searchField.focus = false
-
-                Connections {
-                    target: listView
-                    onShowSearchChanged: {
-                        searchField.forceActiveFocus()
-                    }
+                Item {
+                    width: 1
+                    height: 1
                 }
 
-                Behavior on height {
-                    NumberAnimation { duration: 300 }
+                Separator {
+                    visible: index < (listView.count - 1)
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2*x
+                    color: Theme.primaryColor
                 }
-                Behavior on opacity {
-                    NumberAnimation { duration: 300 }
+
+                Item {
+                    width: 1
+                    height: 1
                 }
             }
         }
 
-        SilicaListView {
-            property bool showSearch: false
-
-            id: listView
-
-            width: parent.width
-            anchors.top: header.bottom
-            anchors.bottom: parent.bottom
-
-            clip: true
-
-            model: CommentsSortFilterModel {
-                id: filterModel
-                sortOrder: settings.commentsSortOrder
-                sourceModel: CommentsModel { id: commentsModel }
-            }
-
-            delegate: ListItem {
-                contentHeight: contentColumn.height
-
-                Column {
-                    id: contentColumn
-                    width: parent.width
-                    spacing: Theme.paddingSmall
-
-                    Label {
-                        text: model.timestamp.toLocaleString()
-
-                        x: Theme.horizontalPageMargin
-                        width: parent.width - 2*x
-                        wrapMode: Text.WordWrap
-
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                        color: Theme.highlightColor
-                    }
-                    Label {
-                        text: qsTr("From") + ": " + model.author
-
-
-                        x: Theme.horizontalPageMargin
-                        width: parent.width - 2*x
-                        wrapMode: Text.WordWrap
-
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                        color: Theme.highlightColor
-                    }
-                    Label {
-                        text: model.title
-
-                        x: Theme.horizontalPageMargin
-                        width: parent.width - 2*x
-                        wrapMode: Text.WordWrap
-
-                        font.pixelSize: Theme.fontSizeSmall
-                        color: Theme.highlightColor
-                    }
-                    Label {
-                        text: model.text
-                        x: Theme.horizontalPageMargin
-                        width: parent.width - 2*x
-                        wrapMode: Text.WordWrap
-
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                    }
-
-                    Item {
-                        width: 1
-                        height: 1
-                    }
-
-                    Separator {
-                        visible: index < (listView.count - 1)
-                        x: Theme.horizontalPageMargin
-                        width: parent.width - 2*x
-                        color: Theme.primaryColor
-                    }
-
-                    Item {
-                        width: 1
-                        height: 1
-                    }
-                }
-            }
-
-            ViewPlaceholder {
-                enabled: listView.count === 0
-                text: qsTr("No comments available")
-            }
-
-            VerticalScrollDecorator {}
+        ViewPlaceholder {
+            visible: !commentsModel.busy
+            enabled: listView.count === 0
+            text: qsTr("No comments available")
         }
+
+        VerticalScrollDecorator {}
     }
 
-    Component.onCompleted: refreshComments()
+    Component.onCompleted: commentsModel.refresh()
 }
 

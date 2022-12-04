@@ -1,8 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 Page {
     id: page
 
@@ -17,21 +15,21 @@ Page {
                 description: qsTr("Browse domestic news")
                 icon: "image://theme/icon-m-home"
                 page: "NewsListPage.qml"
-                ressort: Ressort.Inland
+                ressort: "inland"
             }
             ListElement {
                 title: qsTr("Foreign News");
                 description: qsTr("Browse news from foreign countries")
                 icon: "image://theme/icon-m-airplane-mode"
                 page: "NewsListPage.qml"
-                ressort: Ressort.Ausland
+                ressort: "ausland"
             }
             ListElement {
                 title: qsTr("Economic News");
                 description: qsTr("Browse economic news")
                 icon: "image://theme/icon-m-storage"
                 page: "NewsListPage.qml"
-                ressort: Ressort.Wirtschaft
+                ressort: "wirtschaft"
             }
 
             ListElement {
@@ -39,35 +37,35 @@ Page {
                 description: qsTr("Browse investigative news")
                 icon: "image://theme/icon-m-camera"
                 page: "NewsListPage.qml"
-                ressort: Ressort.Investigativ
+                ressort: "investigativ"
             }
             ListElement {
                 title: qsTr("Regional News");
                 description: qsTr("Browse regional news")
                 icon: "image://theme/icon-m-location"
                 page: "NewsListPage.qml"
-                ressort: Ressort.Regional
+                ressort: "regional"
             }
             ListElement {
                 title: qsTr("Sport News");
                 description: qsTr("Browse sport news")
                 icon: "image://theme/icon-m-person"
                 page: "NewsListPage.qml"
-                ressort: Ressort.Sport
+                ressort: "sport"
             }
             ListElement {
                 title: qsTr("Videos");
                 description: qsTr("Browse videos")
                 icon: "image://theme/icon-m-video"
                 page: "NewsListPage.qml"
-                ressort: Ressort.Video
+                ressort: "video"
             }
             ListElement {
                 title: qsTr("Search");
                 description: qsTr("Search content")
                 icon: "image://theme/icon-m-search"
                 page: "SearchPage.qml"
-                ressort: Ressort.Search
+                ressort: "search"
             }
         }
 
@@ -127,7 +125,6 @@ Page {
             }
 
             onClicked: {
-                if (model.ressort)
                 pageStack.push(Qt.resolvedUrl(page), {
                                                  ressort: model.ressort,
                                                  ressortTitle: model.title

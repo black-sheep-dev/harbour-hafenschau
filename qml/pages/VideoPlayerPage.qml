@@ -4,8 +4,6 @@ import Nemo.KeepAlive 1.2
 
 import QtMultimedia 5.6
 
-import org.nubecula.harbour.hafenschau 1.0
-
 Page {
     property alias title: titleLabel.text
     property var streams
@@ -28,16 +26,16 @@ Page {
             source: {
                 if (livestream.length > 0) return livestream
 
-                if (settings.videoQualityAdaptive && streams.hasOwnProperty("adaptivestreaming")) return streams.adaptivestreaming
+                if (config.videoQualityAdaptive && streams.hasOwnProperty("adaptivestreaming")) return streams.adaptivestreaming
 
-                switch (settings.videoQuality) {
-                case VideoQuality.Low:
+                switch (config.videoQuality) {
+                case 0:
                     return streams.h264s
 
-                case VideoQuality.Medium:
+                case 1:
                     return streams.h264m
 
-                case VideoQuality.High:
+                case 2:
                     return streams.h264xl
 
                 default:

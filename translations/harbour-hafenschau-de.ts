@@ -27,28 +27,36 @@
         <source>Sources</source>
         <translation>Quellen</translation>
     </message>
+    <message>
+        <source>Social</source>
+        <translation>Soziale Medien</translation>
+    </message>
+    <message>
+        <source>Donations</source>
+        <translation>Spenden</translation>
+    </message>
+    <message>
+        <source>If you like my work why not buy me a beer?</source>
+        <translation>Wenn dir meine Arbeit gefällt, warum mir kein Bier ausgeben?</translation>
+    </message>
+    <message>
+        <source>Donate with PayPal</source>
+        <translation>Spenden via PayPal</translation>
+    </message>
+    <message>
+        <source>Donate with Liberpay</source>
+        <translation>Spenden via Liberpay</translation>
+    </message>
+    <message>
+        <source>Copied to clipboard</source>
+        <translation>In die Zwischenablage kopiert</translation>
+    </message>
 </context>
 <context>
     <name>CommentsListPage</name>
     <message>
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
-    </message>
-    <message>
-        <source>Sort descending</source>
-        <translation>Absteigend sortieren</translation>
-    </message>
-    <message>
-        <source>Sort ascending</source>
-        <translation>Aufsteigend sortieren</translation>
-    </message>
-    <message>
-        <source>Hide search</source>
-        <translation>Suche ausblenden</translation>
-    </message>
-    <message>
-        <source>Search</source>
-        <translation>Suchen</translation>
     </message>
     <message>
         <source>Comments (closed)</source>
@@ -76,6 +84,21 @@
             <numerusform>%n Kommentar</numerusform>
             <numerusform>%n Kommentare</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Sort descending</source>
+        <translation>Absteigend sortieren</translation>
+    </message>
+    <message>
+        <source>Sort ascending</source>
+        <translation>Aufsteigend sortieren</translation>
+    </message>
+</context>
+<context>
+    <name>CommentsModel</name>
+    <message>
+        <source>Failed to fetch comments</source>
+        <translation>Konnte Kommentare nicht laden</translation>
     </message>
 </context>
 <context>
@@ -110,18 +133,17 @@
     </message>
 </context>
 <context>
+    <name>NewsListItem</name>
+    <message>
+        <source>Copy link to clipboard</source>
+        <translation>Link in Zwischenablage kopieren</translation>
+    </message>
+</context>
+<context>
     <name>NewsListPage</name>
     <message>
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
-    </message>
-    <message>
-        <source>Hide search</source>
-        <translation>Suche ausblenden</translation>
-    </message>
-    <message>
-        <source>Search</source>
-        <translation>Suchen</translation>
     </message>
     <message>
         <source>No news available</source>
@@ -143,9 +165,20 @@
         <source>Load more</source>
         <translation>Mehr laden</translation>
     </message>
+</context>
+<context>
+    <name>NewsModel</name>
     <message>
-        <source>Copy link to clipboard</source>
-        <translation>Link in Zwischenablage kopieren</translation>
+        <source>No updates available</source>
+        <translation>Keine Updates verfügbar</translation>
+    </message>
+    <message>
+        <source>Failed to fetch news</source>
+        <translation>Laden von Nachrichten fehlgeschlagen</translation>
+    </message>
+    <message>
+        <source>Failed to fetch more news</source>
+        <translation>Laden von weiteren Nachrichten fehlgeschlagen</translation>
     </message>
 </context>
 <context>
@@ -163,20 +196,16 @@
         <translation>Zeit:</translation>
     </message>
     <message>
-        <source>Save news data</source>
-        <translation>Daten speichern</translation>
-    </message>
-    <message>
-        <source>Failed to load news</source>
-        <translation>Laden fehlgeschlagen</translation>
-    </message>
-    <message>
-        <source>Check your internet connection</source>
-        <translation>Überprüfe deine Internetverbindung</translation>
-    </message>
-    <message>
         <source>Copy link to clipboard</source>
         <translation>Link in Zwischenablage kopieren</translation>
+    </message>
+    <message>
+        <source>Failed to fetch news</source>
+        <translation>Laden von Nachrichten fehlgeschlagen</translation>
+    </message>
+    <message>
+        <source>Show raw data</source>
+        <translation>Zeige Rohdaten</translation>
     </message>
 </context>
 <context>
@@ -264,6 +293,10 @@
         <source>Type in a search pattern to find content</source>
         <translation>Gebe einen Suchbegriff ein um Inhalte zu finden</translation>
     </message>
+    <message>
+        <source>Failed to search</source>
+        <translation>Suche fehlgeschlagen</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAutoRefreshPage</name>
@@ -307,17 +340,6 @@
     </message>
 </context>
 <context>
-    <name>SettingsCachePage</name>
-    <message>
-        <source>Cache Settings</source>
-        <translation>Cache Einstellungen</translation>
-    </message>
-    <message>
-        <source>Reset</source>
-        <translation>Zurücksetzen</translation>
-    </message>
-</context>
-<context>
     <name>SettingsCoverPage</name>
     <message>
         <source>Cover Settings</source>
@@ -352,58 +374,27 @@
     <name>SettingsDeveloperPage</name>
     <message>
         <source>Developer Settings</source>
-        <translation>Entwickler Optionen</translation>
+        <translation>Entwickler Einstellungen</translation>
     </message>
     <message>
-        <source>Save news api data</source>
-        <translation>Speichere Nachrichten API Daten</translation>
+        <source>Developer mode</source>
+        <translation>Entwicklermodus</translation>
     </message>
     <message>
-        <source>When activated an option to save the raw api data is available in pulldown menu on every reader page.</source>
-        <translation>Aktiviert einen Eintrag im Pull-Down-Menü jeder Seite, mit dem man die API Rohdaten speichern kann.</translation>
-    </message>
-    <message>
-        <source>The data is stored in Documents folder on the device.</source>
-        <translation>Die Daten werden im Ordner Dokumente auf dem Gerät gespeichert.</translation>
-    </message>
-    <message>
-        <source>When there is a problem with displaying a special news, provide this data on GitHub as an issue to help fixing it. An additional screenshot helps too!</source>
-        <translation>Wenn es zu Darstellungsprobleme bei speziellen Artikeln kommt, stelle diese Daten mit einer Fehlermeldung auf GitHub zur Verfügung! Ein zusätzlicher Screenshot kann auch helfen!</translation>
-    </message>
-    <message>
-        <source>Show unkown content</source>
-        <translation>Zeige unbekannte Inhalte</translation>
-    </message>
-    <message>
-        <source>If enabled unkown content items are displayed in the reader page.</source>
-        <translation>Aktivieren um unbekannte Inhalte auf der Leseseite anzuzeigen.</translation>
+        <source>When active some developer options are available inside the app</source>
+        <translation>Wenn aktiv werden innerhalb der Anwendung bestimmte Entwickleroptionen verfügbar</translation>
     </message>
 </context>
 <context>
     <name>SettingsPage</name>
     <message>
         <source>Regional News</source>
+        <translatorcomment>Regional</translatorcomment>
         <translation>Regional</translation>
     </message>
     <message>
         <source>Select regional news</source>
         <translation>Regionale Nachrichten auswählen</translation>
-    </message>
-    <message>
-        <source>Developer Settings</source>
-        <translation>Entwickler Optionen</translation>
-    </message>
-    <message>
-        <source>Manage developer options</source>
-        <translation>Entwickler Optionen verwalten</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation>Über</translation>
-    </message>
-    <message>
-        <source>Show about page</source>
-        <translation>Über die Anwendung</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -426,14 +417,6 @@
         <translation>Automatische Aktualisierungen verwalten</translation>
     </message>
     <message>
-        <source>Cache Settings</source>
-        <translation>Cache Einstellungen</translation>
-    </message>
-    <message>
-        <source>Manage cache options</source>
-        <translation>Cache Optionen verwalten</translation>
-    </message>
-    <message>
         <source>Webview Settings</source>
         <translation>Webansichts Einstellungen</translation>
     </message>
@@ -449,6 +432,14 @@
         <source>Manage video settings</source>
         <translation>Video Optionen verwalten</translation>
     </message>
+    <message>
+        <source>Developer Settings</source>
+        <translation>Entwickler Einstellungen</translation>
+    </message>
+    <message>
+        <source>Manage developer options</source>
+        <translation>Entiwckler Optionen verwalten</translation>
+    </message>
 </context>
 <context>
     <name>SettingsRegionsPage</name>
@@ -457,12 +448,12 @@
         <translation>Zurücksetzen</translation>
     </message>
     <message>
-        <source>Regional News</source>
-        <translation>Regionale Nachrichten</translation>
+        <source>Reset region settings</source>
+        <translation>Setze Regionaleinstellungen zurück</translation>
     </message>
     <message>
-        <source>Reset region settings</source>
-        <translation>Regionen zurücksetzen</translation>
+        <source>Regional News</source>
+        <translation>Regional</translation>
     </message>
 </context>
 <context>
@@ -538,8 +529,8 @@
         <translation>Überprüfe deine Internetverbindung</translation>
     </message>
     <message>
-        <source>Copy link to clipboard</source>
-        <translation>Link in Zwischenablage kopieren</translation>
+        <source>About</source>
+        <translation>Über</translation>
     </message>
 </context>
 <context>
@@ -563,6 +554,13 @@
     <message>
         <source>Livestream of parliamentary sessions</source>
         <translation>Live Übertragungen von Parlamentssitzungen</translation>
+    </message>
+</context>
+<context>
+    <name>harbour-hafenschau</name>
+    <message>
+        <source>Hafenschau</source>
+        <translation>Hafenschau</translation>
     </message>
 </context>
 </TS>

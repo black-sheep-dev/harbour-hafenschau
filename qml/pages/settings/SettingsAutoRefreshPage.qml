@@ -2,7 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import Nemo.KeepAlive 1.2
 
-import org.nubecula.harbour.hafenschau 1.0
+import "../../."
 
 Page {
     id: page
@@ -52,35 +52,35 @@ Page {
                 onCurrentIndexChanged: {
                     switch (currentIndex) {
                     case 0:
-                        settings.autoRefresh = 0
+                        config.autoRefresh = 0
                         break
 
                     case 1:
-                        settings.autoRefresh = BackgroundJob.ThirtySeconds
+                        config.autoRefresh = BackgroundJob.ThirtySeconds
                         break
 
                     case 2:
-                        settings.autoRefresh = BackgroundJob.TwoAndHalfMinutes
+                        config.autoRefresh = BackgroundJob.TwoAndHalfMinutes
                         break
 
                     case 3:
-                        settings.autoRefresh = BackgroundJob.FiveMinutes
+                        config.autoRefresh = BackgroundJob.FiveMinutes
                         break
 
                     case 4:
-                        settings.autoRefresh = BackgroundJob.FifteenMinutes
+                        config.autoRefresh = BackgroundJob.FifteenMinutes
                         break
 
                     case 5:
-                        settings.autoRefresh = BackgroundJob.ThirtyMinutes
+                        config.autoRefresh = BackgroundJob.ThirtyMinutes
                         break
 
                     case 6:
-                        settings.autoRefresh = BackgroundJob.OneHour
+                        config.autoRefresh = BackgroundJob.OneHour
                         break
 
                     default:
-                        settings.autoRefresh = 0
+                        config.autoRefresh = 0
                         break
                     }
 
@@ -88,7 +88,7 @@ Page {
                 }
 
                 Component.onCompleted: {
-                    switch (settings.autoRefresh) {
+                    switch (config.autoRefresh) {
                     case BackgroundJob.ThirtySeconds:
                         currentIndex = 1
                         break
@@ -130,9 +130,9 @@ Page {
                 text: qsTr("Notification")
                 description: qsTr("Enable notification if breaking news is available")
 
-                onCheckedChanged: settings.notify = checked
+                onCheckedChanged: config.notify = checked
 
-                Component.onCompleted: checked = settings.notify
+                Component.onCompleted: checked = config.notify
             }
         }
     }

@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/icons">
-        <file alias="git">icons/github.svg</file>
-        <file alias="twitter">icons/twitter.svg</file>
-    </qresource>
-</RCC>

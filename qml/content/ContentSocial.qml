@@ -59,7 +59,7 @@ BackgroundItem {
                height: Theme.itemSizeMedium
                fillMode: Image.PreserveAspectCrop
 
-               placeholderUrl: "qrc:/icons/twitter"
+               placeholderUrl: "/usr/share/harbour-" + Qt.application.name + "/icons/twitter.svg"
             }
 
             Label {

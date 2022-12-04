@@ -1,63 +1,72 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 import "../components/"
 
+import "../."
+
 Page {
-    property alias link: newsRequest.query
-    property alias news: newsRequest.result
+    property bool busy: false
+    property string link: ""
+    property var news: undefined
+    property bool ready: false
 
     function checkForUpdate() {
-            if (news.updateCheckUrl === undefined) {
-                refresh(false)
+        busy = true
+        Api.request(news.updateCheckUrl, function (data, status) {
+            busy = false
+
+            if (status !== 200) {
                 return
             }
 
-            checkForUpdateRequest.query = news.updateCheckUrl
-            api.request(checkForUpdateRequest)
-        }
-
-    function refresh(cached) {
-        newsRequest.cached = cached
-        api.request(newsRequest)
+            if (data === "true") refresh()
+        })
     }
 
-    ApiRequest {
-        id: newsRequest
+    function refresh() {
+        busy = true
+        console.log(link)
+        Api.request(link.length > 0 ? link : news.details, function (data, status) {
+            busy = false
 
-        onFinished: refreshContent()
+            if (status !== 200) {
+                notify.show(qsTr("Failed to fetch news"))
+                return
+            }
+
+            news = data
+        })
     }
 
-    ApiRequest {
-        id: checkForUpdateRequest
-
-        onFinished: if (resultRaw === "true") refresh(false)
-    }
 
     id: page
 
     allowedOrientations: Orientation.All
 
+    onNewsChanged: {
+        ready = true
+        refreshContent()
+    }
+
     PageBusyIndicator {
-        running: newsRequest.loading  && !newsRequest.hasResult
+        running: busy && !ready
     }
 
     SilicaFlickable {
         PullDownMenu {
-            busy: newsRequest.loading
+            busy: busy
 
             MenuItem {
-                visible: settings.developerOptions & DeveloperOption.SaveNews
+                visible: config.developerMode
 
-                text: qsTr("Save news data")
-                onClicked: dataWriter.saveNews(news)
+                text: qsTr("Show raw data")
+                onClicked: pageStack.push(Qt.resolvedUrl("DataReaderPage.qml"), { text: JSON.stringify(news, null, '\t') });
             }
 
             MenuItem {
                 text: qsTr("Refresh")
-                onClicked: checkForUpdate()
+                onClicked: refresh()
             }
 
             MenuItem {
@@ -74,7 +83,7 @@ Page {
         }
 
         PushUpMenu {
-            busy: newsRequest.loading
+            busy: busy
             visible: news.hasOwnProperty("comments")
 
             MenuItem {
@@ -86,16 +95,10 @@ Page {
         anchors.fill: parent
         contentHeight: headerImage.height + columnHeader.height + columnContent.height + bottomSpacer.height
 
-        ViewPlaceholder {
-            enabled: newsRequest.error > 0
-            text: qsTr("Failed to load news")
-            hintText: qsTr("Check your internet connection")
-        }
-
         RemoteImage {
             id: headerImage
 
-            opacity: !newsRequest.hasResult ? 0:1
+            opacity: !ready ? 0:1
 
             Behavior on opacity {
                 FadeAnimation { duration: 150 }
@@ -110,7 +113,7 @@ Page {
         Column {
             id: columnHeader
 
-            opacity: !newsRequest.hasResult ? 0:1
+            opacity: !ready ? 0:1
 
             Behavior on opacity {
                 FadeAnimation { duration: 500 }
@@ -183,7 +186,7 @@ Page {
         Column {
             id: columnContent
 
-            opacity: !newsRequest.hasResult ? 0:1
+            opacity: !ready ? 0:1
 
             Behavior on opacity {
                 FadeAnimation { duration: 1000 }
@@ -203,19 +206,21 @@ Page {
             width: 1
         }
 
-        ViewPlaceholder {
-            enabled: newsRequest.error > 0
-            text: qsTr("Failed to load news")
-            hintText: qsTr("Check your internet connection")
-        }
+//        ViewPlaceholder {
+//            enabled: newsRequest.error > 0
+//            text: qsTr("Failed to load news")
+//            hintText: qsTr("Check your internet connection")
+//        }
     }
-
-    onStatusChanged: if (status === PageStatus.Active) refresh(true)
 
     function refreshContent() {
         for(var i = columnContent.children.length; i > 0; i--) {
             columnContent.children[i-1].destroy()
         }
+
+        if (news === undefined) return
+
+        if (!news.hasOwnProperty("content")) return
 
         var count = news.content.length
         for(var j = 0; j < count; j++) {
@@ -258,16 +263,27 @@ Page {
                 component = Qt.createComponent("../content/ContentWebview.qml")
                 item = item.webview
             } else {
-                if (!(settings.developerOptions & DeveloperOption.ShowUnkownContent))
-                    continue
-
-                component = Qt.createComponent("../content/ContentUnkown.qml")
+                if (config.developerMode) component = Qt.createComponent("../content/ContentUnkown.qml")
             }
 
             if (component.status !== Component.Ready)
                 console.log("NOT READY")
 
             var obj = component.createObject(columnContent, {item: item})
+        }
+    }
+
+    Component.onCompleted: {
+        if (link.length > 0) {
+            console.log("link available")
+            refresh()
+            return
+        }
+
+        if (news !== undefined) {
+            ready = true
+            refreshContent()
+            checkForUpdate()
         }
     }
 }

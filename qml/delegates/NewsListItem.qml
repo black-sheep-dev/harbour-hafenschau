@@ -1,12 +1,18 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 import "../components/"
 
 ListItem {
     contentHeight: contentRow.height + separatorBottom.height
+
+    menu: ContextMenu {
+        enabled: modelData.shareURL.length > 0
+        MenuItem {
+            text: qsTr("Copy link to clipboard")
+            onClicked: Clipboard.text = modelData.shareURL
+        }
+    }
 
     Row {
         id: contentRow
@@ -20,12 +26,12 @@ ListItem {
             width: Theme.itemSizeExtraLarge
             height: Theme.itemSizeExtraLarge * 1.4
 
-            source: model.thumbnail
+            source: modelData.teaserImage.portraetgross8x9.imageurl
             placeholderUrl: "/usr/share/harbour-hafenschau/images/dummy_thumbnail.png"
 
 
             Image {
-                visible: model.type === NewsType.Video
+                visible: modelData.type === "video"
                 anchors.centerIn: parent
                 source: "image://theme/icon-m-play"
             }
@@ -37,7 +43,7 @@ ListItem {
             spacing: Theme.paddingSmall
 
             Label {
-                text: model.type === NewsType.Video ? model.datetime.toLocaleString() : model.topline
+                text: modelData.type === "video" ? new Date(modelData.date).toLocaleString() : modelData.topline
 
                 width: parent.width
                 wrapMode: Text.WordWrap
@@ -45,7 +51,7 @@ ListItem {
                 font.pixelSize: Theme.fontSizeExtraSmall
             }
             Label {
-                text: model.title
+                text: modelData.title
 
                 width: parent.width
                 wrapMode: Text.WordWrap
@@ -54,7 +60,7 @@ ListItem {
                 color: Theme.highlightColor
             }
             Label {
-                text: model.firstSentence
+                text: modelData.hasOwnProperty("firstSentence") ? modelData.firstSentence : ""
                 width: parent.width
                 wrapMode: Text.WordWrap
 

@@ -2,8 +2,6 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import Nemo.KeepAlive 1.2
 
-import org.nubecula.harbour.hafenschau 1.0
-
 Page {
     id: page
 
@@ -43,9 +41,9 @@ Page {
                 text: qsTr("Adaptive Streaming")
                 description: qsTr("Use adaptive streaming when possible")
 
-                onCheckedChanged: settings.videoQualityAdaptive = checked
+                onCheckedChanged: config.videoQualityAdaptive = checked
 
-                Component.onCompleted: checked = settings.videoQualityAdaptive
+                Component.onCompleted: checked = config.videoQualityAdaptive
             }
 
             ComboBox {
@@ -59,8 +57,8 @@ Page {
                     MenuItem { text: qsTr("High") }
                 }
 
-                onCurrentIndexChanged: settings.videoQuality = currentIndex
-                Component.onCompleted: currentIndex = settings.videoQuality
+                onCurrentIndexChanged: config.videoQuality = currentIndex
+                Component.onCompleted: currentIndex = config.videoQuality
             }
 
 

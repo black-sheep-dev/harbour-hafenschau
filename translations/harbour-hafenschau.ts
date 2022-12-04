@@ -27,27 +27,35 @@
         <source>Sources</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Social</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Donations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you like my work why not buy me a beer?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Donate with PayPal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Donate with Liberpay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CommentsListPage</name>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sort descending</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sort ascending</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hide search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -76,6 +84,21 @@
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Sort descending</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort ascending</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CommentsModel</name>
+    <message>
+        <source>Failed to fetch comments</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -110,17 +133,16 @@
     </message>
 </context>
 <context>
+    <name>NewsListItem</name>
+    <message>
+        <source>Copy link to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>NewsListPage</name>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hide search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -143,8 +165,19 @@
         <source>Load more</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>NewsModel</name>
     <message>
-        <source>Copy link to clipboard</source>
+        <source>No updates available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to fetch news</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to fetch more news</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -163,19 +196,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save news data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to load news</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Check your internet connection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Copy link to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to fetch news</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show raw data</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -264,6 +293,10 @@
         <source>Type in a search pattern to find content</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to search</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsAutoRefreshPage</name>
@@ -307,17 +340,6 @@
     </message>
 </context>
 <context>
-    <name>SettingsCachePage</name>
-    <message>
-        <source>Cache Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reset</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>SettingsCoverPage</name>
     <message>
         <source>Cover Settings</source>
@@ -355,27 +377,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save news api data</source>
+        <source>Developer mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>When activated an option to save the raw api data is available in pulldown menu on every reader page.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The data is stored in Documents folder on the device.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>When there is a problem with displaying a special news, provide this data on GitHub as an issue to help fixing it. An additional screenshot helps too!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show unkown content</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>If enabled unkown content items are displayed in the reader page.</source>
+        <source>When active some developer options are available inside the app</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -387,22 +393,6 @@
     </message>
     <message>
         <source>Select regional news</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Developer Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Manage developer options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show about page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -426,14 +416,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cache Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Manage cache options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Webview Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -449,6 +431,14 @@
         <source>Manage video settings</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Developer Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage developer options</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsRegionsPage</name>
@@ -457,11 +447,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Regional News</source>
+        <source>Reset region settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reset region settings</source>
+        <source>Regional News</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -538,7 +528,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Copy link to clipboard</source>
+        <source>About</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -562,6 +552,13 @@
     </message>
     <message>
         <source>Livestream of parliamentary sessions</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>harbour-hafenschau</name>
+    <message>
+        <source>Hafenschau</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

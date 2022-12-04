@@ -1,11 +1,11 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 import "../delegates"
+import "../."
 
 Page {
+    property bool busy: false
     property int ressort: Ressort.Search
     property string ressortTitle
 
@@ -13,33 +13,32 @@ Page {
     property int totalItemCount: 0
     readonly property int pageSize: 20
 
+    property var items: []
+
     function search() {
-        searchRequest.query = "https://www.tagesschau.de/api2/search/"
+        var query = "https://www.tagesschau.de/api2/search/"
                 + "?searchText=" + searchField.text
                 + "&resultPage=" + currentPage
                 + "&pageSize=" + pageSize
 
-        api.request(searchRequest)
+        busy = true
+        Api.request(query, function(data, status) {
+            busy = false
+            if (status !== 200) {
+                notify.show(qsTr("Failed to search"))
+                return
+            }
+
+            totalItemCount = data.totalItemCount
+            items = items.concat(data.searchResults)
+        })
     }
 
     function reset() {
         currentPage = 0
         totalItemCount = 0
         searchField.text = ""
-        newsModel.clear()
-    }
-
-    ApiRequest {
-        id: searchRequest
-
-        onFinished: {
-            if (currentPage > 0) {
-                newsModel.addItems(result.searchResults)
-            } else {
-                newsModel.setItems(result.searchResults)
-            }
-            totalItemCount = result.totalItemCount
-        }
+        items = []
     }
 
     id: page
@@ -48,7 +47,7 @@ Page {
 
     SilicaFlickable {
         PushUpMenu {
-            busy: searchRequest.loading
+            busy: busy
             visible: totalItemCount  > pageSize * currentPage + 1
             MenuItem {
                 text: qsTr("Load more") + " (" + (currentPage + 1) + "/" + (Math.floor(totalItemCount / pageSize)) + ")"
@@ -86,7 +85,7 @@ Page {
         }
 
         PageBusyIndicator {
-            running: searchRequest.loading && listView.count === 0
+            running: busy && listView.count === 0
         }
 
         SilicaListView {
@@ -98,29 +97,24 @@ Page {
 
             clip: true
 
-            model: NewsListModel {
-                property bool error: false
-                property bool loading: false
-
-                id: newsModel
-            }
+            model: items
 
             delegate: NewsListItem {
                 id: delegate
 
                 onClicked: {
-                    if (model.type === NewsType.WebView) {
-                        pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), {url: model.detailsWeb })
-                    } else if (model.type === NewsType.Video) {
-                        pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {streams: model.streams})
+                    if (modelData.type === "webview") {
+                        pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), {url: modelData.detailsWeb })
+                    } else if (modelData.type === "video") {
+                        pageStack.push(Qt.resolvedUrl("../pages/VideoPlayerPage.qml"), {streams: modelData.streams})
                     } else {
-                        pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {link: model.details})
+                        pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {link: modelData.details})
                     }
                 }
             }
 
             ViewPlaceholder {
-                enabled: listView.count === 0 && !searchRequest.loading
+                enabled: listView.count === 0 && busy
                 text: qsTr("No content found")
                 hintText: qsTr("Type in a search pattern to find content")
             }

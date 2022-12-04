@@ -1,14 +1,12 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 import "../components/"
 import "../."
 
 CoverBackground {
     function increment() {
-        if (currentCoverIndex === (mainModel.count - 1)) {
+        if (currentCoverIndex === (mainNews.items.length - 1)) {
             currentCoverIndex = 0
         } else {
             currentCoverIndex++
@@ -16,17 +14,17 @@ CoverBackground {
     }
 
     Connections {
-        target: mainModel
-        onCountChanged: currentCoverIndex = 0
+        target: mainNews
+        onItemsChanged: currentCoverIndex = 0
     }
 
     id: coverBackground
 
     Timer {
         id: timer
-        interval: settings.coverSwitchInterval
+        interval: config.coverSwitchInterval
         repeat: true
-        running: settings.coverSwitch
+        running: config.coverSwitch
 
         onTriggered: increment()
     }
@@ -36,11 +34,11 @@ CoverBackground {
         height: parent.height
 
         Behavior on x {
-            NumberAnimation { duration: currentCoverIndex === (mainModel.count - 1) ? 0 : 250 }
+            NumberAnimation { duration: currentCoverIndex === (mainNews.items.length - 1) ? 0 : 250 }
         }
 
         Repeater {
-            model: mainModel
+            model: mainNews.items
 
             Rectangle {
                 width: coverBackground.width
@@ -55,7 +53,7 @@ CoverBackground {
 
                     opacity: 0.5
 
-                    source: model.thumbnail
+                    source: modelData.teaserImage.portraetgross8x9.imageurl
                 }
 
                 Column {
@@ -70,7 +68,7 @@ CoverBackground {
                     Label {
                         x: Theme.horizontalPageMargin
                         width: parent.width - 2*x
-                        text: model.title
+                        text: modelData.title
                         font.bold: true
                         wrapMode: Text.WordWrap
                         font.pixelSize: Theme.fontSizeSmall
@@ -79,7 +77,7 @@ CoverBackground {
                     Label {
                         x: Theme.horizontalPageMargin
                         width: parent.width - 2*x
-                        text: model.firstSentence
+                        text: modelData.hasOwnProperty("firstSentence") ? modelData.firstSentence : ""
                         wrapMode: Text.WordWrap
                         font.pixelSize: Theme.fontSizeExtraSmall
                     }
@@ -93,7 +91,7 @@ CoverBackground {
 
         CoverAction {
             iconSource: "image://theme/icon-cover-refresh"
-            onTriggered: mainModel.checkForUpdate()
+            onTriggered: mainNews.refresh()
         }
 
         CoverAction {

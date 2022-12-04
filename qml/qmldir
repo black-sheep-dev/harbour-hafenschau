@@ -1,2 +1,3 @@
 #qmldir
 singleton Global 1.0 global.qml
+singleton Api 1.0 api.qml

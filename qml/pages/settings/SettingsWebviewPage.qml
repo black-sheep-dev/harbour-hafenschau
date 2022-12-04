@@ -28,9 +28,9 @@ Page {
                 text: qsTr("Internal Webview")
                 description: qsTr("When deactivated the web content will be opened in the extarnal browser instead of the internal webview.")
 
-                onCheckedChanged:  settings.internalWebView = checked
+                onCheckedChanged:  config.internalWebView = checked
 
-                Component.onCompleted: checked = settings.internalWebView
+                Component.onCompleted: checked = config.internalWebView
             }
 
         }

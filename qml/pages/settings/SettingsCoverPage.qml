@@ -28,8 +28,8 @@ Page {
                 text: qsTr("Show news directly")
                 description: qsTr("Open news instead of news list when pressing cover.")
 
-                onCheckedChanged: settings.coverShowNews = checked
-                Component.onCompleted: checked = settings.coverShowNews
+                onCheckedChanged: config.coverShowNews = checked
+                Component.onCompleted: checked = config.coverShowNews
             }
 
             TextSwitch {
@@ -39,8 +39,8 @@ Page {
                 text: qsTr("Switch Cover")
                 description: qsTr("Turns on automatic switch of cover pages in a defined interval.")
 
-                onCheckedChanged: settings.coverSwitch = checked
-                Component.onCompleted: checked = settings.coverSwitch
+                onCheckedChanged: config.coverSwitch = checked
+                Component.onCompleted: checked = config.coverSwitch
             }
 
             TextField {
@@ -56,8 +56,8 @@ Page {
                 label: qsTr("Update interval (msec)")
                 description: qsTr("Update interval for cover page switch")
 
-                onTextChanged: settings.coverSwitchInterval = text
-                Component.onCompleted: text = settings.coverSwitchInterval
+                onTextChanged: config.coverSwitchInterval = text
+                Component.onCompleted: text = config.coverSwitchInterval
             }
         }
     }

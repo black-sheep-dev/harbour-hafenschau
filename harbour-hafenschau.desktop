@@ -1,10 +1,9 @@
 [Desktop Entry]
 Type=Application
-Icon=harbour-hafenschau
 X-Nemo-Application-Type=silica-qt5
-Exec=harbour-hafenschau
+Icon=harbour-hafenschau
+Exec=sailfish-qml harbour-hafenschau
 Name=Hafenschau
-Categories=Network
 
 [X-Sailjail]
 OrganizationName=org.nubecula

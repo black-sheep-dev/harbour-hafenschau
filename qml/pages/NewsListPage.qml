@@ -1,231 +1,98 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import org.nubecula.harbour.hafenschau 1.0
-
 import "../delegates"
+import "../models"
 import "../."
 
 Page {
     property string ressortTitle
-    property int ressort: Ressort.Undefined
-    property string ressortQuery
+    property string ressort: ""
 
     id: page
 
     allowedOrientations: Orientation.All
 
-    function refresh() {
-        newsRequest.query = "https://www.tagesschau.de/api2/news/" + ressortQuery
-        api.request(newsRequest)
-    }
-
-    function loadMore() {
-        api.request(loadMoreRequest)
-    }
-
-    ApiRequest {
-        id: newsRequest
-
-        onFinished: {
-            newsModel.setItems(result.news)
-            loadMoreRequest.query = result.nextPage
-        }
-    }
-
-    ApiRequest {
-        id: loadMoreRequest
-
-        onFinished: {
-            newsModel.addItems(result.news)
-            loadMoreRequest.query = result.nextPage
-        }
+    NewsModel {
+        id: newsModel
+        url: "https://tagesschau.de/api2/news?ressort=" + ressort
     }
 
     PageBusyIndicator {
-        running: newsRequest.loading && listView.count === 0
+        running: newsModel.busy && listView.count === 0
     }
 
-    SilicaFlickable {
+    SilicaListView {
         PullDownMenu {
-            busy: newsRequest.loading || loadMoreRequest.loading
+            busy: newsModel.busy
 
             MenuItem {
                 text: qsTr("Refresh")
-                onClicked: refresh()
-            }
-            MenuItem {
-                text: listView.showSearch ? qsTr("Hide search") : qsTr("Search")
-                onClicked: {
-                    listView.showSearch = !listView.showSearch
-
-                    if (!listView.showSearch) {
-                        searchField.focus = false
-                        searchField.text = ""
-                    }
-                }
+                onClicked: newsModel.refresh()
             }
         }
 
         PushUpMenu {
-            busy: newsRequest.loading || loadMoreRequest.loading
+            busy: newsModel.busy
 
-            visible: loadMoreRequest.query.length > 0
+            visible: newsModel.nextPage.length > 0
 
             MenuItem  {
                 text: qsTr("Load more")
-                onClicked: loadMore()
+                onClicked: newsModel.loadMore()
             }
         }
 
+        id: listView
         anchors.fill: parent
 
-        Column {
-            id: header
-            width: parent.width
-
-            PageHeader {
-                title: page.ressortTitle
-            }
-
-            SearchField {
-                id: searchField
-                width: parent.width
-                height: listView.showSearch ? implicitHeight : 0
-                opacity: listView.showSearch ? 1 : 0
-                onTextChanged: {
-                    filterModel.setFilterFixedString(text)
-                }
-
-                EnterKey.onClicked: searchField.focus = false
-
-                Connections {
-                    target: listView
-                    onShowSearchChanged: {
-                        searchField.forceActiveFocus()
-                    }
-                }
-
-                Behavior on height {
-                    NumberAnimation { duration: 300 }
-                }
-                Behavior on opacity {
-                    NumberAnimation { duration: 300 }
-                }
-            }
+        header: PageHeader {
+            title: page.ressortTitle
         }
 
-        SilicaListView {
-            property bool showSearch: false
 
-            id: listView
 
-            width: parent.width
-            anchors.top: header.bottom
-            anchors.bottom: parent.bottom
+        clip: true
 
-            clip: true
+        model: newsModel.items
 
-            model: NewsSortFilterModel {
-                id: filterModel
-                sourceModel: NewsListModel { id: newsModel }
-            }
+        delegate: NewsListItem {
+            id: delegate
 
-            delegate: NewsListItem {
-                id: delegate
 
-                menu: ContextMenu {
-                    enabled: model.shareUrl.length > 0
-                    MenuItem {
-                        text: qsTr("Copy link to clipboard")
-                        onClicked: Clipboard.text = model.shareUrl
-                    }
-                }
 
-                onClicked: {
-                    if (model.type === NewsType.WebView) {
-                        if (settings.internalWebView) {
-                            pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), {url: model.detailsWeb })
-                        } else {
-                            Qt.openUrlExternally(model.detailsWeb)
-                        }
-                    } else if (model.type === NewsType.Video) {
-                        pageStack.push(Qt.resolvedUrl("VideoPlayerPage.qml"), {
-                                                   title: model.title,
-                                                   streams: model.streams
-                                               })
+            onClicked: {
+                if (modelData.type === "webview") {
+                    if (config.internalWebView) {
+                        pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), {url: modelData.detailsweb })
                     } else {
-                        pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {link: model.details})
+                        Qt.openUrlExternally(modelData.detailsweb)
                     }
+                } else if (modelData.type === "video") {
+                    pageStack.push(Qt.resolvedUrl("VideoPlayerPage.qml"), {
+                                               title: modelData.title,
+                                               streams: modelData.streams
+                                           })
+                } else {
+                    pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {link: modelData.details})
                 }
             }
+        }
 
-            ViewPlaceholder {
-                enabled: listView.count === 0 && newsRequest.hasResult
-                text: qsTr("No news available")
-                hintText: {
-                    if (ressort === Ressort.Regional)
-                        return qsTr("Please select some regions in settings first!")
-                    else
-                        return qsTr("Please refresh or check internet connection!")
-                }
+        ViewPlaceholder {
+            enabled: listView.count === 0 && !newsModel.busy
+            text: qsTr("No news available")
+            hintText: {
+                if (ressort === "regional")
+                    return qsTr("Please select some regions in settings first!")
+                else
+                    return qsTr("Please refresh or check internet connection!")
             }
-
-            VerticalScrollDecorator {}
-        }
-    }
-
-    onStatusChanged: {
-        if (status === PageStatus.Active) {
-            refresh()
-        } else if (status === PageStatus.Deactivating) {
-            searchField.focus = false
-            searchField.text = ""
-            listView.showSearch = false
         }
 
+        VerticalScrollDecorator {}
     }
 
-    Component.onCompleted: {
-        const query = "?ressort="
-
-        switch (ressort) {
-        case Ressort.Ausland:
-            query += "ausland"
-            break;
-
-        case Ressort.Inland:
-            query += "inland"
-            break;
-
-        case Ressort.Investigativ:
-            query += "investigativ"
-            break;
-
-        case Ressort.Regional:
-            query = "?regions=" + Global.activeRegions.join(',')
-            break;
-
-        case Ressort.Search:
-            break;
-
-        case Ressort.Sport:
-            query += "sport"
-            break;
-
-        case Ressort.Video:
-            query += "video"
-            break;
-
-        case Ressort.Wirtschaft:
-            query += "wirtschaft"
-            break;
-
-        default:
-            break;
-        }
-
-        ressortQuery = query
-    }
+    onRessortChanged: newsModel.fetch()
 }
 

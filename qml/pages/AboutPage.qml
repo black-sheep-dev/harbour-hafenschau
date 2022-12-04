@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import Nemo.DBus 2.0
+
+import "../."
 
 Page {
     readonly property string appId: "harbour-hafenschau"
@@ -8,16 +9,6 @@ Page {
     id: page
 
     allowedOrientations: Orientation.All
-
-//    DBusInterface {
-//        id: sailHubInterface
-
-//        service: "org.nubecula.sailhub"
-//        iface: "org.nubecula.sailhub"
-//        path: "/"
-
-//        onStatusChanged: console.log("DBUS :" + status)
-//    }
 
     SilicaFlickable {
         anchors.fill: parent
@@ -39,7 +30,6 @@ Page {
                 height: parent.width / 2
                 width: parent.width / 2
                 anchors.horizontalCenter: parent.horizontalCenter
-                opacity: 0.7
             }
 
             Label {
@@ -54,7 +44,7 @@ Page {
             Label {
                 width: parent.width
                 x : Theme.horizontalPageMargin
-                text: Qt.application.version
+                text: Global.appVersion
             }
 
             Label {
@@ -77,7 +67,79 @@ Page {
                       + qsTr("This project tries to offer a solution to consume the contents of the German public broadcasting under Sailfish OS, since there is no native application.")  
             }
 
-            SectionHeader{
+            SectionHeader {
+                text: qsTr("Social")
+            }
+
+            BackgroundItem {
+                width: parent.width
+                height: Theme.itemSizeMedium
+                contentHeight: Theme.itemSizeMedium
+                Row{
+                    width:parent.width - 2 * x
+                    height: parent.height
+                    x:Theme.horizontalPageMargin
+                    spacing:Theme.paddingLarge
+
+                    Image {
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: parent.height * 0.8
+                        height: width
+                        source: "/usr/share/harbour-" + Qt.application.name + "/icons/mastodon.svg"
+                    }
+
+                    Label{
+                        width: parent.width - parent.height - parent.spacing
+                        anchors.verticalCenter: parent.verticalCenter
+                        wrapMode: Text.WrapAnywhere
+                        font.pixelSize: Theme.fontSizeSmall
+
+                        text: "@" + Qt.application.name + "@social.nubecula.org"
+                        color: parent.parent.pressed ? Theme.highlightColor : Theme.primaryColor
+
+                    }
+                }
+                onClicked: {
+                    notification.show(qsTr("Copied to clipboard"))
+                    Clipboard.text = "@hafenschau@social.nubecula.org"
+                }
+            }
+
+            ListItem {
+                width: parent.width
+                height: Theme.itemSizeMedium
+                contentHeight: Theme.itemSizeMedium
+                Row{
+                    width:parent.width - 2 * x
+                    height: parent.height
+                    x:Theme.horizontalPageMargin
+                    spacing:Theme.paddingLarge
+
+                    Image {
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: parent.height * 0.8
+                        height: width
+                        source: "/usr/share/harbour-" + Qt.application.name + "/icons/mastodon.svg"
+                    }
+
+                    Label{
+                        width: parent.width - parent.height - parent.spacing
+                        anchors.verticalCenter: parent.verticalCenter
+                        wrapMode: Text.WrapAnywhere
+                        font.pixelSize: Theme.fontSizeSmall
+
+                        text: "@blacksheep@social.nubecula.org"
+                        color: parent.parent.pressed ? Theme.highlightColor : Theme.primaryColor
+
+                    }
+                }
+                onClicked: {
+                    notification.show(qsTr("Copied to clipboard"))
+                    Clipboard.text = "@blacksheep@social.nubecula.org"
+                }
+            }
+
+            SectionHeader {
                 text: qsTr("Sources")
             }
 
@@ -88,12 +150,13 @@ Page {
                     width:parent.width - 2 * x
                     height: parent.height
                     x:Theme.horizontalPageMargin
-                    spacing:Theme.paddingMedium
+                    spacing:Theme.paddingLarge
 
                     Image {
-                        width: parent.height
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: parent.height * 0.8
                         height: width
-                        source: "qrc:///icons/git"
+                        source: "/usr/share/harbour-" + Qt.application.name + "/icons/github.svg"
                     }
 
                     Label{
@@ -102,7 +165,7 @@ Page {
                         wrapMode: Text.WrapAnywhere
                         font.pixelSize: Theme.fontSizeSmall
 
-                        text: "https://github.com/black-sheep-dev/" + appId
+                        text: "https://github.com/black-sheep-dev/harbour-" + Qt.application.name
                         color: parent.parent.pressed ? Theme.highlightColor : Theme.primaryColor
 
                     }
@@ -110,14 +173,78 @@ Page {
                 onClicked: Qt.openUrlExternally("https://github.com/black-sheep-dev/"  + appId)
             }
 
-//            ButtonLayout {
-//                width: parent.width
+            SectionHeader{
+                text: qsTr("Donations")
+            }
 
-//                Button {
-//                    text: qsTr("Give star")
-//                    onClicked: sailHubInterface.call("addStar", ["black-sheep-dev", appId])
-//                }
-//            }
+            Label {
+                x : Theme.horizontalPageMargin
+                width: parent.width - 2*x
+
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeSmall
+
+                text: qsTr("If you like my work why not buy me a beer?")
+            }
+
+            BackgroundItem{
+                width: parent.width
+                height: Theme.itemSizeMedium
+
+                Row{
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2*x
+                    height: parent.height
+                    spacing:Theme.paddingLarge
+
+                    Image {
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: parent.height * 0.8
+                        height: width
+                        fillMode: Image.PreserveAspectFit
+                        source: "/usr/share/harbour-" + Qt.application.name + "/icons/paypal.svg"
+                    }
+                    Label{
+                        width: parent.width - parent.height - parent.spacing
+                        anchors.verticalCenter: parent.verticalCenter
+                        wrapMode: Text.WrapAnywhere
+                        font.pixelSize: Theme.fontSizeSmall
+                        color: parent.parent.pressed ? Theme.highlightColor : Theme.primaryColor
+                        text: qsTr("Donate with PayPal")
+                    }
+                }
+                onClicked: Qt.openUrlExternally("https://www.paypal.com/paypalme/nubecula/1")
+            }
+
+            BackgroundItem{
+                width: parent.width
+                height: Theme.itemSizeMedium
+
+                Row{
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2*x
+                    height: parent.height
+
+                    spacing:Theme.paddingLarge
+
+                    Image {
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: parent.height * 0.8
+                        height: width
+                        fillMode: Image.PreserveAspectFit
+                        source: "/usr/share/harbour-" + Qt.application.name + "/icons/liberpay.svg"
+                    }
+                    Label{
+                        width: parent.width - parent.height - parent.spacing
+                        anchors.verticalCenter: parent.verticalCenter
+                        wrapMode: Text.WrapAnywhere
+                        font.pixelSize: Theme.fontSizeSmall
+                        color: parent.parent.pressed ? Theme.highlightColor : Theme.primaryColor
+                        text: qsTr("Donate with Liberpay")
+                    }
+                }
+                onClicked: Qt.openUrlExternally("https://liberapay.com/black-sheep-dev/donate")
+            }
 
             Item {
                 width: 1
