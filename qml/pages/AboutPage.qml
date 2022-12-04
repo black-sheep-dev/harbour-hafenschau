@@ -100,7 +100,7 @@ Page {
                     }
                 }
                 onClicked: {
-                    notification.show(qsTr("Copied to clipboard"))
+                    notify.show(qsTr("Copied to clipboard"))
                     Clipboard.text = "@hafenschau@social.nubecula.org"
                 }
             }
@@ -134,7 +134,7 @@ Page {
                     }
                 }
                 onClicked: {
-                    notification.show(qsTr("Copied to clipboard"))
+                    notify.show(qsTr("Copied to clipboard"))
                     Clipboard.text = "@blacksheep@social.nubecula.org"
                 }
             }
