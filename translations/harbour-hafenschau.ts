@@ -142,7 +142,15 @@
 <context>
     <name>NewsListPage</name>
     <message>
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
         <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load more</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -155,14 +163,6 @@
     </message>
     <message>
         <source>Please refresh or check internet connection!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source></source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Load more</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

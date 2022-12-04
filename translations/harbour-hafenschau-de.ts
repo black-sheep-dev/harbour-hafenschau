@@ -142,8 +142,16 @@
 <context>
     <name>NewsListPage</name>
     <message>
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
+    </message>
+    <message>
+        <source>Load more</source>
+        <translation>Lade mehr</translation>
     </message>
     <message>
         <source>No news available</source>
@@ -151,19 +159,11 @@
     </message>
     <message>
         <source>Please select some regions in settings first!</source>
-        <translation>Bitte zuerst einige Regionen in den Einstellungen festlegen!</translation>
+        <translation>Bitte zuerst eine Region in den Einstellungen auswählen!</translation>
     </message>
     <message>
         <source>Please refresh or check internet connection!</source>
-        <translation>Bitte aktualisieren oder die Internetverbindung prüfen!</translation>
-    </message>
-    <message>
-        <source></source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Load more</source>
-        <translation>Mehr laden</translation>
+        <translation>Aktualisieren oder die Internetverbindung prüfen!</translation>
     </message>
 </context>
 <context>
