@@ -1,3 +1,6 @@
+* Sun Dec 04 2022 Black Sheep <blacksheep@nubecula.org> 0.9.1-1
+- Fixed bug with regional news
+
 * Sun Dec 04 2022 Black Sheep <blacksheep@nubecula.org> 0.9.0-1
 - Switched app to QML only noaarch
 
