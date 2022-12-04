@@ -4,19 +4,22 @@ on:
 
 jobs:
   build:
-    - name: get latest hafenschau release
-      uri:
-      url: https://api.github.com/repos/black-sheep-dev/harbour-hafenschau/releases/latest
-      body_format: json
-      return_content: yes
-      register: hafenschauversion
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: get latest hafenschau release
+        uri:
+        url: https://api.github.com/repos/black-sheep-dev/harbour-hafenschau/releases/latest
+        body_format: json
+        return_content: yes
+        register: hafenschauversion
 
-    - name: Send toot to Mastodon
-      id: mastodon
-      uses: cbrgm/mastodon-github-action@v1
-      with:
-        message: "Hafenschau for #SailfishOS released version {{hafenschauversion.json.tag_name}}. Please check #Chum or #OpenRepos for the new version."
-        visibility: "public" # default: public
-      env:
-        MASTODON_URL: ${{ secrets.MASTODON_URL }} # https://example.social
-        MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }} # access token 
+      - name: Send toot to Mastodon
+        id: mastodon
+        uses: cbrgm/mastodon-github-action@v1
+        with:
+          message: "Hafenschau for #SailfishOS released version {{hafenschauversion.json.tag_name}}. Please check #Chum or #OpenRepos for the new version."
+          visibility: "public" # default: public
+        env:
+          MASTODON_URL: ${{ secrets.MASTODON_URL }} # https://example.social
+          MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }} # access token 
