@@ -33,3 +33,7 @@ With this option you are able to save the news item data for debugging purpose. 
 #### Intention of this project
 
 This app is part of my plan to replace all android apps I use with native ones. If they don't exist, I will try to create one.
+
+## Social Media
+
+Follow this project on [Mastodon](https://social.nubecula.org/@hafenschau)
