@@ -178,7 +178,7 @@
     </message>
     <message>
         <source>Failed to fetch more news</source>
-        <translation>Laden von weiteren Nachrichten fehlgeschlagen</translation>
+        <translation>Konnte keine weiteren Nachrichten laden</translation>
     </message>
 </context>
 <context>
