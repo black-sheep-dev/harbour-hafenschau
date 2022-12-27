@@ -1,3 +1,7 @@
+* Tue Dec 27 2022 Black Sheep <blacksheep@nubecula.org> 0.9.2-1
+- Switched to ListModel from raw array in ListViews
+- Visual improvements
+
 * Sun Dec 04 2022 Black Sheep <blacksheep@nubecula.org> 0.9.1-1
 - Fixed bug with regional news
 
