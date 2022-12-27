@@ -269,7 +269,7 @@ Page {
             if (component.status !== Component.Ready)
                 console.log("NOT READY")
 
-            var obj = component.createObject(columnContent, {item: item})
+            var obj = component.createObject(columnContent, { item: item })
         }
     }
 

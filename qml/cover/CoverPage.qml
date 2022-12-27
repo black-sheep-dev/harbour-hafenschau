@@ -6,7 +6,7 @@ import "../."
 
 CoverBackground {
     function increment() {
-        if (currentCoverIndex === (mainNews.items.length - 1)) {
+        if (currentCoverIndex === (mainNews.count - 1)) {
             currentCoverIndex = 0
         } else {
             currentCoverIndex++
@@ -15,7 +15,7 @@ CoverBackground {
 
     Connections {
         target: mainNews
-        onItemsChanged: currentCoverIndex = 0
+        onUpdated: currentCoverIndex = 0
     }
 
     id: coverBackground
@@ -34,11 +34,11 @@ CoverBackground {
         height: parent.height
 
         Behavior on x {
-            NumberAnimation { duration: currentCoverIndex === (mainNews.items.length - 1) ? 0 : 250 }
+            NumberAnimation { duration: currentCoverIndex === (mainNews.count - 1) ? 0 : 250 }
         }
 
         Repeater {
-            model: mainNews.items
+            model: mainNews
 
             Rectangle {
                 width: coverBackground.width
@@ -53,7 +53,7 @@ CoverBackground {
 
                     opacity: 0.5
 
-                    source: modelData.teaserImage.portraetgross8x9.imageurl
+                    source: teaserImage.portraetgross8x9.imageurl
                 }
 
                 Column {
@@ -68,18 +68,20 @@ CoverBackground {
                     Label {
                         x: Theme.horizontalPageMargin
                         width: parent.width - 2*x
-                        text: modelData.title
+                        text: title
                         font.bold: true
                         wrapMode: Text.WordWrap
                         font.pixelSize: Theme.fontSizeSmall
+                        truncationMode: TruncationMode.Fade
                     }
 
                     Label {
                         x: Theme.horizontalPageMargin
                         width: parent.width - 2*x
-                        text: modelData.hasOwnProperty("firstSentence") ? modelData.firstSentence : ""
+                        text: model.hasOwnProperty("firstSentence") ? firstSentence : ""
                         wrapMode: Text.WordWrap
                         font.pixelSize: Theme.fontSizeExtraSmall
+                        truncationMode: TruncationMode.Fade
                     }
                 }
             }

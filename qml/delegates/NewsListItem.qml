@@ -7,10 +7,10 @@ ListItem {
     contentHeight: contentRow.height + separatorBottom.height
 
     menu: ContextMenu {
-        enabled: modelData.shareURL.length > 0
+        enabled: model.hasOwnProperty("shareURL")
         MenuItem {
             text: qsTr("Copy link to clipboard")
-            onClicked: Clipboard.text = modelData.shareURL
+            onClicked: Clipboard.text = shareURL
         }
     }
 
@@ -26,12 +26,12 @@ ListItem {
             width: Theme.itemSizeExtraLarge
             height: Theme.itemSizeExtraLarge * 1.4
 
-            source: modelData.teaserImage.portraetgross8x9.imageurl
+            source: teaserImage.portraetgross8x9.imageurl
             placeholderUrl: "/usr/share/harbour-hafenschau/images/dummy_thumbnail.png"
 
 
             Image {
-                visible: modelData.type === "video"
+                visible: type === "video"
                 anchors.centerIn: parent
                 source: "image://theme/icon-m-play"
             }
@@ -43,7 +43,7 @@ ListItem {
             spacing: Theme.paddingSmall
 
             Label {
-                text: modelData.type === "video" ? new Date(modelData.date).toLocaleString() : modelData.topline
+                text: type === "video" ? new Date(date).toLocaleString() : topline
 
                 width: parent.width
                 wrapMode: Text.WordWrap
@@ -51,7 +51,7 @@ ListItem {
                 font.pixelSize: Theme.fontSizeExtraSmall
             }
             Label {
-                text: modelData.title
+                text: title
 
                 width: parent.width
                 wrapMode: Text.WordWrap
@@ -60,7 +60,7 @@ ListItem {
                 color: Theme.highlightColor
             }
             Label {
-                text: modelData.hasOwnProperty("firstSentence") ? modelData.firstSentence : ""
+                text: model.hasOwnProperty("firstSentence") ? firstSentence : ""
                 width: parent.width
                 wrapMode: Text.WordWrap
 

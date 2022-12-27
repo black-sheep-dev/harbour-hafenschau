@@ -51,7 +51,7 @@ Page {
         }
 
         clip: true
-        model: commentsModel.items
+        model: commentsModel
 
         delegate: ListItem {
             contentHeight: contentColumn.height
@@ -62,7 +62,7 @@ Page {
                 spacing: Theme.paddingSmall
 
                 Label {
-                    text: new Date(modelData.Beitragsdatum).toLocaleString()
+                    text: new Date(Beitragsdatum).toLocaleString()
 
                     x: Theme.horizontalPageMargin
                     width: parent.width - 2*x
@@ -72,7 +72,7 @@ Page {
                     color: Theme.highlightColor
                 }
                 Label {
-                    text: qsTr("From") + ": " + modelData.Benutzer
+                    text: qsTr("From") + ": " + Benutzer
 
 
                     x: Theme.horizontalPageMargin
@@ -83,7 +83,7 @@ Page {
                     color: Theme.highlightColor
                 }
                 Label {
-                    text: modelData.Titel
+                    text: Titel
 
                     x: Theme.horizontalPageMargin
                     width: parent.width - 2*x
@@ -93,7 +93,7 @@ Page {
                     color: Theme.highlightColor
                 }
                 Label {
-                    text: modelData.Kommentar
+                    text: Kommentar
                     x: Theme.horizontalPageMargin
                     width: parent.width - 2*x
                     wrapMode: Text.WordWrap

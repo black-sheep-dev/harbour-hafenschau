@@ -38,21 +38,21 @@ Page {
             title: qsTr("Top News")
         }
 
-        model: mainNews.items
+        model: mainNews
 
         delegate: NewsListItem {
             id: delegate
 
             onClicked: {
-                if (modelData.type === "webview") {
+                if (type === "webview") {
                     if (config.internalWebView) {
-                        pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), {url: modelData.detailsweb})
+                        pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), { url: detailsweb })
                     } else {
-                        Qt.openUrlExternally(modelData.detailsweb)
+                        Qt.openUrlExternally(detailsweb)
                     }
 
                 } else {
-                    pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {news: mainNews.items[index]})
+                    pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), { link: details })
                 }
             }
         }

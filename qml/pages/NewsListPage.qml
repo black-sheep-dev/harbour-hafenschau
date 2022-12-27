@@ -14,7 +14,7 @@ Page {
     allowedOrientations: Orientation.All
 
     NewsModel {
-        id: newsModel
+        id: newsResortModel
         url: {
             if (ressort === "regional") {
                 const regions = JSON.parse(config.activeRegions)
@@ -26,27 +26,27 @@ Page {
     }
 
     PageBusyIndicator {
-        running: newsModel.busy && listView.count === 0
+        running: newsResortModel.busy && listView.count === 0
     }
 
     SilicaListView {
         PullDownMenu {
-            busy: newsModel.busy
+            busy: newsResortModel.busy
 
             MenuItem {
                 text: qsTr("Refresh")
-                onClicked: newsModel.refresh()
+                onClicked: newsResortModel.refresh()
             }
         }
 
         PushUpMenu {
-            busy: newsModel.busy
+            busy: newsResortModel.busy
 
-            visible: newsModel.nextPage.length > 0
+            visible: newsResortModel.nextPage.length > 0
 
             MenuItem  {
                 text: qsTr("Load more")
-                onClicked: newsModel.loadMore()
+                onClicked: newsResortModel.loadMore()
             }
         }
 
@@ -61,33 +61,32 @@ Page {
 
         clip: true
 
-        model: newsModel.items
+        model: newsResortModel
+
 
         delegate: NewsListItem {
             id: delegate
 
-
-
             onClicked: {
-                if (modelData.type === "webview") {
+                if (type === "webview") {
                     if (config.internalWebView) {
-                        pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), {url: modelData.detailsweb })
+                        pageStack.push(Qt.resolvedUrl("WebViewPage.qml"), { url: detailsweb })
                     } else {
-                        Qt.openUrlExternally(modelData.detailsweb)
+                        Qt.openUrlExternally(detailsweb)
                     }
-                } else if (modelData.type === "video") {
+                } else if (type === "video") {
                     pageStack.push(Qt.resolvedUrl("VideoPlayerPage.qml"), {
-                                               title: modelData.title,
-                                               streams: modelData.streams
+                                               title: title,
+                                               streams: streams
                                            })
                 } else {
-                    pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), {link: modelData.details})
+                    pageStack.push(Qt.resolvedUrl("ReaderPage.qml"), { link: details })
                 }
             }
         }
 
         ViewPlaceholder {
-            enabled: listView.count === 0 && !newsModel.busy
+            enabled: listView.count === 0 && !newsResortModel.busy
             text: qsTr("No news available")
             hintText: {
                 if (ressort === "regional")
@@ -100,6 +99,6 @@ Page {
         VerticalScrollDecorator {}
     }
 
-    onRessortChanged: newsModel.fetch()
+    onRessortChanged: newsResortModel.fetch()
 }
 

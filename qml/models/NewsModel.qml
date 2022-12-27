@@ -2,12 +2,15 @@ import QtQuick 2.0
 
 import "../."
 
-Item {
+ListModel {
     property bool busy: false
     property string url: ""
     property string nextPage: ""
     property string newStoriesCountLink: ""
-    property var items: []
+
+    id: listModel
+
+    signal updated()
 
     function refresh() {
         if (newStoriesCountLink.length === 0) {
@@ -41,7 +44,6 @@ Item {
     }
 
     function fetch() {
-        console.log(url)
         busy = true
         Api.request(url, function (data, status) {
             busy = false
@@ -54,6 +56,7 @@ Item {
             if (data.hasOwnProperty("newStoriesCountLink")) newStoriesCountLink = data.newStoriesCountLink
 
 
+            const items
             if (data.hasOwnProperty("regional")) {
                 const regions = JSON.parse(config.activeRegions)
 
@@ -77,6 +80,10 @@ Item {
                 items = data.news
             }
 
+            listModel.clear()
+            items.forEach(function(item) { listModel.append(item) })
+            listModel.updated()
+
             if (data.hasOwnProperty("nextPage")) nextPage = data.nextPage
         })
     }
@@ -90,7 +97,8 @@ Item {
                 return
             }
 
-            items = items.concat(data.news)
+            data.news.forEach(function(item) { listModel.append(item) })
+
             nextPage = data.nextPage
         })
     }

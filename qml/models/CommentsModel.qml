@@ -2,7 +2,7 @@ import QtQuick 2.0
 
 import "../."
 
-Item {
+ListModel {
     property bool busy: false
     property bool commentsAllowed: false
     property int count: 0
@@ -11,7 +11,7 @@ Item {
     property string detailsWeb: ""
     property int sortOrder: Qt.AscendingOrder
 
-    property var items: []
+    id: listModel
 
     function refresh() {
         if (details.length > 0) {
@@ -44,11 +44,16 @@ Item {
                 return
             }
 
+            const items
+
             if (sortOrder === Qt.AscendingOrder) {
                 items = data.Items
             } else {
                 items = data.Items.sort(compare)
             }
+
+            listModel.clear()
+            items.forEach(function(item) { listModel.append(item) })
         })
     }
 
@@ -63,5 +68,5 @@ Item {
         }
     }
 
-    onSortOrderChanged: items = items.sort(compare)
+    onSortOrderChanged: fetch()
 }
