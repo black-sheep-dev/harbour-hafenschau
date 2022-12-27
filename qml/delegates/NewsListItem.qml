@@ -49,6 +49,7 @@ ListItem {
                 wrapMode: Text.WordWrap
 
                 font.pixelSize: Theme.fontSizeExtraSmall
+                truncationMode: TruncationMode.Fade
             }
             Label {
                 text: title
@@ -58,6 +59,7 @@ ListItem {
 
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.highlightColor
+                truncationMode: TruncationMode.Fade
             }
             Label {
                 text: model.hasOwnProperty("firstSentence") ? firstSentence : ""
@@ -65,6 +67,7 @@ ListItem {
                 wrapMode: Text.WordWrap
 
                 font.pixelSize: Theme.fontSizeExtraSmall
+                truncationMode: TruncationMode.Fade
             }
             Item {
                 width: 1
