@@ -27,6 +27,7 @@ DISTFILES += qml/harbour-hafenschau.qml \
     qml/global.qml \
     qml/models/CommentsModel.qml \
     qml/models/NewsModel.qml \
+    qml/pages/ChannelsPage.qml \
     qml/pages/CommentsListPage.qml \
     qml/pages/DataReaderPage.qml \
     qml/pages/GalleryPage.qml \

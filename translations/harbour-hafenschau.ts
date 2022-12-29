@@ -53,6 +53,25 @@
     </message>
 </context>
 <context>
+    <name>ChannelsPage</name>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Channels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No channels available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please refresh or check internet connection!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CommentsListPage</name>
     <message>
         <source>Refresh</source>

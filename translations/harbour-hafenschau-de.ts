@@ -53,6 +53,25 @@
     </message>
 </context>
 <context>
+    <name>ChannelsPage</name>
+    <message>
+        <source>Refresh</source>
+        <translation>Aktualisieren</translation>
+    </message>
+    <message>
+        <source>Channels</source>
+        <translation type="unfinished">Multimedia Kanäle</translation>
+    </message>
+    <message>
+        <source>No channels available</source>
+        <translation>Keine Kanäle verfügbar</translation>
+    </message>
+    <message>
+        <source>Please refresh or check internet connection!</source>
+        <translation>Aktualisieren oder die Internetverbindung prüfen!</translation>
+    </message>
+</context>
+<context>
     <name>CommentsListPage</name>
     <message>
         <source>Refresh</source>

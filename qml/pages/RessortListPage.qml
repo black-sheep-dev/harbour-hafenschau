@@ -135,7 +135,7 @@ Page {
         VerticalScrollDecorator {}
     }
 
-    onStatusChanged: if (status === PageStatus.Active) pageStack.pushAttached(Qt.resolvedUrl("StreamsListPage.qml"))
+    onStatusChanged: if (status === PageStatus.Active) pageStack.pushAttached(Qt.resolvedUrl("ChannelsPage.qml"))
 }
 
 

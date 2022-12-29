@@ -76,6 +76,8 @@ ListModel {
                 })
 
                 items = data.news.concat(regionalNews)
+            } else if (data.hasOwnProperty("channels")) {
+                items = data.channels
             } else {
                 items = data.news
             }
