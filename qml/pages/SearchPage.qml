@@ -46,18 +46,6 @@ Page {
     allowedOrientations: Orientation.All
 
     SilicaFlickable {
-//        PushUpMenu {
-//            busy: busy
-//            visible: totalItemCount  > pageSize * currentPage + 1
-//            MenuItem {
-//                text: qsTr("Load more") + " (" + (currentPage + 1) + "/" + (Math.floor(totalItemCount / pageSize)) + ")"
-//                onClicked: {
-//                    currentPage++
-//                    search()
-//                }
-//            }
-//        }
-
         anchors.fill: parent
 
         Column {

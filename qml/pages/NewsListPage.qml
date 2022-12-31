@@ -39,25 +39,12 @@ Page {
             }
         }
 
-        PushUpMenu {
-            busy: newsResortModel.busy
-
-            visible: newsResortModel.nextPage.length > 0
-
-            MenuItem  {
-                text: qsTr("Load more")
-                onClicked: newsResortModel.loadMore()
-            }
-        }
-
         id: listView
         anchors.fill: parent
 
         header: PageHeader {
             title: page.ressortTitle
         }
-
-
 
         clip: true
 
@@ -97,6 +84,8 @@ Page {
         }
 
         VerticalScrollDecorator {}
+
+        onAtYEndChanged: if (atYEnd && newsResortModel.nextPage.length > 0) newsResortModel.loadMore()
     }
 
     onRessortChanged: newsResortModel.fetch()
