@@ -13,7 +13,7 @@ Page {
     property int totalItemCount: 0
     readonly property int pageSize: 20
 
-    property var items: []
+    //property var items: []
 
     function search() {
         var query = "https://www.tagesschau.de/api2/search/"
@@ -30,7 +30,7 @@ Page {
             }
 
             totalItemCount = data.totalItemCount
-            items = items.concat(data.searchResults)
+            data.searchResults.forEach(function(item) { searchModel.append(item) })
         })
     }
 
@@ -46,17 +46,17 @@ Page {
     allowedOrientations: Orientation.All
 
     SilicaFlickable {
-        PushUpMenu {
-            busy: busy
-            visible: totalItemCount  > pageSize * currentPage + 1
-            MenuItem {
-                text: qsTr("Load more") + " (" + (currentPage + 1) + "/" + (Math.floor(totalItemCount / pageSize)) + ")"
-                onClicked: {
-                    currentPage++
-                    search()
-                }
-            }
-        }
+//        PushUpMenu {
+//            busy: busy
+//            visible: totalItemCount  > pageSize * currentPage + 1
+//            MenuItem {
+//                text: qsTr("Load more") + " (" + (currentPage + 1) + "/" + (Math.floor(totalItemCount / pageSize)) + ")"
+//                onClicked: {
+//                    currentPage++
+//                    search()
+//                }
+//            }
+//        }
 
         anchors.fill: parent
 
@@ -91,13 +91,20 @@ Page {
         SilicaListView {
             id: listView
 
+            onAtYEndChanged: {
+                if (atYEnd && totalItemCount  > pageSize * currentPage + 1) {
+                    currentPage++
+                    search()
+                }
+            }
+
             width: parent.width
             anchors.top: header.bottom
             anchors.bottom: parent.bottom
 
             clip: true
 
-            model: items
+            model: ListModel { id: searchModel }
 
             delegate: NewsListItem {
                 id: delegate
