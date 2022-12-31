@@ -60,7 +60,7 @@
     </message>
     <message>
         <source>Channels</source>
-        <translation type="unfinished">Multimedia Kanäle</translation>
+        <translation>Multimedia Kanäle</translation>
     </message>
     <message>
         <source>No channels available</source>
@@ -300,10 +300,6 @@
 </context>
 <context>
     <name>SearchPage</name>
-    <message>
-        <source>Load more</source>
-        <translation>Mehr laden</translation>
-    </message>
     <message>
         <source>No content found</source>
         <translation>Keine Inhalte gefunden</translation>

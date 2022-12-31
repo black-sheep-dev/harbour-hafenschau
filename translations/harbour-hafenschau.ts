@@ -301,10 +301,6 @@
 <context>
     <name>SearchPage</name>
     <message>
-        <source>Load more</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No content found</source>
         <translation type="unfinished"></translation>
     </message>
