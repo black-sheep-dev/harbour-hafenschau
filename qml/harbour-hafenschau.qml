@@ -55,33 +55,6 @@ ApplicationWindow
         appName: qsTr("Hafenschau")
     }
 
-//    Notification {
-//        property var notifiedNews: []
-
-//        function notify(news) {
-//            if (notifiedNews.indexOf(news.sophoraId) >= 0) return
-
-//            summary = news.title
-//            subText = news.firstSentence
-//            body = news.firstSentence
-//            icon = "/usr/share/icons/hicolor/86x86/apps/" + appId + ".png"
-//            remoteActions = [{
-//                name: "default",
-//                service: "org.nubecula.hafenschau",
-//                path: "/",
-//                iface: "org.nubecula.hafenschau",
-//                method: "open",
-//                arguments: [news.details]
-//            }]
-
-//            notifiedNews.push(news.sophoraId)
-//            publish()
-//        }
-
-//        id: breakingNewsNotification
-//        appName: "Hafenschau"
-//    }
-
     BackgroundJob {
         enabled: config.autoRefresh > 0
         frequency: config.autoRefresh

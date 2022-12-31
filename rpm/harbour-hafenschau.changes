@@ -1,5 +1,13 @@
+* Sat Dec 31 2022 Black Sheep <blacksheep@nubecula.org> 0.9.4-1
+- Add infinite scroll on ListViews to load more content (pagination)
+- Fixed bug at search page
+
 * Thu Dec 29 2022 Black Sheep <blacksheep@nubecula.org> 0.9.3-1
 - Add media channels
+
+* Tue Dec 27 2022 Black Sheep <blacksheep@nubecula.org> 0.9.2-1
+- Switched to ListModel from raw array in ListViews
+- Visual improvements
 
 * Sun Dec 04 2022 Black Sheep <blacksheep@nubecula.org> 0.9.1-1
 - Fixed bug with regional news

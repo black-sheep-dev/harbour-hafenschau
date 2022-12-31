@@ -169,10 +169,6 @@
         <translation>Aktualisieren</translation>
     </message>
     <message>
-        <source>Load more</source>
-        <translation>Lade mehr</translation>
-    </message>
-    <message>
         <source>No news available</source>
         <translation>Keine Nachrichten verfügbar</translation>
     </message>
