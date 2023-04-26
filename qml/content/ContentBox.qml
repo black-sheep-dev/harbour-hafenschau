@@ -2,6 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 import "../components/"
+import "../js/helper.js" as Helper
 
 BackgroundItem {
     property var item
@@ -16,14 +17,14 @@ BackgroundItem {
         spacing: Theme.paddingMedium
 
         Separator {       
-            visible: !item.hasOwnProperty("images")
+            visible: !item.hasOwnProperty("image")
             width: parent.width
             color: Theme.highlightBackgroundColor
         }
 
         RemoteImage {
-            visible: item.hasOwnProperty("images")
-            source: item.images.videowebl.imageurl
+            visible: item.hasOwnProperty("image")
+            source: item.image.imageVariants["16x9-" + Helper.getPreferredImageSize16x9(width)]
         }
 
         Label {

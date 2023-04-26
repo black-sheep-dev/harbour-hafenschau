@@ -2,6 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 import "../components/"
+import "../js/helper.js" as Helper
 import "../."
 
 CoverBackground {
@@ -53,7 +54,7 @@ CoverBackground {
 
                     opacity: 0.5
 
-                    source: teaserImage.portraetgross8x9.imageurl
+                    source: teaserImage.imageVariants["1x1-" + Helper.getPreferredImageSize1x1(height)]
                 }
 
                 Column {

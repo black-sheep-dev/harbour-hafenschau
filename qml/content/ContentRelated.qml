@@ -2,6 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 import "../components/"
+import "../js/helper.js" as Helper
 
 Item {
     property var item
@@ -61,7 +62,7 @@ Item {
                         width: Theme.itemSizeHuge * 0.8
                         height: width
 
-                        source: modelData.teaserImage.videoweb1x1l.imageurl
+                        source: modelData.teaserImage.imageVariants["1x1-" + Helper.getPreferredImageSize1x1(width)]
                         placeholderUrl: "/usr/share/harbour-hafenschau/images/dummy_thumbnail.png"
 
                         Image {

@@ -2,6 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 import "../components/"
+import "../js/helper.js" as Helper
 
 import "../."
 
@@ -104,10 +105,12 @@ Page {
                 FadeAnimation { duration: 150 }
             }
 
-            anchors.left: parent.left
-            anchors.right: parent.right
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
 
-            source: news.teaserImage.videowebl.imageurl
+            source: news.teaserImage.imageVariants["16x9-" + Helper.getPreferredImageSize16x9(width)]
         }
 
         Column {
@@ -243,7 +246,6 @@ Page {
                 item = item.video
             } else if (item.type === "audio") {
                 component = Qt.createComponent("../content/ContentAudio.qml")
-                item = item.audio
             } else if (item.type === "list") {
                 component = Qt.createComponent("../content/ContentList.qml")
                 item = item.list

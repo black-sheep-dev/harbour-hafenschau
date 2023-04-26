@@ -2,6 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 import "../components/"
+import "../js/helper.js" as Helper
 
 BackgroundItem {
     property var item
@@ -42,7 +43,7 @@ BackgroundItem {
             model: item
 
             delegate: RemoteImage {
-                source: modelData.videowebl.imageurl
+                source: modelData.imageVariants["16x9-" + Helper.getPreferredImageSize16x9(width)]
             }
 
             onDragStarted: switchTimer.stop()

@@ -1,3 +1,6 @@
+* Wed Apr 26 2023 Black Sheep <blacksheep@nubecula.org> 0.9.5-1
+- Fixed problems with pictures and media because of API changes
+
 * Sat Dec 31 2022 Black Sheep <blacksheep@nubecula.org> 0.9.4-1
 - Add infinite scroll on ListViews to load more content (pagination)
 - Fixed bug at search page
