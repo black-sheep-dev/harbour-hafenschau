@@ -6,7 +6,7 @@ import "../."
 
 Page {
     property bool busy: false
-    property int ressort: Ressort.Search
+    property string ressort
     property string ressortTitle
 
     property int currentPage: 0
@@ -39,7 +39,7 @@ Page {
         currentPage = 0
         totalItemCount = 0
         searchField.text = ""
-        items = []
+        //items = []
     }
 
     id: page
