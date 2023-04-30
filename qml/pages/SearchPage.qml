@@ -16,7 +16,7 @@ Page {
     //property var items: []
 
     function search() {
-        var query = "https://www.tagesschau.de/api2/search/"
+        var query = "https://www.tagesschau.de/api2/search"
                 + "?searchText=" + searchField.text
                 + "&resultPage=" + currentPage
                 + "&pageSize=" + pageSize
@@ -26,6 +26,7 @@ Page {
             busy = false
             if (status !== 200) {
                 notify.show(qsTr("Failed to search"))
+                console.log("Failed to search, got status:", status)
                 return
             }
 
