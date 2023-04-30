@@ -6,7 +6,7 @@ import "../."
 
 Page {
     property bool busy: false
-    property int ressort: Ressort.Search
+    property string ressort
     property string ressortTitle
 
     property int currentPage: 0
@@ -16,7 +16,7 @@ Page {
     //property var items: []
 
     function search() {
-        var query = "https://www.tagesschau.de/api2/search/"
+        var query = "https://www.tagesschau.de/api2/search"
                 + "?searchText=" + searchField.text
                 + "&resultPage=" + currentPage
                 + "&pageSize=" + pageSize
@@ -26,6 +26,7 @@ Page {
             busy = false
             if (status !== 200) {
                 notify.show(qsTr("Failed to search"))
+                console.log("Failed to search, got status:", status)
                 return
             }
 
@@ -38,7 +39,7 @@ Page {
         currentPage = 0
         totalItemCount = 0
         searchField.text = ""
-        items = []
+        //items = []
     }
 
     id: page

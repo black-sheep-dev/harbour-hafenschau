@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>I am not the producer of the content used in the app! The content and its copyright belongs to tagesschau.de!</source>
-        <translation>Ich bin nicht der Erzeuger der Inhalte welcche in dieser Anwendung gezeigt werden! Die Inhalte und damit das Copyrigth gehören zu tagesschau.de!</translation>
+        <translation>Ich bin nicht der Erzeuger der Inhalte welche in dieser Anwendung gezeigt werden! Die Inhalte und damit das Copyright gehören zu tagesschau.de!</translation>
     </message>
     <message>
         <source>This project tries to offer a solution to consume the contents of the German public broadcasting under Sailfish OS, since there is no native application.</source>
@@ -126,7 +126,7 @@
         <source>Gallery with %n pictures</source>
         <translation>
             <numerusform>Galerie mit %n Bild</numerusform>
-            <numerusform>Galerie mit %n Bilder</numerusform>
+            <numerusform>Galerie mit %n Bildern</numerusform>
         </translation>
     </message>
 </context>
