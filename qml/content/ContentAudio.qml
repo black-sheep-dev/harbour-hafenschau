@@ -4,7 +4,7 @@ import Sailfish.Silica 1.0
 import QtMultimedia 5.6
 
 import "../components/"
-import "../js/helper.js" as Helper
+import "../."
 
 BackgroundItem {
     property bool playing: false
@@ -26,7 +26,9 @@ BackgroundItem {
             RemoteImage {
                 id: headerImage
 
-                source: item.teaserImage === undefined ? "/usr/share/harbour-hafenschau/images/audiograph.png" : item.teaserImage.imageVariants["16x9-" + Helper.getPreferredImageSize16x9(width)]
+                source: item.teaserImage === undefined ?
+                            "/usr/share/harbour-hafenschau/images/audiograph.png" :
+                            Tools.getPreferredImageSize16x9(width, item.teaserImage.imageVariants)
                 placeholderUrl: "/usr/share/harbour-hafenschau/images/audiograph.png"
 
                 Image {

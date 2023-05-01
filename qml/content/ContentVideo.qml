@@ -2,7 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 import "../components/"
-import "../js/helper.js" as Helper
+import "../."
 
 BackgroundItem {
     property var item
@@ -17,7 +17,7 @@ BackgroundItem {
         spacing: Theme.paddingMedium
 
         RemoteImage {
-            source: item.teaserImage.imageVariants["16x9-" + Helper.getPreferredImageSize16x9(width)]
+            source: Tools.getPreferredImageSize16x9(width, item.teaserImage.imageVariants)
             placeholderUrl: "/usr/share/harbour-hafenschau/images/video_dummy.png"
 
             Image {

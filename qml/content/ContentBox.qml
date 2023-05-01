@@ -2,7 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 import "../components/"
-import "../js/helper.js" as Helper
+import "../."
 
 BackgroundItem {
     property var item
@@ -24,7 +24,7 @@ BackgroundItem {
 
         RemoteImage {
             visible: item.hasOwnProperty("image")
-            source: item.image.imageVariants["16x9-" + Helper.getPreferredImageSize16x9(width)]
+            source: Tools.getPreferredImageSize16x9(width, item.image.imageVariants)
         }
 
         Label {
