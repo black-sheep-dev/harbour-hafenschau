@@ -9,7 +9,7 @@ Name:       harbour-hafenschau
 # << macros
 
 Summary:    Hafenschau
-Version:    0.9.5
+Version:    0.9.6
 Release:    1
 Group:      Qt/Qt
 License:    MIT
@@ -47,7 +47,6 @@ Url:
     Donation: https://www.paypal.com/paypalme/nubecula/1
 %endif
 
-%define _binary_payload w2.xzdio
 
 %prep
 %setup -q -n %{name}-%{version}

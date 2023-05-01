@@ -1,3 +1,9 @@
+* Mon May 01 2023 Black Sheep <blacksheep@nubecula.org> 0.9.6-1
+- Changed RPM compression for backward compatibility
+- Fixed internal link handling (by cnlpete)
+- Fixed search page (by cnlpete)
+- Translation fixes (by cnlpete)
+
 * Wed Apr 26 2023 Black Sheep <blacksheep@nubecula.org> 0.9.5-1
 - Fixed problems with pictures and media because of API changes
 

@@ -25,7 +25,6 @@ DISTFILES += qml/harbour-hafenschau.qml \
     qml/cover/CoverPage.qml \
     qml/delegates/NewsListItem.qml \
     qml/global.qml \
-    qml/js/helper.js \
     qml/models/CommentsModel.qml \
     qml/models/NewsModel.qml \
     qml/pages/ChannelsPage.qml \
@@ -47,6 +46,7 @@ DISTFILES += qml/harbour-hafenschau.qml \
     qml/pages/settings/SettingsVideoPage.qml \
     qml/pages/settings/SettingsWebviewPage.qml \
     qml/qmldir \
+    qml/tools.qml \
     rpm/harbour-hafenschau.changes \
     rpm/harbour-hafenschau.changes.run.in \
     rpm/harbour-hafenschau.spec \
