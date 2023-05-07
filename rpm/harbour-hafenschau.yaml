@@ -31,6 +31,9 @@ Description: |
     %endif
 Builder: qmake5
 
+Macros:
+ - _binary_payload;w2.xzdio
+
 # This section specifies build dependencies that are resolved using pkgconfig.
 # This is the preferred way of specifying build dependencies for your package.
 PkgConfigBR:

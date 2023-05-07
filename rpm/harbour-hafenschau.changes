@@ -1,3 +1,6 @@
+* Sun May 07 2023 Black Sheep <blacksheep@nubecula.org> 0.9.7-1
+- Add rpm compression into yaml file for backward compatibility
+
 * Mon May 01 2023 Black Sheep <blacksheep@nubecula.org> 0.9.6-1
 - Changed RPM compression for backward compatibility
 - Fixed internal link handling (by cnlpete)

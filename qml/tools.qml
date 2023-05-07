@@ -11,7 +11,6 @@ Item {
         if (width <= 432 && keys.indexOf("16x9-432") >= 0) size = 432
         if (width <= 640 && keys.indexOf("16x9-640") >= 0) size = 640
 
-        console.log("1x1-" + size)
         return variants["1x1-" + size]
     }
 
