@@ -10,7 +10,7 @@ Name:       harbour-hafenschau
 %define _binary_payload w2.xzdio
 
 Summary:    Hafenschau
-Version:    0.9.7
+Version:    0.9.8
 Release:    1
 Group:      Qt/Qt
 License:    MIT
