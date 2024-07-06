@@ -19,7 +19,7 @@ ApplicationWindow
 
     NewsModel {
         id: mainNews
-        url: "https://www.tagesschau.de/api2/homepage"
+        url: "https://www.tagesschau.de/api2u/homepage"
     }
 
     ConfigurationGroup {

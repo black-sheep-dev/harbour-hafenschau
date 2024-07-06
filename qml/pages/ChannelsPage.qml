@@ -12,7 +12,7 @@ Page {
 
     NewsModel {
         id: channelsModel
-        url: "https://www.tagesschau.de/api2/channels"
+        url: "https://www.tagesschau.de/api2u/channels"
     }
 
     PageBusyIndicator {
