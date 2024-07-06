@@ -16,7 +16,7 @@ Page {
     //property var items: []
 
     function search() {
-        var query = "https://www.tagesschau.de/api2/search"
+        var query = "https://www.tagesschau.de/api2u/search"
                 + "?searchText=" + searchField.text
                 + "&resultPage=" + currentPage
                 + "&pageSize=" + pageSize

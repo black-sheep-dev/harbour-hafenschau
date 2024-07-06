@@ -74,7 +74,7 @@ BackgroundItem {
         if (item.link === undefined) return
         var link = item.link.match(/(?:ht|f)tps?:\/\/[-a-zA-Z0-9.]+\.[a-zA-Z]{2,3}(\/[^"<]*)?/g)[0]
 
-        if (link.substr(0, 30) === "https://www.tagesschau.de/api2")
+        if (link.substr(0, 31) === "https://www.tagesschau.de/api2u")
             pageStack.push(Qt.resolvedUrl("../pages/ReaderPage.qml"), {link: link})
         else
             Qt.openUrlExternally(link)
